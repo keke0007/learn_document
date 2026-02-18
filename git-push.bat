@@ -7,7 +7,7 @@ echo === 执行 git commit ===
 git commit -m "add something"
 
 echo === 执行 git push ===
-git push origin master
+git push origin main
 
 echo === 操作完成 ===
 pause
