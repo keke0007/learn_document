@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-config
+  namespace: myapp
+data:
+  app.properties: |
+    app.name=MyApp
+    app.version=1.0.0
+    api.url=http://api-service:5000
+    cache.url=redis://redis-service:6379
+  nginx.conf: |
+    server {
+        listen 80;
+        server_name localhost;
+        location / {
+            proxy_pass http://api-service:5000;
+        }
+    }

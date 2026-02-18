@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grid 布局</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: #f0f0f0;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+        }
+        
+        .section {
+            background: white;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        h2 {
+            color: #555;
+            margin-bottom: 15px;
+        }
+        
+        /* 1. 基础 Grid */
+        .grid-basic {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+        
+        .grid-item {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            border-radius: 5px;
+        }
+        
+        /* 2. 固定列宽 */
+        .grid-fixed {
+            display: grid;
+            grid-template-columns: 200px 1fr 200px;
+            gap: 15px;
+        }
+        
+        /* 3. 响应式 Grid */
+        .grid-responsive {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+        
+        /* 4. Grid 区域 */
+        .grid-areas {
+            display: grid;
+            grid-template-columns: 1fr 3fr 1fr;
+            grid-template-rows: auto 1fr auto;
+            gap: 15px;
+            min-height: 400px;
+        }
+        
+        .header {
+            grid-column: 1 / -1;
+            background: #e74c3c;
+        }
+        
+        .sidebar {
+            background: #3498db;
+        }
+        
+        .main {
+            background: #2ecc71;
+        }
+        
+        .footer {
+            grid-column: 1 / -1;
+            background: #f39c12;
+        }
+        
+        /* 5. 对齐方式 */
+        .grid-align {
+            display: grid;
+            grid-template-columns: repeat(3, 150px);
+            gap: 15px;
+            justify-content: center;
+            align-content: center;
+            min-height: 300px;
+        }
+        
+        /* 6. 嵌套 Grid */
+        .grid-nested {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+        
+        .nested-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            padding: 10px;
+            background: #ecf0f1;
+        }
+        
+        .nested-item {
+            background: #95a5a6;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>CSS Grid 布局案例</h1>
+        
+        <!-- 1. 基础 Grid -->
+        <div class="section">
+            <h2>1. 基础 Grid 布局 (3 列)</h2>
+            <div class="grid-basic">
+                <div class="grid-item">1</div>
+                <div class="grid-item">2</div>
+                <div class="grid-item">3</div>
+                <div class="grid-item">4</div>
+                <div class="grid-item">5</div>
+                <div class="grid-item">6</div>
+            </div>
+        </div>
+        
+        <!-- 2. 固定列宽 -->
+        <div class="section">
+            <h2>2. 固定列宽布局</h2>
+            <div class="grid-fixed">
+                <div class="grid-item">侧边栏 (200px)</div>
+                <div class="grid-item">主内容 (自适应)</div>
+                <div class="grid-item">侧边栏 (200px)</div>
+            </div>
+        </div>
+        
+        <!-- 3. 响应式 Grid -->
+        <div class="section">
+            <h2>3. 响应式 Grid (auto-fit)</h2>
+            <div class="grid-responsive">
+                <div class="grid-item">项目 1</div>
+                <div class="grid-item">项目 2</div>
+                <div class="grid-item">项目 3</div>
+                <div class="grid-item">项目 4</div>
+                <div class="grid-item">项目 5</div>
+            </div>
+        </div>
+        
+        <!-- 4. Grid 区域 -->
+        <div class="section">
+            <h2>4. Grid 区域布局</h2>
+            <div class="grid-areas">
+                <div class="grid-item header">Header (全宽)</div>
+                <div class="grid-item sidebar">Sidebar</div>
+                <div class="grid-item main">Main Content</div>
+                <div class="grid-item sidebar">Sidebar</div>
+                <div class="grid-item footer">Footer (全宽)</div>
+            </div>
+        </div>
+        
+        <!-- 5. 对齐方式 -->
+        <div class="section">
+            <h2>5. Grid 对齐方式</h2>
+            <div class="grid-align">
+                <div class="grid-item">1</div>
+                <div class="grid-item">2</div>
+                <div class="grid-item">3</div>
+            </div>
+        </div>
+        
+        <!-- 6. 嵌套 Grid -->
+        <div class="section">
+            <h2>6. 嵌套 Grid</h2>
+            <div class="grid-nested">
+                <div class="grid-item">外层 1</div>
+                <div class="nested-grid">
+                    <div class="nested-item">内层 1</div>
+                    <div class="nested-item">内层 2</div>
+                    <div class="nested-item">内层 3</div>
+                    <div class="nested-item">内层 4</div>
+                </div>
+                <div class="grid-item">外层 3</div>
+                <div class="grid-item">外层 4</div>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2>Grid 常用属性总结</h2>
+            <ul style="line-height: 2;">
+                <li><strong>display: grid</strong> - 启用 Grid</li>
+                <li><strong>grid-template-columns</strong> - 定义列 (1fr, repeat(), auto-fit)</li>
+                <li><strong>grid-template-rows</strong> - 定义行</li>
+                <li><strong>gap</strong> - 网格间距</li>
+                <li><strong>grid-column</strong> - 项目跨列 (1 / -1, span 2)</li>
+                <li><strong>grid-row</strong> - 项目跨行</li>
+                <li><strong>grid-template-areas</strong> - 定义区域</li>
+                <li><strong>justify-content</strong> - 水平对齐</li>
+                <li><strong>align-content</strong> - 垂直对齐</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,94 @@
+# Spring Boot 配置示例
+# 用于验证配置绑定和自动配置
+
+spring:
+  application:
+    name: demo-application
+  
+  # 数据源配置
+  datasource:
+    url: jdbc:mysql://localhost:3306/mydb
+    username: root
+    password: password
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  
+  # Redis 配置
+  redis:
+    host: localhost
+    port: 6379
+    password: 
+    database: 0
+  
+  # Nacos 配置
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+        namespace: dev
+        group: DEFAULT_GROUP
+      config:
+        server-addr: localhost:8848
+        file-extension: yml
+        namespace: dev
+        group: DEFAULT_GROUP
+  
+  # Gateway 配置
+    gateway:
+      routes:
+        - id: user-service
+          uri: lb://user-service
+          predicates:
+            - Path=/api/users/**
+          filters:
+            - AddRequestHeader=X-Request-Id, ${random.uuid}
+            - Retry=3
+  
+  # Sentinel 配置
+    sentinel:
+      transport:
+        dashboard: localhost:8080
+      datasource:
+        flow:
+          nacos:
+            server-addr: localhost:8848
+            data-id: sentinel-flow-rules
+            group-id: DEFAULT_GROUP
+            rule-type: flow
+
+# Seata 配置
+seata:
+  enabled: true
+  application-id: seata-demo
+  tx-service-group: my_test_tx_group
+  config:
+    type: nacos
+    nacos:
+      server-addr: localhost:8848
+      namespace: seata
+      group: SEATA_GROUP
+  registry:
+    type: nacos
+    nacos:
+      server-addr: localhost:8848
+      namespace: seata
+      group: SEATA_GROUP
+
+# XXL-JOB 配置
+xxl:
+  job:
+    admin:
+      addresses: http://localhost:8080/xxl-job-admin
+    executor:
+      appname: xxl-job-executor
+      address: 
+      ip: 
+      port: 9999
+      logpath: /data/applogs/xxl-job/jobhandler
+      logretentiondays: 30
+    accessToken: 
+
+# 自定义配置
+app:
+  name: demo-app
+  port: 8080
+  timeout: 5000

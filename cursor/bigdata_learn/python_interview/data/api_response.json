@@ -1,0 +1,26 @@
+{
+  "code": 200,
+  "message": "success",
+  "data": {
+    "users": [
+      {
+        "id": 1,
+        "name": "张三",
+        "email": "zhangsan@example.com",
+        "age": 25,
+        "department": "研发部"
+      },
+      {
+        "id": 2,
+        "name": "李四",
+        "email": "lisi@example.com",
+        "age": 30,
+        "department": "产品部"
+      }
+    ],
+    "total": 100,
+    "page": 1,
+    "page_size": 10
+  },
+  "timestamp": 1706284800000
+}

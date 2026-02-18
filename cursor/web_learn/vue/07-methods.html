@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>方法</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            border-bottom: 3px solid #4CAF50;
+            padding-bottom: 10px;
+        }
+        .section {
+            margin: 30px 0;
+            padding: 20px;
+            background: #f9f9f9;
+            border-left: 4px solid #4CAF50;
+            border-radius: 5px;
+        }
+        .demo-box {
+            padding: 20px;
+            background: #e8f5e9;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+        button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        input {
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div class="container">
+            <h1>方法（Methods）</h1>
+            
+            <div class="section">
+                <h2>1. 基础方法</h2>
+                <div class="demo-box">
+                    <button @click="greet">问候</button>
+                    <button @click="sayHello('Vue')">问候 Vue</button>
+                    <p>{{ message }}</p>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2>2. 方法访问数据</h2>
+                <div class="demo-box">
+                    <p>计数：{{ count }}</p>
+                    <button @click="increment">增加</button>
+                    <button @click="decrement">减少</button>
+                    <button @click="reset">重置</button>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2>3. 方法调用其他方法</h2>
+                <div class="demo-box">
+                    <input v-model.number="num1" type="number" placeholder="数字1">
+                    <input v-model.number="num2" type="number" placeholder="数字2">
+                    <button @click="calculate">计算</button>
+                    <p>结果：{{ result }}</p>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2>4. 方法中的 this</h2>
+                <div class="demo-box">
+                    <button @click="showThis">显示 this</button>
+                    <p>{{ thisInfo }}</p>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2>5. 方法 vs 计算属性</h2>
+                <div class="demo-box">
+                    <input v-model="inputText" placeholder="输入文本">
+                    <p>方法调用：{{ reverseText() }}</p>
+                    <p>计算属性：{{ reversedText }}</p>
+                    <p><strong>注意：</strong>方法每次渲染都会执行，计算属性有缓存</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const { createApp } = Vue;
+
+        createApp({
+            data() {
+                return {
+                    message: '',
+                    count: 0,
+                    num1: null,
+                    num2: null,
+                    result: '',
+                    thisInfo: '',
+                    inputText: ''
+                }
+            },
+            computed: {
+                reversedText() {
+                    return this.inputText.split('').reverse().join('');
+                }
+            },
+            methods: {
+                greet() {
+                    this.message = 'Hello, World!';
+                },
+                sayHello(name) {
+                    this.message = `Hello, ${name}!`;
+                },
+                increment() {
+                    this.count++;
+                },
+                decrement() {
+                    this.count--;
+                },
+                reset() {
+                    this.count = 0;
+                },
+                calculate() {
+                    if (this.num1 !== null && this.num2 !== null) {
+                        const sum = this.add(this.num1, this.num2);
+                        const product = this.multiply(this.num1, this.num2);
+                        this.result = `和: ${sum}, 积: ${product}`;
+                    }
+                },
+                add(a, b) {
+                    return a + b;
+                },
+                multiply(a, b) {
+                    return a * b;
+                },
+                showThis() {
+                    this.thisInfo = `this 指向 Vue 实例，可以访问 data、computed、methods 等`;
+                },
+                reverseText() {
+                    return this.inputText.split('').reverse().join('');
+                }
+            }
+        }).mount('#app');
+    </script>
+</body>
+</html>

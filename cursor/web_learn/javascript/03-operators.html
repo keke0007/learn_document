@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>运算符</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            border-bottom: 3px solid #4CAF50;
+            padding-bottom: 10px;
+        }
+        .section {
+            margin: 30px 0;
+            padding: 20px;
+            background: #f9f9f9;
+            border-left: 4px solid #4CAF50;
+            border-radius: 5px;
+        }
+        button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        .output {
+            background: #e8f5e9;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>JavaScript 运算符</h1>
+        
+        <div class="section">
+            <h2>1. 算术运算符</h2>
+            <button onclick="demoArithmetic()">运行示例</button>
+            <div id="arithmetic-output" class="output"></div>
+        </div>
+        
+        <div class="section">
+            <h2>2. 赋值运算符</h2>
+            <button onclick="demoAssignment()">运行示例</button>
+            <div id="assignment-output" class="output"></div>
+        </div>
+        
+        <div class="section">
+            <h2>3. 比较运算符</h2>
+            <button onclick="demoComparison()">运行示例</button>
+            <div id="comparison-output" class="output"></div>
+        </div>
+        
+        <div class="section">
+            <h2>4. 逻辑运算符</h2>
+            <button onclick="demoLogical()">运行示例</button>
+            <div id="logical-output" class="output"></div>
+        </div>
+        
+        <div class="section">
+            <h2>5. 三元运算符</h2>
+            <button onclick="demoTernary()">运行示例</button>
+            <div id="ternary-output" class="output"></div>
+        </div>
+        
+        <div class="section">
+            <h2>6. 类型运算符</h2>
+            <button onclick="demoType()">运行示例</button>
+            <div id="type-output" class="output"></div>
+        </div>
+    </div>
+
+    <script>
+        function demoArithmetic() {
+            let output = "";
+            let a = 10, b = 3;
+            
+            output += `a = ${a}, b = ${b}<br>`;
+            output += `a + b = ${a + b}<br>`;
+            output += `a - b = ${a - b}<br>`;
+            output += `a * b = ${a * b}<br>`;
+            output += `a / b = ${(a / b).toFixed(2)}<br>`;
+            output += `a % b = ${a % b} (取余)<br>`;
+            output += `a ** b = ${a ** b} (幂运算)<br>`;
+            output += `++a = ${++a} (前置递增)<br>`;
+            output += `a-- = ${a--} (后置递减)<br>`;
+            
+            document.getElementById('arithmetic-output').innerHTML = output;
+        }
+        
+        function demoAssignment() {
+            let output = "";
+            let x = 10;
+            
+            output += `初始值: x = ${x}<br>`;
+            x += 5; output += `x += 5: ${x}<br>`;
+            x -= 3; output += `x -= 3: ${x}<br>`;
+            x *= 2; output += `x *= 2: ${x}<br>`;
+            x /= 4; output += `x /= 4: ${x}<br>`;
+            x %= 3; output += `x %= 3: ${x}<br>`;
+            
+            document.getElementById('assignment-output').innerHTML = output;
+        }
+        
+        function demoComparison() {
+            let output = "";
+            let a = 5, b = 5, c = "5";
+            
+            output += `a = ${a}, b = ${b}, c = "${c}"<br><br>`;
+            output += `a == b: ${a == b} (相等)<br>`;
+            output += `a == c: ${a == c} (相等，类型转换)<br>`;
+            output += `a === c: ${a === c} (严格相等)<br>`;
+            output += `a != b: ${a != b} (不等)<br>`;
+            output += `a !== c: ${a !== c} (严格不等)<br>`;
+            output += `a > 3: ${a > 3} (大于)<br>`;
+            output += `a < 10: ${a < 10} (小于)<br>`;
+            output += `a >= 5: ${a >= 5} (大于等于)<br>`;
+            output += `a <= 5: ${a <= 5} (小于等于)<br>`;
+            
+            document.getElementById('comparison-output').innerHTML = output;
+        }
+        
+        function demoLogical() {
+            let output = "";
+            let a = true, b = false;
+            
+            output += `a = ${a}, b = ${b}<br><br>`;
+            output += `a && b: ${a && b} (逻辑与)<br>`;
+            output += `a || b: ${a || b} (逻辑或)<br>`;
+            output += `!a: ${!a} (逻辑非)<br>`;
+            output += `!b: ${!b} (逻辑非)<br><br>`;
+            
+            // 短路求值
+            output += `true && "Hello": ${true && "Hello"}<br>`;
+            output += `false || "World": ${false || "World"}<br>`;
+            
+            document.getElementById('logical-output').innerHTML = output;
+        }
+        
+        function demoTernary() {
+            let output = "";
+            let age = 20;
+            
+            output += `age = ${age}<br>`;
+            let status = age >= 18 ? "成年人" : "未成年人";
+            output += `status = age >= 18 ? "成年人" : "未成年人"<br>`;
+            output += `结果: ${status}<br><br>`;
+            
+            let score = 85;
+            let grade = score >= 90 ? "优秀" : score >= 60 ? "及格" : "不及格";
+            output += `score = ${score}<br>`;
+            output += `grade: ${grade}`;
+            
+            document.getElementById('ternary-output').innerHTML = output;
+        }
+        
+        function demoType() {
+            let output = "";
+            
+            output += `typeof 42: ${typeof 42}<br>`;
+            output += `typeof "hello": ${typeof "hello"}<br>`;
+            output += `typeof true: ${typeof true}<br>`;
+            output += `typeof undefined: ${typeof undefined}<br>`;
+            output += `typeof null: ${typeof null}<br>`;
+            output += `typeof []: ${typeof []}<br>`;
+            output += `typeof {}: ${typeof {}}<br>`;
+            output += `typeof function(){}: ${typeof function(){}}<br>`;
+            
+            document.getElementById('type-output').innerHTML = output;
+        }
+        
+        console.log("=== 运算符示例 ===");
+    </script>
+</body>
+</html>

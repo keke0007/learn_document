@@ -1,0 +1,5 @@
+{"level":"INFO","service":"order","msg":"order created","order_id":1001}
+{"level":"ERROR","service":"order","msg":"payment failed","order_id":1002}
+{"type":"ORDER_CREATED","order_id":1003,"user_id":2,"ts":"2024-03-14T10:02:00Z"}
+{"type":"ORDER_PAID","order_id":1003,"user_id":2,"ts":"2024-03-14T10:03:00Z"}
+

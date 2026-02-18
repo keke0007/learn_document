@@ -1,0 +1,100 @@
+{
+  "description": "外部 API 响应示例集合",
+  "examples": [
+    {
+      "name": "库存查询 API 响应",
+      "endpoint": "GET /api/inventory/{product_id}",
+      "response": {
+        "success": true,
+        "data": {
+          "product_id": "P2001",
+          "product_name": "无线蓝牙耳机",
+          "total_stock": 150,
+          "available_stock": 120,
+          "reserved_stock": 30,
+          "warehouses": [
+            {"warehouse_id": "WH-SZ-001", "stock": 80},
+            {"warehouse_id": "WH-BJ-001", "stock": 70}
+          ],
+          "last_updated": "2024-01-15T10:00:00Z"
+        }
+      }
+    },
+    {
+      "name": "用户信息 API 响应",
+      "endpoint": "GET /api/users/{user_id}",
+      "response": {
+        "success": true,
+        "data": {
+          "user_id": "U1001",
+          "username": "zhangsan",
+          "email": "zhangsan@example.com",
+          "phone": "13800138000",
+          "level": 3,
+          "vip_status": true,
+          "points": 5680,
+          "created_at": "2023-06-15T08:30:00Z"
+        }
+      }
+    },
+    {
+      "name": "订单列表 API 响应",
+      "endpoint": "GET /api/orders?user_id={user_id}&status=pending",
+      "response": {
+        "success": true,
+        "data": {
+          "total": 2,
+          "page": 1,
+          "page_size": 10,
+          "orders": [
+            {
+              "order_id": "ORD20240115001",
+              "amount": 199.00,
+              "status": "pending",
+              "created_at": "2024-01-15T10:30:00Z"
+            },
+            {
+              "order_id": "ORD20240114002",
+              "amount": 88.00,
+              "status": "pending",
+              "created_at": "2024-01-14T15:20:00Z"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "错误响应示例",
+      "endpoint": "GET /api/orders/{order_id}",
+      "response": {
+        "success": false,
+        "error": {
+          "code": "ORDER_NOT_FOUND",
+          "message": "订单不存在",
+          "details": {
+            "order_id": "ORD99999999999"
+          }
+        }
+      }
+    },
+    {
+      "name": "分页响应示例",
+      "endpoint": "GET /api/products?category=electronics&page=1&size=10",
+      "response": {
+        "success": true,
+        "data": {
+          "total": 156,
+          "page": 1,
+          "page_size": 10,
+          "total_pages": 16,
+          "has_next": true,
+          "has_prev": false,
+          "items": [
+            {"id": "P2001", "name": "无线蓝牙耳机", "price": 99.50},
+            {"id": "P2002", "name": "智能手表", "price": 299.00}
+          ]
+        }
+      }
+    }
+  ]
+}

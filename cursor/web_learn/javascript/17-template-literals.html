@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>模板字符串</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            border-bottom: 3px solid #4CAF50;
+            padding-bottom: 10px;
+        }
+        .section {
+            margin: 30px 0;
+            padding: 20px;
+            background: #f9f9f9;
+            border-left: 4px solid #4CAF50;
+            border-radius: 5px;
+        }
+        button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        .output {
+            background: #e8f5e9;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>模板字符串</h1>
+        
+        <div class="section">
+            <h2>1. 基础模板字符串</h2>
+            <button onclick="demoBasic()">运行示例</button>
+            <div id="basic-output" class="output"></div>
+        </div>
+        
+        <div class="section">
+            <h2>2. 多行字符串</h2>
+            <button onclick="demoMultiline()">运行示例</button>
+            <div id="multiline-output" class="output"></div>
+        </div>
+        
+        <div class="section">
+            <h2>3. 表达式嵌入</h2>
+            <button onclick="demoExpressions()">运行示例</button>
+            <div id="expressions-output" class="output"></div>
+        </div>
+        
+        <div class="section">
+            <h2>4. 标签模板</h2>
+            <button onclick="demoTagged()">运行示例</button>
+            <div id="tagged-output" class="output"></div>
+        </div>
+        
+        <div class="section">
+            <h2>5. 实际应用</h2>
+            <button onclick="demoPractical()">运行示例</button>
+            <div id="practical-output" class="output"></div>
+        </div>
+    </div>
+
+    <script>
+        function demoBasic() {
+            let output = "";
+            let name = "张三";
+            let age = 25;
+            
+            // 传统字符串拼接
+            let oldWay = "姓名: " + name + ", 年龄: " + age;
+            output += `传统方式: ${oldWay}\n`;
+            
+            // 模板字符串
+            let newWay = `姓名: ${name}, 年龄: ${age}`;
+            output += `模板字符串: ${newWay}\n`;
+            
+            document.getElementById('basic-output').textContent = output;
+        }
+        
+        function demoMultiline() {
+            let output = "";
+            
+            // 传统多行（需要 \n）
+            let oldMultiline = "第一行\n第二行\n第三行";
+            output += `传统方式:\n${oldMultiline}\n\n`;
+            
+            // 模板字符串多行
+            let newMultiline = `第一行
+第二行
+第三行`;
+            output += `模板字符串:\n${newMultiline}`;
+            
+            document.getElementById('multiline-output').textContent = output;
+        }
+        
+        function demoExpressions() {
+            let output = "";
+            let a = 10;
+            let b = 20;
+            
+            // 数学表达式
+            output += `a + b = ${a + b}\n`;
+            output += `a * b = ${a * b}\n`;
+            
+            // 函数调用
+            function double(x) { return x * 2; }
+            output += `double(5) = ${double(5)}\n`;
+            
+            // 三元运算符
+            let score = 85;
+            output += `成绩: ${score >= 60 ? "及格" : "不及格"}\n`;
+            
+            // 对象属性
+            let person = {name: "张三", age: 25};
+            output += `姓名: ${person.name}, 年龄: ${person.age}`;
+            
+            document.getElementById('expressions-output').textContent = output;
+        }
+        
+        function demoTagged() {
+            let output = "";
+            
+            // 标签模板函数
+            function highlight(strings, ...values) {
+                let result = "";
+                strings.forEach((str, i) => {
+                    result += str;
+                    if (i < values.length) {
+                        result += `<strong>${values[i]}</strong>`;
+                    }
+                });
+                return result;
+            }
+            
+            let name = "张三";
+            let age = 25;
+            let tagged = highlight`姓名: ${name}, 年龄: ${age}`;
+            output += `标签模板结果: ${tagged}\n\n`;
+            
+            // 另一个例子：转义HTML
+            function escapeHtml(strings, ...values) {
+                return strings.reduce((result, str, i) => {
+                    let value = values[i] || "";
+                    if (typeof value === 'string') {
+                        value = value.replace(/&/g, '&amp;')
+                                    .replace(/</g, '&lt;')
+                                    .replace(/>/g, '&gt;');
+                    }
+                    return result + str + value;
+                }, '');
+            }
+            
+            let userInput = "<script>alert('xss')</script>";
+            let safe = escapeHtml`用户输入: ${userInput}`;
+            output += `转义HTML: ${safe}`;
+            
+            document.getElementById('tagged-output').innerHTML = output;
+        }
+        
+        function demoPractical() {
+            let output = "";
+            
+            // 1. HTML 模板
+            let user = {name: "张三", email: "zhang@example.com"};
+            let html = `
+                <div class="user-card">
+                    <h3>${user.name}</h3>
+                    <p>${user.email}</p>
+                </div>
+            `;
+            output += `HTML 模板:\n${html}\n\n`;
+            
+            // 2. SQL 查询（示例）
+            let table = "users";
+            let condition = "age > 18";
+            let query = `SELECT * FROM ${table} WHERE ${condition}`;
+            output += `SQL 查询: ${query}\n\n`;
+            
+            // 3. URL 构建
+            let baseUrl = "https://api.example.com";
+            let endpoint = "users";
+            let userId = 123;
+            let url = `${baseUrl}/${endpoint}/${userId}`;
+            output += `URL: ${url}\n\n`;
+            
+            // 4. 消息格式化
+            let product = {name: "商品A", price: 99.99};
+            let message = `
+                您购买的商品: ${product.name}
+                价格: ¥${product.price.toFixed(2)}
+                感谢您的购买！
+            `;
+            output += `消息:\n${message}`;
+            
+            document.getElementById('practical-output').textContent = output;
+        }
+        
+        console.log("=== 模板字符串示例 ===");
+        console.log("模板字符串使用反引号 ` 和 ${} 来嵌入表达式");
+    </script>
+</body>
+</html>

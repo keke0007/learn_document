@@ -1,0 +1,11 @@
+id,name,age,email,department,salary,hire_date
+1,张三,25,zhangsan@example.com,IT,15000,2020-01-15
+2,李四,30,lisi@example.com,HR,12000,2019-06-20
+3,王五,28,wangwu@example.com,IT,18000,2021-03-10
+4,赵六,32,zhaoliu@example.com,Finance,20000,2018-09-05
+5,钱七,27,qianqi@example.com,IT,16000,2022-01-20
+6,孙八,35,sunba@example.com,Finance,25000,2017-05-15
+7,周九,29,zhoujiu@example.com,HR,13000,2020-11-30
+8,吴十,31,wushi@example.com,IT,19000,2019-08-25
+9,郑一,26,zhengyi@example.com,IT,17000,2021-07-12
+10,王二,33,wanger@example.com,Finance,22000,2018-12-01

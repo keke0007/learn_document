@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>导航栏案例</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            padding-bottom: 100px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        h1 {
+            text-align: center;
+            margin: 40px 0;
+            color: #333;
+        }
+        
+        .section {
+            margin-bottom: 80px;
+        }
+        
+        h2 {
+            color: #555;
+            margin-bottom: 20px;
+        }
+        
+        /* 1. 基础导航栏 */
+        .nav-basic {
+            background: #333;
+            padding: 15px 0;
+        }
+        
+        .nav-basic ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+        }
+        
+        .nav-basic a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-basic a:hover {
+            color: #4CAF50;
+        }
+        
+        /* 2. 带 Logo 的导航栏 */
+        .nav-with-logo {
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .nav-logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #667eea;
+        }
+        
+        .nav-with-logo ul {
+            list-style: none;
+            display: flex;
+            gap: 30px;
+        }
+        
+        .nav-with-logo a {
+            color: #333;
+            text-decoration: none;
+            padding: 10px 15px;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-with-logo a:hover {
+            color: #667eea;
+            background: #f0f0f0;
+            border-radius: 5px;
+        }
+        
+        /* 3. 固定导航栏 */
+        .nav-fixed {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(102, 126, 234, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 15px 30px;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .nav-fixed ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+        }
+        
+        .nav-fixed a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: background 0.3s ease;
+        }
+        
+        .nav-fixed a:hover {
+            background: rgba(255,255,255,0.2);
+        }
+        
+        /* 4. 响应式导航栏 */
+        .nav-responsive {
+            background: #2c3e50;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .nav-responsive .logo {
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        
+        .nav-responsive ul {
+            list-style: none;
+            display: flex;
+            gap: 30px;
+        }
+        
+        .nav-responsive a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 15px;
+        }
+        
+        .nav-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        @media (max-width: 768px) {
+            .nav-responsive ul {
+                display: none;
+            }
+            
+            .nav-toggle {
+                display: block;
+            }
+        }
+        
+        /* 5. 底部导航栏 */
+        .nav-bottom {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+            padding: 15px 0;
+            z-index: 1000;
+        }
+        
+        .nav-bottom ul {
+            list-style: none;
+            display: flex;
+            justify-content: space-around;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .nav-bottom a {
+            color: #666;
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+            padding: 10px;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-bottom a:hover,
+        .nav-bottom a.active {
+            color: #667eea;
+        }
+        
+        /* 6. 侧边导航栏 */
+        .nav-sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 250px;
+            background: #2c3e50;
+            padding: 30px 0;
+            z-index: 999;
+        }
+        
+        .nav-sidebar ul {
+            list-style: none;
+        }
+        
+        .nav-sidebar li {
+            margin-bottom: 10px;
+        }
+        
+        .nav-sidebar a {
+            color: white;
+            text-decoration: none;
+            display: block;
+            padding: 15px 30px;
+            transition: background 0.3s ease;
+        }
+        
+        .nav-sidebar a:hover {
+            background: rgba(255,255,255,0.1);
+        }
+        
+        .content-with-sidebar {
+            margin-left: 250px;
+            padding: 30px;
+        }
+        
+        .demo-content {
+            background: #f5f5f5;
+            padding: 30px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>导航栏案例集合</h1>
+        
+        <!-- 1. 基础导航栏 -->
+        <div class="section">
+            <h2>1. 基础导航栏</h2>
+            <nav class="nav-basic">
+                <ul>
+                    <li><a href="#">首页</a></li>
+                    <li><a href="#">关于</a></li>
+                    <li><a href="#">服务</a></li>
+                    <li><a href="#">产品</a></li>
+                    <li><a href="#">联系</a></li>
+                </ul>
+            </nav>
+        </div>
+        
+        <!-- 2. 带 Logo 的导航栏 -->
+        <div class="section">
+            <h2>2. 带 Logo 的导航栏</h2>
+            <nav class="nav-with-logo">
+                <div class="nav-logo">MyLogo</div>
+                <ul>
+                    <li><a href="#">首页</a></li>
+                    <li><a href="#">关于</a></li>
+                    <li><a href="#">服务</a></li>
+                    <li><a href="#">联系</a></li>
+                </ul>
+            </nav>
+        </div>
+        
+        <!-- 3. 固定导航栏 -->
+        <div class="section">
+            <h2>3. 固定导航栏（滚动查看效果）</h2>
+            <nav class="nav-fixed">
+                <ul>
+                    <li><a href="#">首页</a></li>
+                    <li><a href="#">关于</a></li>
+                    <li><a href="#">服务</a></li>
+                    <li><a href="#">产品</a></li>
+                    <li><a href="#">联系</a></li>
+                </ul>
+            </nav>
+            <div style="height: 200px; padding-top: 80px;">
+                <p>滚动页面，导航栏会固定在顶部</p>
+            </div>
+        </div>
+        
+        <!-- 4. 响应式导航栏 -->
+        <div class="section">
+            <h2>4. 响应式导航栏</h2>
+            <nav class="nav-responsive">
+                <div class="logo">Logo</div>
+                <ul>
+                    <li><a href="#">首页</a></li>
+                    <li><a href="#">关于</a></li>
+                    <li><a href="#">服务</a></li>
+                    <li><a href="#">联系</a></li>
+                </ul>
+                <button class="nav-toggle">☰</button>
+            </nav>
+            <p style="margin-top: 15px;">调整窗口大小查看响应式效果</p>
+        </div>
+        
+        <!-- 5. 底部导航栏 -->
+        <div class="section">
+            <h2>5. 底部导航栏</h2>
+            <p>底部导航栏固定在页面底部（实际在页面底部可见）</p>
+        </div>
+        
+        <!-- 6. 侧边导航栏 -->
+        <div class="section">
+            <h2>6. 侧边导航栏</h2>
+            <nav class="nav-sidebar">
+                <ul>
+                    <li><a href="#">首页</a></li>
+                    <li><a href="#">仪表板</a></li>
+                    <li><a href="#">设置</a></li>
+                    <li><a href="#">用户</a></li>
+                    <li><a href="#">帮助</a></li>
+                </ul>
+            </nav>
+            <div class="content-with-sidebar">
+                <div class="demo-content">
+                    <h3>主内容区域</h3>
+                    <p>这是使用侧边导航栏的布局示例。侧边栏固定在左侧，主内容区域在右侧。</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 底部导航栏 -->
+    <nav class="nav-bottom">
+        <ul>
+            <li><a href="#" class="active">
+                <span style="font-size: 1.5rem;">🏠</span>
+                <span>首页</span>
+            </a></li>
+            <li><a href="#">
+                <span style="font-size: 1.5rem;">🔍</span>
+                <span>搜索</span>
+            </a></li>
+            <li><a href="#">
+                <span style="font-size: 1.5rem;">❤️</span>
+                <span>收藏</span>
+            </a></li>
+            <li><a href="#">
+                <span style="font-size: 1.5rem;">👤</span>
+                <span>我的</span>
+            </a></li>
+        </ul>
+    </nav>
+</body>
+</html>

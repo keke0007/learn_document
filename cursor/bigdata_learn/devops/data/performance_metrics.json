@@ -1,0 +1,49 @@
+{
+  "timestamp": "2024-01-26T10:00:00Z",
+  "application": "myapp",
+  "metrics": {
+    "jvm": {
+      "memory_used_mb": 2048,
+      "memory_max_mb": 4096,
+      "memory_usage_percent": 50,
+      "heap_used_mb": 1800,
+      "heap_max_mb": 4096,
+      "heap_usage_percent": 44,
+      "gc_collections": 150,
+      "gc_time_ms": 5000,
+      "gc_time_percent": 0.5
+    },
+    "cpu": {
+      "usage_percent": 35,
+      "load_average": 1.2
+    },
+    "http": {
+      "requests_total": 100000,
+      "requests_per_second": 100,
+      "response_time_avg_ms": 150,
+      "response_time_p95_ms": 300,
+      "response_time_p99_ms": 500,
+      "error_rate_percent": 0.5,
+      "status_2xx": 99500,
+      "status_4xx": 400,
+      "status_5xx": 100
+    },
+    "database": {
+      "connections_active": 15,
+      "connections_idle": 5,
+      "query_time_avg_ms": 50,
+      "query_time_max_ms": 500
+    },
+    "redis": {
+      "connections_active": 8,
+      "commands_per_second": 200,
+      "hit_rate_percent": 95
+    }
+  },
+  "alerts": [
+    {
+      "level": "info",
+      "message": "All systems operational"
+    }
+  ]
+}

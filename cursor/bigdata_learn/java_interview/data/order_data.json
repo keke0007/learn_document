@@ -1,0 +1,57 @@
+[
+  {
+    "orderId": "ORD001",
+    "userId": 1,
+    "productId": "PROD001",
+    "productName": "笔记本电脑",
+    "quantity": 1,
+    "price": 5999.00,
+    "totalAmount": 5999.00,
+    "orderDate": "2024-01-15",
+    "status": "已完成"
+  },
+  {
+    "orderId": "ORD002",
+    "userId": 2,
+    "productId": "PROD002",
+    "productName": "智能手机",
+    "quantity": 2,
+    "price": 2999.00,
+    "totalAmount": 5998.00,
+    "orderDate": "2024-01-16",
+    "status": "已发货"
+  },
+  {
+    "orderId": "ORD003",
+    "userId": 1,
+    "productId": "PROD003",
+    "productName": "无线耳机",
+    "quantity": 1,
+    "price": 299.00,
+    "totalAmount": 299.00,
+    "orderDate": "2024-01-17",
+    "status": "待支付"
+  },
+  {
+    "orderId": "ORD004",
+    "userId": 3,
+    "productId": "PROD001",
+    "productName": "笔记本电脑",
+    "quantity": 1,
+    "price": 5999.00,
+    "totalAmount": 5999.00,
+    "orderDate": "2024-01-18",
+    "status": "已完成"
+  },
+  {
+    "orderId": "ORD005",
+    "userId": 2,
+    "productId": "PROD004",
+    "productName": "机械键盘",
+    "quantity": 1,
+    "price": 499.00,
+    "totalAmount": 499.00,
+    "orderDate": "2024-01-19",
+    "status": "已发货"
+  }
+]

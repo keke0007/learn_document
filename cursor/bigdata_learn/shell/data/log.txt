@@ -1,0 +1,7 @@
+2024-01-15 09:00:00 INFO User login: user001
+2024-01-15 09:05:23 ERROR Database connection failed
+2024-01-15 09:10:45 INFO User logout: user001
+2024-01-15 09:15:30 WARN Low memory warning
+2024-01-15 09:20:12 INFO User login: user002
+2024-01-15 09:25:55 ERROR File not found: /path/to/file
+2024-01-15 09:30:20 INFO User logout: user002

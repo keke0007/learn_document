@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>原型链</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            border-bottom: 3px solid #4CAF50;
+            padding-bottom: 10px;
+        }
+        .section {
+            margin: 30px 0;
+            padding: 20px;
+            background: #f9f9f9;
+            border-left: 4px solid #4CAF50;
+            border-radius: 5px;
+        }
+        button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        .output {
+            background: #e8f5e9;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>原型链</h1>
+        
+        <div class="section">
+            <h2>1. 原型对象</h2>
+            <button onclick="demoPrototype()">运行示例</button>
+            <div id="prototype-output" class="output"></div>
+        </div>
+        
+        <div class="section">
+            <h2>2. 原型链</h2>
+            <button onclick="demoPrototypeChain()">运行示例</button>
+            <div id="chain-output" class="output"></div>
+        </div>
+        
+        <div class="section">
+            <h2>3. 原型继承</h2>
+            <button onclick="demoInheritance()">运行示例</button>
+            <div id="inheritance-output" class="output"></div>
+        </div>
+        
+        <div class="section">
+            <h2>4. 修改原型</h2>
+            <button onclick="demoModify()">运行示例</button>
+            <div id="modify-output" class="output"></div>
+        </div>
+        
+        <div class="section">
+            <h2>5. Object.create</h2>
+            <button onclick="demoObjectCreate()">运行示例</button>
+            <div id="create-output" class="output"></div>
+        </div>
+    </div>
+
+    <script>
+        // 1. 原型对象
+        function demoPrototype() {
+            let output = "";
+            
+            function Person(name) {
+                this.name = name;
+            }
+            
+            Person.prototype.greet = function() {
+                return `Hello, I'm ${this.name}`;
+            };
+            
+            let person = new Person("张三");
+            
+            output += `person.name: ${person.name}<br>`;
+            output += `person.greet(): ${person.greet()}<br>`;
+            output += `person.__proto__ === Person.prototype: ${person.__proto__ === Person.prototype}<br>`;
+            output += `Person.prototype.constructor === Person: ${Person.prototype.constructor === Person}`;
+            
+            document.getElementById('prototype-output').innerHTML = output;
+        }
+        
+        // 2. 原型链
+        function demoPrototypeChain() {
+            let output = "";
+            
+            let arr = [1, 2, 3];
+            
+            output += `arr.__proto__ === Array.prototype: ${arr.__proto__ === Array.prototype}<br>`;
+            output += `Array.prototype.__proto__ === Object.prototype: ${Array.prototype.__proto__ === Object.prototype}<br>`;
+            output += `Object.prototype.__proto__: ${Object.prototype.__proto__}<br>`;
+            output += `<br>原型链: arr -> Array.prototype -> Object.prototype -> null<br>`;
+            output += `arr.hasOwnProperty('length'): ${arr.hasOwnProperty('length')}<br>`;
+            output += `arr.hasOwnProperty('toString'): ${arr.hasOwnProperty('toString')} (继承自 Object.prototype)`;
+            
+            document.getElementById('chain-output').innerHTML = output;
+        }
+        
+        // 3. 原型继承
+        function demoInheritance() {
+            let output = "";
+            
+            function Animal(name) {
+                this.name = name;
+            }
+            
+            Animal.prototype.speak = function() {
+                return `${this.name} makes a sound`;
+            };
+            
+            function Dog(name, breed) {
+                Animal.call(this, name); // 调用父构造函数
+                this.breed = breed;
+            }
+            
+            // 设置原型链
+            Dog.prototype = Object.create(Animal.prototype);
+            Dog.prototype.constructor = Dog;
+            
+            Dog.prototype.speak = function() {
+                return `${this.name} barks!`;
+            };
+            
+            let dog = new Dog("旺财", "金毛");
+            
+            output += `dog.name: ${dog.name}<br>`;
+            output += `dog.breed: ${dog.breed}<br>`;
+            output += `dog.speak(): ${dog.speak()}<br>`;
+            output += `dog instanceof Dog: ${dog instanceof Dog}<br>`;
+            output += `dog instanceof Animal: ${dog instanceof Animal}`;
+            
+            document.getElementById('inheritance-output').innerHTML = output;
+        }
+        
+        // 4. 修改原型
+        function demoModify() {
+            let output = "";
+            
+            function Person(name) {
+                this.name = name;
+            }
+            
+            let person1 = new Person("张三");
+            let person2 = new Person("李四");
+            
+            output += `修改前 person1.greet: ${typeof person1.greet}<br>`;
+            
+            // 在原型上添加方法
+            Person.prototype.greet = function() {
+                return `Hello, ${this.name}`;
+            };
+            
+            output += `修改后 person1.greet(): ${person1.greet()}<br>`;
+            output += `person2.greet(): ${person2.greet()}<br>`;
+            output += "所有实例都可以访问新添加的方法";
+            
+            document.getElementById('modify-output').innerHTML = output;
+        }
+        
+        // 5. Object.create
+        function demoObjectCreate() {
+            let output = "";
+            
+            // 基础对象
+            let animal = {
+                speak: function() {
+                    return `${this.name} makes a sound`;
+                }
+            };
+            
+            // 使用 Object.create 创建新对象
+            let dog = Object.create(animal);
+            dog.name = "旺财";
+            dog.breed = "金毛";
+            dog.speak = function() {
+                return `${this.name} barks!`;
+            };
+            
+            output += `dog.name: ${dog.name}<br>`;
+            output += `dog.speak(): ${dog.speak()}<br>`;
+            output += `dog.__proto__ === animal: ${dog.__proto__ === animal}<br>`;
+            output += `Object.getPrototypeOf(dog) === animal: ${Object.getPrototypeOf(dog) === animal}`;
+            
+            document.getElementById('create-output').innerHTML = output;
+        }
+        
+        console.log("=== 原型链示例 ===");
+        console.log("JavaScript 使用原型链实现继承");
+    </script>
+</body>
+</html>

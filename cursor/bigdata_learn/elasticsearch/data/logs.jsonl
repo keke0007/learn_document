@@ -1,0 +1,29 @@
+{ "index": {} }
+{ "ts": "2024-03-14T10:00:01", "level": "INFO", "service": "order-service", "message": "order created", "order_id": 1001 }
+{ "index": {} }
+{ "ts": "2024-03-14T10:00:05", "level": "INFO", "service": "user-service", "message": "user login", "user_id": 1 }
+{ "index": {} }
+{ "ts": "2024-03-14T10:00:10", "level": "ERROR", "service": "order-service", "message": "payment failed", "order_id": 1002 }
+{ "index": {} }
+{ "ts": "2024-03-14T10:01:02", "level": "WARN", "service": "order-service", "message": "slow query", "order_id": 1003 }
+{ "index": {} }
+{ "ts": "2024-03-14T10:01:15", "level": "INFO", "service": "search-service", "message": "search request", "keyword": "手机" }
+{ "index": {} }
+{ "ts": "2024-03-14T10:01:40", "level": "ERROR", "service": "user-service", "message": "login failed", "user_id": 2 }
+{ "index": {} }
+{ "ts": "2024-03-14T10:02:05", "level": "INFO", "service": "order-service", "message": "order paid", "order_id": 1001 }
+{ "index": {} }
+{ "ts": "2024-03-14T10:02:18", "level": "INFO", "service": "search-service", "message": "search request", "keyword": "耳机" }
+{ "index": {} }
+{ "ts": "2024-03-14T10:02:33", "level": "ERROR", "service": "order-service", "message": "order timeout", "order_id": 1004 }
+{ "index": {} }
+{ "ts": "2024-03-14T10:03:01", "level": "INFO", "service": "user-service", "message": "user logout", "user_id": 1 }
+{ "index": {} }
+{ "ts": "2024-03-14T10:03:22", "level": "INFO", "service": "order-service", "message": "order created", "order_id": 1005 }
+{ "index": {} }
+{ "ts": "2024-03-14T10:03:45", "level": "WARN", "service": "search-service", "message": "slow search", "keyword": "笔记本" }
+{ "index": {} }
+{ "ts": "2024-03-14T10:04:10", "level": "INFO", "service": "order-service", "message": "order shipped", "order_id": 1001 }
+{ "index": {} }
+{ "ts": "2024-03-14T10:04:25", "level": "ERROR", "service": "order-service", "message": "order cancel failed", "order_id": 1006 }
+

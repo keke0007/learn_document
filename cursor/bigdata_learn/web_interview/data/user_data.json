@@ -1,0 +1,53 @@
+[
+  {
+    "id": 1,
+    "name": "张三",
+    "email": "zhangsan@example.com",
+    "avatar": "https://example.com/avatars/1.jpg",
+    "age": 25,
+    "department": "研发部",
+    "skills": ["JavaScript", "Vue.js", "React"],
+    "projects": [
+      {
+        "id": 1,
+        "name": "电商平台",
+        "role": "前端开发",
+        "duration": "6个月"
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "name": "李四",
+    "email": "lisi@example.com",
+    "avatar": "https://example.com/avatars/2.jpg",
+    "age": 30,
+    "department": "产品部",
+    "skills": ["产品设计", "用户体验"],
+    "projects": [
+      {
+        "id": 2,
+        "name": "移动应用",
+        "role": "产品经理",
+        "duration": "12个月"
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "name": "王五",
+    "email": "wangwu@example.com",
+    "avatar": "https://example.com/avatars/3.jpg",
+    "age": 28,
+    "department": "设计部",
+    "skills": ["UI设计", "交互设计"],
+    "projects": [
+      {
+        "id": 3,
+        "name": "品牌官网",
+        "role": "UI设计师",
+        "duration": "3个月"
+      }
+    ]
+  }
+]

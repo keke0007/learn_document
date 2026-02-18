@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>展开和剩余参数</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            border-bottom: 3px solid #4CAF50;
+            padding-bottom: 10px;
+        }
+        .section {
+            margin: 30px 0;
+            padding: 20px;
+            background: #f9f9f9;
+            border-left: 4px solid #4CAF50;
+            border-radius: 5px;
+        }
+        button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        .output {
+            background: #e8f5e9;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>展开和剩余参数</h1>
+        
+        <div class="section">
+            <h2>1. 展开运算符（数组）</h2>
+            <button onclick="demoSpreadArray()">运行示例</button>
+            <div id="spread-array-output" class="output"></div>
+        </div>
+        
+        <div class="section">
+            <h2>2. 展开运算符（对象）</h2>
+            <button onclick="demoSpreadObject()">运行示例</button>
+            <div id="spread-object-output" class="output"></div>
+        </div>
+        
+        <div class="section">
+            <h2>3. 剩余参数（函数）</h2>
+            <button onclick="demoRestParams()">运行示例</button>
+            <div id="rest-params-output" class="output"></div>
+        </div>
+        
+        <div class="section">
+            <h2>4. 剩余参数（解构）</h2>
+            <button onclick="demoRestDestructuring()">运行示例</button>
+            <div id="rest-destructuring-output" class="output"></div>
+        </div>
+        
+        <div class="section">
+            <h2>5. 实际应用</h2>
+            <button onclick="demoPractical()">运行示例</button>
+            <div id="practical-output" class="output"></div>
+        </div>
+    </div>
+
+    <script>
+        function demoSpreadArray() {
+            let output = "";
+            
+            // 展开数组
+            let arr1 = [1, 2, 3];
+            let arr2 = [4, 5, 6];
+            let combined = [...arr1, ...arr2];
+            output += `[...arr1, ...arr2]: [${combined.join(', ')}]<br>`;
+            
+            // 复制数组
+            let original = [1, 2, 3];
+            let copy = [...original];
+            copy.push(4);
+            output += `原数组: [${original.join(', ')}]<br>`;
+            output += `复制后修改: [${copy.join(', ')}]<br>`;
+            
+            // 在数组中间插入
+            let arr3 = [1, 5];
+            let arr4 = [2, 3, 4];
+            let inserted = [arr3[0], ...arr4, arr3[1]];
+            output += `插入元素: [${inserted.join(', ')}]<br>`;
+            
+            // 展开字符串
+            let str = "Hello";
+            let chars = [...str];
+            output += `展开字符串: [${chars.join(', ')}]<br>`;
+            
+            document.getElementById('spread-array-output').innerHTML = output;
+        }
+        
+        function demoSpreadObject() {
+            let output = "";
+            
+            // 合并对象
+            let obj1 = {a: 1, b: 2};
+            let obj2 = {c: 3, d: 4};
+            let merged = {...obj1, ...obj2};
+            output += `合并对象: ${JSON.stringify(merged)}<br>`;
+            
+            // 复制对象
+            let original = {name: "张三", age: 25};
+            let copy = {...original};
+            copy.age = 26;
+            output += `原对象: ${JSON.stringify(original)}<br>`;
+            output += `复制后修改: ${JSON.stringify(copy)}<br>`;
+            
+            // 覆盖属性
+            let base = {name: "张三", age: 25};
+            let updated = {...base, age: 26, city: "北京"};
+            output += `覆盖属性: ${JSON.stringify(updated)}<br>`;
+            
+            document.getElementById('spread-object-output').innerHTML = output;
+        }
+        
+        function demoRestParams() {
+            let output = "";
+            
+            // 剩余参数
+            function sum(...numbers) {
+                return numbers.reduce((acc, num) => acc + num, 0);
+            }
+            
+            output += `sum(1, 2, 3): ${sum(1, 2, 3)}<br>`;
+            output += `sum(1, 2, 3, 4, 5): ${sum(1, 2, 3, 4, 5)}<br>`;
+            
+            // 剩余参数 + 普通参数
+            function greet(greeting, ...names) {
+                return names.map(name => `${greeting}, ${name}!`).join(' ');
+            }
+            
+            output += `greet("Hello", "张三", "李四"): ${greet("Hello", "张三", "李四")}<br>`;
+            
+            document.getElementById('rest-params-output').innerHTML = output;
+        }
+        
+        function demoRestDestructuring() {
+            let output = "";
+            
+            // 数组解构中的剩余参数
+            let [first, second, ...rest] = [1, 2, 3, 4, 5];
+            output += `[first, second, ...rest] = [1, 2, 3, 4, 5]:<br>`;
+            output += `first=${first}, second=${second}, rest=[${rest.join(', ')}]<br>`;
+            
+            // 对象解构中的剩余参数
+            let {name, ...other} = {
+                name: "张三",
+                age: 25,
+                city: "北京"
+            };
+            output += `<br>对象解构: name=${name}, other=${JSON.stringify(other)}<br>`;
+            
+            document.getElementById('rest-destructuring-output').innerHTML = output;
+        }
+        
+        function demoPractical() {
+            let output = "";
+            
+            // 1. 函数调用时展开数组
+            function add(a, b, c) {
+                return a + b + c;
+            }
+            let numbers = [1, 2, 3];
+            output += `add(...numbers): ${add(...numbers)}<br>`;
+            
+            // 2. Math.max 使用展开
+            let max = Math.max(...[1, 5, 3, 9, 2]);
+            output += `Math.max(...[1, 5, 3, 9, 2]): ${max}<br>`;
+            
+            // 3. 数组去重
+            let arr = [1, 2, 2, 3, 3, 3];
+            let unique = [...new Set(arr)];
+            output += `去重: [${unique.join(', ')}]<br>`;
+            
+            // 4. 对象默认值合并
+            function createUser(userData) {
+                const defaults = {
+                    name: "用户",
+                    age: 0,
+                    role: "guest"
+                };
+                return {...defaults, ...userData};
+            }
+            let user = createUser({name: "张三", age: 25});
+            output += `创建用户: ${JSON.stringify(user)}<br>`;
+            
+            document.getElementById('practical-output').innerHTML = output;
+        }
+        
+        console.log("=== 展开和剩余参数示例 ===");
+        console.log("展开运算符: ... 用于展开数组或对象");
+        console.log("剩余参数: ... 用于收集多个参数");
+    </script>
+</body>
+</html>

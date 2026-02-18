@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>颜色和背景</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+        }
+        
+        .section {
+            background: white;
+            padding: 30px;
+            margin-bottom: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        h2 {
+            color: #555;
+            margin-bottom: 20px;
+        }
+        
+        /* 颜色表示方式 */
+        .color-hex { background: #667eea; color: white; padding: 15px; }
+        .color-rgb { background: rgb(102, 126, 234); color: white; padding: 15px; }
+        .color-rgba { background: rgba(102, 126, 234, 0.7); padding: 15px; }
+        .color-hsl { background: hsl(248, 72%, 66%); color: white; padding: 15px; }
+        .color-name { background: blue; color: white; padding: 15px; }
+        
+        /* 背景样式 */
+        .bg-solid {
+            background-color: #667eea;
+            color: white;
+            padding: 30px;
+            border-radius: 8px;
+        }
+        
+        .bg-gradient {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 8px;
+        }
+        
+        .bg-gradient-radial {
+            background: radial-gradient(circle, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 8px;
+        }
+        
+        .bg-image {
+            background-image: url('https://via.placeholder.com/800x400/667eea/ffffff?text=Background+Image');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 50px;
+            border-radius: 8px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+        
+        .bg-pattern {
+            background-image: 
+                repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(102, 126, 234, 0.1) 10px, rgba(102, 126, 234, 0.1) 20px);
+            padding: 30px;
+            border-radius: 8px;
+        }
+        
+        .bg-multiple {
+            background: 
+                linear-gradient(rgba(102, 126, 234, 0.7), rgba(118, 75, 162, 0.7)),
+                url('https://via.placeholder.com/800x400');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 50px;
+            border-radius: 8px;
+        }
+        
+        /* 颜色网格 */
+        .color-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .color-box {
+            height: 100px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+        }
+        
+        .demo-box {
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>颜色和背景案例</h1>
+        
+        <div class="section">
+            <h2>1. 颜色表示方式</h2>
+            <div class="color-grid">
+                <div class="color-box color-hex">HEX<br>#667eea</div>
+                <div class="color-box color-rgb">RGB<br>rgb(102,126,234)</div>
+                <div class="color-box color-rgba">RGBA<br>rgba(102,126,234,0.7)</div>
+                <div class="color-box color-hsl">HSL<br>hsl(248,72%,66%)</div>
+                <div class="color-box color-name">颜色名<br>blue</div>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2>2. 纯色背景</h2>
+            <div class="bg-solid">
+                <p>这是一个使用纯色背景的示例</p>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2>3. 线性渐变背景</h2>
+            <div class="bg-gradient">
+                <p>线性渐变背景 (linear-gradient)</p>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2>4. 径向渐变背景</h2>
+            <div class="bg-gradient-radial">
+                <p>径向渐变背景 (radial-gradient)</p>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2>5. 图片背景</h2>
+            <div class="bg-image">
+                <h3>带图片的背景</h3>
+                <p>使用 background-image 设置背景图片</p>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2>6. 图案背景</h2>
+            <div class="bg-pattern">
+                <p>使用 CSS 创建的图案背景</p>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2>7. 多重背景</h2>
+            <div class="bg-multiple">
+                <h3>渐变 + 图片背景</h3>
+                <p>可以同时使用渐变和图片作为背景</p>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2>8. 背景属性</h2>
+            <div class="demo-box" style="background: #e3f2fd; background-size: 200px; background-repeat: repeat;">
+                <p><strong>background-repeat: repeat</strong> - 重复背景</p>
+            </div>
+            
+            <div class="demo-box" style="background: #e3f2fd; background-size: 200px; background-repeat: no-repeat; background-position: center;">
+                <p><strong>background-repeat: no-repeat</strong> - 不重复</p>
+            </div>
+            
+            <div class="demo-box" style="background: #e3f2fd; background-size: cover; background-image: url('https://via.placeholder.com/200'); background-position: center;">
+                <p><strong>background-size: cover</strong> - 覆盖整个容器</p>
+            </div>
+            
+            <div class="demo-box" style="background: #e3f2fd; background-size: contain; background-image: url('https://via.placeholder.com/200'); background-repeat: no-repeat; background-position: center;">
+                <p><strong>background-size: contain</strong> - 完整显示图片</p>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2>颜色和背景属性总结</h2>
+            <ul style="line-height: 2;">
+                <li><strong>color</strong> - 文字颜色</li>
+                <li><strong>background-color</strong> - 背景颜色</li>
+                <li><strong>background-image</strong> - 背景图片</li>
+                <li><strong>background-size</strong> - 背景大小 (cover, contain, 具体值)</li>
+                <li><strong>background-position</strong> - 背景位置 (center, top, left 等)</li>
+                <li><strong>background-repeat</strong> - 重复方式 (repeat, no-repeat, repeat-x, repeat-y)</li>
+                <li><strong>background-attachment</strong> - 固定方式 (scroll, fixed)</li>
+                <li><strong>linear-gradient()</strong> - 线性渐变</li>
+                <li><strong>radial-gradient()</strong> - 径向渐变</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

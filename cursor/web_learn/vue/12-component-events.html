@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>组件事件</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            border-bottom: 3px solid #4CAF50;
+            padding-bottom: 10px;
+        }
+        .section {
+            margin: 30px 0;
+            padding: 20px;
+            background: #f9f9f9;
+            border-left: 4px solid #4CAF50;
+            border-radius: 5px;
+        }
+        .demo-box {
+            padding: 20px;
+            background: #e8f5e9;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+        button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        .counter-display {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #667eea;
+            margin: 15px 0;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div class="container">
+            <h1>组件事件</h1>
+            
+            <div class="section">
+                <h2>1. 基础事件发射</h2>
+                <div class="demo-box">
+                    <counter-button @increment="handleIncrement"></counter-button>
+                    <p>总计数：{{ totalCount }}</p>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2>2. 传递数据</h2>
+                <div class="demo-box">
+                    <user-form @user-submit="handleUserSubmit"></user-form>
+                    <div v-if="submittedUser">
+                        <p>提交的用户：{{ JSON.stringify(submittedUser) }}</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2>3. 多个事件</h2>
+                <div class="demo-box">
+                    <action-buttons 
+                        @save="handleSave"
+                        @delete="handleDelete"
+                        @cancel="handleCancel"
+                    ></action-buttons>
+                    <p>最后操作：{{ lastAction }}</p>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2>4. 事件修饰符</h2>
+                <div class="demo-box">
+                    <custom-button @click.once="handleOnceClick"></custom-button>
+                    <p>once 点击次数：{{ onceCount }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const { createApp } = Vue;
+
+        // 1. 计数器按钮组件
+        const CounterButton = {
+            data() {
+                return {
+                    count: 0
+                }
+            },
+            methods: {
+                increment() {
+                    this.count++;
+                    this.$emit('increment', this.count);
+                }
+            },
+            template: `
+                <div>
+                    <div class="counter-display">{{ count }}</div>
+                    <button @click="increment">增加</button>
+                </div>
+            `
+        };
+
+        // 2. 用户表单组件
+        const UserForm = {
+            data() {
+                return {
+                    name: '',
+                    email: ''
+                }
+            },
+            methods: {
+                submit() {
+                    this.$emit('user-submit', {
+                        name: this.name,
+                        email: this.email
+                    });
+                    this.name = '';
+                    this.email = '';
+                }
+            },
+            template: `
+                <div>
+                    <input v-model="name" placeholder="姓名" style="margin: 5px; padding: 8px;">
+                    <input v-model="email" placeholder="邮箱" style="margin: 5px; padding: 8px;">
+                    <button @click="submit">提交</button>
+                </div>
+            `
+        };
+
+        // 3. 操作按钮组件
+        const ActionButtons = {
+            methods: {
+                save() {
+                    this.$emit('save');
+                },
+                delete() {
+                    this.$emit('delete');
+                },
+                cancel() {
+                    this.$emit('cancel');
+                }
+            },
+            template: `
+                <div>
+                    <button @click="save">保存</button>
+                    <button @click="delete">删除</button>
+                    <button @click="cancel">取消</button>
+                </div>
+            `
+        };
+
+        // 4. 自定义按钮组件
+        const CustomButton = {
+            template: `
+                <button>点击我（只触发一次）</button>
+            `
+        };
+
+        createApp({
+            components: {
+                CounterButton,
+                UserForm,
+                ActionButtons,
+                CustomButton
+            },
+            data() {
+                return {
+                    totalCount: 0,
+                    submittedUser: null,
+                    lastAction: '',
+                    onceCount: 0
+                }
+            },
+            methods: {
+                handleIncrement(count) {
+                    this.totalCount = count;
+                },
+                handleUserSubmit(user) {
+                    this.submittedUser = user;
+                },
+                handleSave() {
+                    this.lastAction = '保存';
+                },
+                handleDelete() {
+                    this.lastAction = '删除';
+                },
+                handleCancel() {
+                    this.lastAction = '取消';
+                },
+                handleOnceClick() {
+                    this.onceCount++;
+                }
+            }
+        }).mount('#app');
+    </script>
+</body>
+</html>

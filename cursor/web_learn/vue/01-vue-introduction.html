@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue 简介和基础使用</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            border-bottom: 3px solid #4CAF50;
+            padding-bottom: 10px;
+        }
+        .section {
+            margin: 30px 0;
+            padding: 20px;
+            background: #f9f9f9;
+            border-left: 4px solid #4CAF50;
+            border-radius: 5px;
+        }
+        h2 {
+            color: #555;
+            margin-bottom: 15px;
+        }
+        .demo-box {
+            padding: 20px;
+            background: #e8f5e9;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+        input {
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            margin: 10px 0;
+        }
+        button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div class="container">
+            <h1>Vue.js 简介和基础使用</h1>
+            
+            <div class="section">
+                <h2>1. 数据绑定</h2>
+                <div class="demo-box">
+                    <p>消息：{{ message }}</p>
+                    <input v-model="message" placeholder="输入消息">
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2>2. 响应式数据</h2>
+                <div class="demo-box">
+                    <p>计数器：{{ count }}</p>
+                    <button @click="increment">增加</button>
+                    <button @click="decrement">减少</button>
+                    <button @click="reset">重置</button>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2>3. 计算属性</h2>
+                <div class="demo-box">
+                    <p>姓名：{{ firstName }} {{ lastName }}</p>
+                    <p>全名（计算属性）：{{ fullName }}</p>
+                    <input v-model="firstName" placeholder="名">
+                    <input v-model="lastName" placeholder="姓">
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2>4. 方法调用</h2>
+                <div class="demo-box">
+                    <p>当前时间：{{ currentTime }}</p>
+                    <button @click="updateTime">更新时间</button>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2>5. 条件渲染</h2>
+                <div class="demo-box">
+                    <p v-if="isVisible">这段文字可以显示/隐藏</p>
+                    <button @click="toggleVisibility">
+                        {{ isVisible ? '隐藏' : '显示' }}
+                    </button>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2>6. 列表渲染</h2>
+                <div class="demo-box">
+                    <ul>
+                        <li v-for="(item, index) in items" :key="index">
+                            {{ index + 1 }}. {{ item }}
+                        </li>
+                    </ul>
+                    <input v-model="newItem" @keyup.enter="addItem" placeholder="添加新项目">
+                    <button @click="addItem">添加</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const { createApp } = Vue;
+
+        createApp({
+            data() {
+                return {
+                    // 1. 数据绑定
+                    message: 'Hello Vue!',
+                    
+                    // 2. 响应式数据
+                    count: 0,
+                    
+                    // 3. 计算属性
+                    firstName: '张',
+                    lastName: '三',
+                    
+                    // 4. 方法
+                    currentTime: new Date().toLocaleTimeString(),
+                    
+                    // 5. 条件渲染
+                    isVisible: true,
+                    
+                    // 6. 列表渲染
+                    items: ['Vue', 'React', 'Angular'],
+                    newItem: ''
+                }
+            },
+            computed: {
+                // 计算属性：全名
+                fullName() {
+                    return this.firstName + ' ' + this.lastName;
+                }
+            },
+            methods: {
+                // 增加计数
+                increment() {
+                    this.count++;
+                },
+                // 减少计数
+                decrement() {
+                    this.count--;
+                },
+                // 重置计数
+                reset() {
+                    this.count = 0;
+                },
+                // 更新时间
+                updateTime() {
+                    this.currentTime = new Date().toLocaleTimeString();
+                },
+                // 切换显示
+                toggleVisibility() {
+                    this.isVisible = !this.isVisible;
+                },
+                // 添加项目
+                addItem() {
+                    if (this.newItem.trim()) {
+                        this.items.push(this.newItem);
+                        this.newItem = '';
+                    }
+                }
+            }
+        }).mount('#app');
+    </script>
+</body>
+</html>

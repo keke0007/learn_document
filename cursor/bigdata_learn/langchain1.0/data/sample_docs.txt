@@ -1,0 +1,68 @@
+# LangChain 框架介绍
+
+## 什么是 LangChain
+
+LangChain 是一个用于开发由大语言模型（LLM）驱动的应用程序的开源框架。它提供了一系列工具、组件和接口，使开发者能够轻松构建各种基于 LLM 的应用，如聊天机器人、问答系统、文档分析工具等。
+
+LangChain 的核心理念是将 LLM 与其他计算资源或知识源"链接"起来，从而创建更强大、更实用的应用程序。
+
+## LangChain 1.0 主要特性
+
+### LCEL（LangChain Expression Language）
+
+LCEL 是 LangChain 1.0 引入的统一编排语法，使用管道操作符 `|` 将组件串联起来。所有组件都实现了统一的 Runnable 接口，支持 invoke、batch、stream、ainvoke 等方法。
+
+LCEL 的优势包括：
+- 代码简洁直观
+- 原生支持流式输出
+- 原生支持异步操作
+- 方便的并行执行
+- 内置重试和回退机制
+
+### 模块化架构
+
+LangChain 1.0 将代码库拆分为多个包：
+- langchain-core：核心抽象和接口
+- langchain：高层组件和链
+- langchain-community：社区贡献的集成
+- langchain-openai、langchain-anthropic 等：特定提供商的集成
+
+### RAG（检索增强生成）
+
+RAG 是 LangChain 的重要应用场景，通过检索外部知识库来增强 LLM 的回答能力。主要组件包括：
+- Document Loaders：加载各种格式的文档
+- Text Splitters：将长文档分割成小块
+- Embeddings：将文本转换为向量
+- Vector Stores：存储和检索向量
+- Retrievers：从向量库中检索相关文档
+
+### Agent 智能代理
+
+Agent 是 LangChain 中最强大的功能之一，它能够使用工具来完成复杂任务。LLM 作为"大脑"决定使用哪些工具以及如何使用，然后通过 AgentExecutor 执行这些决策。
+
+支持的 Agent 类型包括：
+- Tool Calling Agent：使用模型的原生工具调用能力
+- ReAct Agent：基于推理-行动循环
+- OpenAI Functions Agent：使用 OpenAI 函数调用
+
+## 常见应用场景
+
+1. **智能客服**：结合知识库回答用户问题
+2. **文档问答**：基于企业文档的问答系统
+3. **数据分析**：通过自然语言查询数据库
+4. **自动化工作流**：使用 Agent 执行多步骤任务
+5. **内容生成**：文章写作、翻译、摘要等
+
+## 学习路径建议
+
+1. 先掌握基础的 LLM 调用和 Prompt 编写
+2. 学习 LCEL 管道操作和 Runnable 接口
+3. 实践 RAG 知识库构建
+4. 探索 Agent 和工具调用
+5. 了解生产部署和监控（LangSmith）
+
+## 相关资源
+
+- 官方文档：https://python.langchain.com/
+- GitHub：https://github.com/langchain-ai/langchain
+- LangSmith：https://smith.langchain.com/

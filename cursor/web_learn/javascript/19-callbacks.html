@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>回调函数</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            border-bottom: 3px solid #4CAF50;
+            padding-bottom: 10px;
+        }
+        .section {
+            margin: 30px 0;
+            padding: 20px;
+            background: #f9f9f9;
+            border-left: 4px solid #4CAF50;
+            border-radius: 5px;
+        }
+        button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        .output {
+            background: #e8f5e9;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            min-height: 50px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>回调函数</h1>
+        
+        <div class="section">
+            <h2>1. 基础回调函数</h2>
+            <button onclick="demoBasic()">运行示例</button>
+            <div id="basic-output" class="output"></div>
+        </div>
+        
+        <div class="section">
+            <h2>2. 异步回调</h2>
+            <button onclick="demoAsync()">运行示例</button>
+            <div id="async-output" class="output"></div>
+        </div>
+        
+        <div class="section">
+            <h2>3. 数组方法中的回调</h2>
+            <button onclick="demoArrayCallbacks()">运行示例</button>
+            <div id="array-output" class="output"></div>
+        </div>
+        
+        <div class="section">
+            <h2>4. 事件回调</h2>
+            <button id="event-btn">点击我</button>
+            <div id="event-output" class="output"></div>
+        </div>
+        
+        <div class="section">
+            <h2>5. 回调地狱问题</h2>
+            <button onclick="demoCallbackHell()">运行示例</button>
+            <div id="hell-output" class="output"></div>
+        </div>
+    </div>
+
+    <script>
+        // 1. 基础回调函数
+        function processData(data, callback) {
+            let result = data * 2;
+            callback(result);
+        }
+        
+        function demoBasic() {
+            let output = document.getElementById('basic-output');
+            output.innerHTML = "执行中...";
+            
+            processData(5, function(result) {
+                output.innerHTML = `处理结果: ${result}`;
+            });
+            
+            // 箭头函数回调
+            processData(10, (result) => {
+                output.innerHTML += `<br>箭头函数回调: ${result}`;
+            });
+        }
+        
+        // 2. 异步回调
+        function fetchData(callback) {
+            setTimeout(() => {
+                callback({id: 1, name: "数据"});
+            }, 1000);
+        }
+        
+        function demoAsync() {
+            let output = document.getElementById('async-output');
+            output.innerHTML = "加载中...";
+            
+            fetchData(function(data) {
+                output.innerHTML = `获取到数据: ${JSON.stringify(data)}`;
+            });
+        }
+        
+        // 3. 数组方法中的回调
+        function demoArrayCallbacks() {
+            let output = "";
+            let numbers = [1, 2, 3, 4, 5];
+            
+            output += `原数组: [${numbers.join(', ')}]<br>`;
+            
+            // forEach
+            output += "forEach 输出: ";
+            numbers.forEach(num => output += num * 2 + " ");
+            output += "<br>";
+            
+            // map
+            let doubled = numbers.map(num => num * 2);
+            output += `map: [${doubled.join(', ')}]<br>`;
+            
+            // filter
+            let evens = numbers.filter(num => num % 2 === 0);
+            output += `filter: [${evens.join(', ')}]<br>`;
+            
+            // find
+            let found = numbers.find(num => num > 3);
+            output += `find: ${found}<br>`;
+            
+            document.getElementById('array-output').innerHTML = output;
+        }
+        
+        // 4. 事件回调
+        document.getElementById('event-btn').addEventListener('click', function() {
+            let output = document.getElementById('event-output');
+            output.innerHTML = `按钮被点击了！<br>时间: ${new Date().toLocaleTimeString()}`;
+        });
+        
+        // 5. 回调地狱
+        function demoCallbackHell() {
+            let output = document.getElementById('hell-output');
+            output.innerHTML = "执行中...";
+            
+            // 模拟回调地狱
+            setTimeout(() => {
+                output.innerHTML += "<br>第一步完成";
+                setTimeout(() => {
+                    output.innerHTML += "<br>第二步完成";
+                    setTimeout(() => {
+                        output.innerHTML += "<br>第三步完成";
+                        output.innerHTML += "<br><br>这就是回调地狱！使用 Promise 或 async/await 可以解决";
+                    }, 500);
+                }, 500);
+            }, 500);
+        }
+        
+        console.log("=== 回调函数示例 ===");
+        console.log("回调函数是作为参数传递给其他函数的函数");
+    </script>
+</body>
+</html>

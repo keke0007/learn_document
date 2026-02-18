@@ -1,0 +1,19 @@
+-- InfluxDB 常用查询示例（InfluxQL）
+
+USE metrics;
+
+-- 最近 10 条 CPU 数据
+SELECT * FROM cpu ORDER BY time DESC LIMIT 10;
+
+-- 每主机最近 1 小时的平均 CPU 使用率
+SELECT MEAN(usage_user) AS mean_usage_user
+FROM cpu
+WHERE time > now() - 1h
+GROUP BY host;
+
+-- 最近 15 分钟每分钟 HTTP 请求数
+SELECT SUM(count)
+FROM http_requests
+WHERE time > now() - 15m
+GROUP BY time(1m), service fill(0);
+

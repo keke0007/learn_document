@@ -1,0 +1,54 @@
+{
+  "flowRules": [
+    {
+      "resource": "userService",
+      "grade": 1,
+      "count": 100,
+      "strategy": 0,
+      "controlBehavior": 0,
+      "limitApp": "default"
+    },
+    {
+      "resource": "orderService",
+      "grade": 1,
+      "count": 50,
+      "strategy": 0,
+      "controlBehavior": 1,
+      "limitApp": "default"
+    }
+  ],
+  "degradeRules": [
+    {
+      "resource": "userService",
+      "grade": 0,
+      "count": 0.5,
+      "timeWindow": 10,
+      "minRequestAmount": 5,
+      "slowRatioThreshold": 0.5
+    },
+    {
+      "resource": "orderService",
+      "grade": 1,
+      "count": 10,
+      "timeWindow": 10,
+      "minRequestAmount": 5
+    }
+  ],
+  "hotParamRules": [
+    {
+      "resource": "userService",
+      "grade": 1,
+      "paramIdx": 0,
+      "count": 10,
+      "durationInSec": 10
+    }
+  ],
+  "systemRules": [
+    {
+      "highestSystemLoad": 0.8,
+      "avgRt": 1000,
+      "maxThread": 200,
+      "qps": 1000
+    }
+  ]
+}

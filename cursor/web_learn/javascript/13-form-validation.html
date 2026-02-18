@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>表单验证</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            border-bottom: 3px solid #4CAF50;
+            padding-bottom: 10px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            font-weight: 500;
+        }
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            box-sizing: border-box;
+        }
+        input:focus {
+            outline: none;
+            border-color: #4CAF50;
+        }
+        input.error {
+            border-color: #f44336;
+        }
+        input.success {
+            border-color: #4CAF50;
+        }
+        .error-message {
+            color: #f44336;
+            font-size: 0.875rem;
+            margin-top: 5px;
+            display: none;
+        }
+        .error-message.show {
+            display: block;
+        }
+        button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            width: 100%;
+        }
+        button:hover {
+            background: #45a049;
+        }
+        .success-message {
+            background: #e8f5e9;
+            color: #2e7d32;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 20px;
+            display: none;
+        }
+        .success-message.show {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>表单验证</h1>
+        
+        <form id="demo-form">
+            <div class="form-group">
+                <label for="name">姓名 *</label>
+                <input type="text" id="name" name="name" placeholder="请输入姓名">
+                <div class="error-message" id="name-error"></div>
+            </div>
+            
+            <div class="form-group">
+                <label for="email">邮箱 *</label>
+                <input type="email" id="email" name="email" placeholder="example@email.com">
+                <div class="error-message" id="email-error"></div>
+            </div>
+            
+            <div class="form-group">
+                <label for="phone">手机号</label>
+                <input type="tel" id="phone" name="phone" placeholder="请输入手机号">
+                <div class="error-message" id="phone-error"></div>
+            </div>
+            
+            <div class="form-group">
+                <label for="password">密码 *</label>
+                <input type="password" id="password" name="password" placeholder="至少6个字符">
+                <div class="error-message" id="password-error"></div>
+            </div>
+            
+            <div class="form-group">
+                <label for="confirm-password">确认密码 *</label>
+                <input type="password" id="confirm-password" name="confirm-password" placeholder="再次输入密码">
+                <div class="error-message" id="confirm-password-error"></div>
+            </div>
+            
+            <button type="submit">提交</button>
+        </form>
+        
+        <div class="success-message" id="success-message">
+            表单验证通过！
+        </div>
+    </div>
+
+    <script>
+        const form = document.getElementById('demo-form');
+        
+        // 验证规则
+        const validators = {
+            name: {
+                required: true,
+                minLength: 2,
+                validate: (value) => {
+                    if (!value.trim()) return '姓名不能为空';
+                    if (value.length < 2) return '姓名至少2个字符';
+                    return '';
+                }
+            },
+            email: {
+                required: true,
+                pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                validate: (value) => {
+                    if (!value.trim()) return '邮箱不能为空';
+                    if (!validators.email.pattern.test(value)) return '邮箱格式不正确';
+                    return '';
+                }
+            },
+            phone: {
+                required: false,
+                pattern: /^1[3-9]\d{9}$/,
+                validate: (value) => {
+                    if (value && !validators.phone.pattern.test(value)) {
+                        return '手机号格式不正确';
+                    }
+                    return '';
+                }
+            },
+            password: {
+                required: true,
+                minLength: 6,
+                validate: (value) => {
+                    if (!value) return '密码不能为空';
+                    if (value.length < 6) return '密码至少6个字符';
+                    return '';
+                }
+            },
+            'confirm-password': {
+                required: true,
+                validate: (value) => {
+                    const password = document.getElementById('password').value;
+                    if (!value) return '请确认密码';
+                    if (value !== password) return '两次密码输入不一致';
+                    return '';
+                }
+            }
+        };
+        
+        // 显示错误
+        function showError(fieldName, message) {
+            const input = document.getElementById(fieldName);
+            const errorDiv = document.getElementById(fieldName + '-error');
+            
+            input.classList.add('error');
+            input.classList.remove('success');
+            errorDiv.textContent = message;
+            errorDiv.classList.add('show');
+        }
+        
+        // 显示成功
+        function showSuccess(fieldName) {
+            const input = document.getElementById(fieldName);
+            const errorDiv = document.getElementById(fieldName + '-error');
+            
+            input.classList.remove('error');
+            input.classList.add('success');
+            errorDiv.classList.remove('show');
+        }
+        
+        // 验证单个字段
+        function validateField(fieldName) {
+            const input = document.getElementById(fieldName);
+            const value = input.value;
+            const validator = validators[fieldName];
+            
+            if (!validator) return true;
+            
+            const error = validator.validate(value);
+            
+            if (error) {
+                showError(fieldName, error);
+                return false;
+            } else {
+                showSuccess(fieldName);
+                return true;
+            }
+        }
+        
+        // 实时验证
+        Object.keys(validators).forEach(fieldName => {
+            const input = document.getElementById(fieldName);
+            if (input) {
+                input.addEventListener('blur', () => validateField(fieldName));
+                input.addEventListener('input', () => {
+                    if (input.classList.contains('error')) {
+                        validateField(fieldName);
+                    }
+                });
+            }
+        });
+        
+        // 表单提交
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            let isValid = true;
+            Object.keys(validators).forEach(fieldName => {
+                if (!validateField(fieldName)) {
+                    isValid = false;
+                }
+            });
+            
+            if (isValid) {
+                document.getElementById('success-message').classList.add('show');
+                console.log('表单数据:', new FormData(form));
+            } else {
+                document.getElementById('success-message').classList.remove('show');
+            }
+        });
+        
+        console.log("=== 表单验证示例 ===");
+    </script>
+</body>
+</html>

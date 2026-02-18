@@ -1,0 +1,18 @@
+[
+  { "order_id": 1001, "user_id": 1, "order_date": "2024-01-15", "city": "北京", "product": "手机", "quantity": 1, "total_amount": 2999.00, "status": "paid" },
+  { "order_id": 1002, "user_id": 2, "order_date": "2024-01-16", "city": "上海", "product": "笔记本电脑", "quantity": 1, "total_amount": 5999.00, "status": "paid" },
+  { "order_id": 1003, "user_id": 1, "order_date": "2024-01-17", "city": "北京", "product": "耳机", "quantity": 3, "total_amount": 897.00, "status": "paid" },
+  { "order_id": 1004, "user_id": 3, "order_date": "2024-01-18", "city": "广州", "product": "手机", "quantity": 1, "total_amount": 2999.00, "status": "paid" },
+  { "order_id": 1005, "user_id": 2, "order_date": "2024-01-19", "city": "上海", "product": "鼠标", "quantity": 2, "total_amount": 198.00, "status": "paid" },
+  { "order_id": 1006, "user_id": 1, "order_date": "2024-02-01", "city": "北京", "product": "笔记本电脑", "quantity": 1, "total_amount": 5999.00, "status": "paid" },
+  { "order_id": 1007, "user_id": 4, "order_date": "2024-02-02", "city": "深圳", "product": "耳机", "quantity": 2, "total_amount": 598.00, "status": "paid" },
+  { "order_id": 1008, "user_id": 3, "order_date": "2024-02-03", "city": "广州", "product": "手机", "quantity": 3, "total_amount": 8997.00, "status": "paid" },
+  { "order_id": 1009, "user_id": 2, "order_date": "2024-02-04", "city": "上海", "product": "鼠标", "quantity": 1, "total_amount": 99.00, "status": "paid" },
+  { "order_id": 1010, "user_id": 1, "order_date": "2024-02-05", "city": "北京", "product": "键盘", "quantity": 2, "total_amount": 398.00, "status": "paid" },
+  { "order_id": 1011, "user_id": 4, "order_date": "2024-03-10", "city": "深圳", "product": "手机", "quantity": 1, "total_amount": 2999.00, "status": "paid" },
+  { "order_id": 1012, "user_id": 3, "order_date": "2024-03-11", "city": "广州", "product": "笔记本电脑", "quantity": 2, "total_amount": 11998.00, "status": "paid" },
+  { "order_id": 1013, "user_id": 1, "order_date": "2024-03-12", "city": "北京", "product": "耳机", "quantity": 1, "total_amount": 299.00, "status": "cancelled" },
+  { "order_id": 1014, "user_id": 2, "order_date": "2024-03-13", "city": "上海", "product": "鼠标", "quantity": 3, "total_amount": 297.00, "status": "paid" },
+  { "order_id": 1015, "user_id": 4, "order_date": "2024-03-14", "city": "深圳", "product": "键盘", "quantity": 1, "total_amount": 199.00, "status": "paid" }
+]
+

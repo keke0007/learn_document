@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>事件处理</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            border-bottom: 3px solid #4CAF50;
+            padding-bottom: 10px;
+        }
+        .section {
+            margin: 30px 0;
+            padding: 20px;
+            background: #f9f9f9;
+            border-left: 4px solid #4CAF50;
+            border-radius: 5px;
+        }
+        button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background: #45a049;
+        }
+        .demo-box {
+            padding: 20px;
+            margin: 10px 0;
+            background: #e8f5e9;
+            border-radius: 5px;
+            min-height: 50px;
+            cursor: pointer;
+        }
+        .output {
+            background: #e8f5e9;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+        }
+        input {
+            padding: 8px;
+            margin: 5px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>事件处理</h1>
+        
+        <div class="section">
+            <h2>1. 点击事件</h2>
+            <button id="click-btn">点击我</button>
+            <div id="click-output" class="output"></div>
+        </div>
+        
+        <div class="section">
+            <h2>2. 鼠标事件</h2>
+            <div id="mouse-demo" class="demo-box">鼠标悬停、移出、点击这里</div>
+            <div id="mouse-output" class="output"></div>
+        </div>
+        
+        <div class="section">
+            <h2>3. 键盘事件</h2>
+            <input type="text" id="keyboard-input" placeholder="在这里输入文字">
+            <div id="keyboard-output" class="output"></div>
+        </div>
+        
+        <div class="section">
+            <h2>4. 表单事件</h2>
+            <form id="demo-form">
+                <input type="text" id="form-input" placeholder="输入内容">
+                <button type="submit">提交</button>
+            </form>
+            <div id="form-output" class="output"></div>
+        </div>
+        
+        <div class="section">
+            <h2>5. 事件对象</h2>
+            <button id="event-obj-btn">点击查看事件对象</button>
+            <div id="event-obj-output" class="output"></div>
+        </div>
+        
+        <div class="section">
+            <h2>6. 事件委托</h2>
+            <ul id="delegate-list">
+                <li>项目 1 <button class="delete-btn">删除</button></li>
+                <li>项目 2 <button class="delete-btn">删除</button></li>
+                <li>项目 3 <button class="delete-btn">删除</button></li>
+            </ul>
+            <div id="delegate-output" class="output"></div>
+        </div>
+    </div>
+
+    <script>
+        // 1. 点击事件
+        document.getElementById('click-btn').addEventListener('click', function() {
+            let output = document.getElementById('click-output');
+            output.innerHTML = '按钮被点击了！<br>时间: ' + new Date().toLocaleTimeString();
+        });
+        
+        // 2. 鼠标事件
+        let mouseDemo = document.getElementById('mouse-demo');
+        let mouseOutput = document.getElementById('mouse-output');
+        
+        mouseDemo.addEventListener('mouseenter', function() {
+            mouseOutput.innerHTML = '鼠标进入';
+            this.style.backgroundColor = '#c8e6c9';
+        });
+        
+        mouseDemo.addEventListener('mouseleave', function() {
+            mouseOutput.innerHTML = '鼠标离开';
+            this.style.backgroundColor = '#e8f5e9';
+        });
+        
+        mouseDemo.addEventListener('click', function() {
+            mouseOutput.innerHTML = '元素被点击了！';
+        });
+        
+        // 3. 键盘事件
+        let keyboardInput = document.getElementById('keyboard-input');
+        let keyboardOutput = document.getElementById('keyboard-output');
+        
+        keyboardInput.addEventListener('keydown', function(e) {
+            keyboardOutput.innerHTML = '按下键: ' + e.key + ' (keyCode: ' + e.keyCode + ')';
+        });
+        
+        keyboardInput.addEventListener('keyup', function(e) {
+            keyboardOutput.innerHTML += '<br>释放键: ' + e.key;
+        });
+        
+        // 4. 表单事件
+        let form = document.getElementById('demo-form');
+        let formInput = document.getElementById('form-input');
+        let formOutput = document.getElementById('form-output');
+        
+        formInput.addEventListener('focus', function() {
+            formOutput.innerHTML = '输入框获得焦点';
+        });
+        
+        formInput.addEventListener('blur', function() {
+            formOutput.innerHTML = '输入框失去焦点';
+        });
+        
+        formInput.addEventListener('input', function() {
+            formOutput.innerHTML = '输入内容: ' + this.value;
+        });
+        
+        form.addEventListener('submit', function(e) {
+            e.preventDefault(); // 阻止默认提交
+            formOutput.innerHTML = '表单提交！内容: ' + formInput.value;
+        });
+        
+        // 5. 事件对象
+        document.getElementById('event-obj-btn').addEventListener('click', function(e) {
+            let output = document.getElementById('event-obj-output');
+            output.innerHTML = 
+                '事件类型: ' + e.type + '<br>' +
+                '目标元素: ' + e.target.tagName + '<br>' +
+                '鼠标X坐标: ' + e.clientX + '<br>' +
+                '鼠标Y坐标: ' + e.clientY + '<br>' +
+                '时间戳: ' + e.timeStamp;
+        });
+        
+        // 6. 事件委托
+        let delegateList = document.getElementById('delegate-list');
+        let delegateOutput = document.getElementById('delegate-output');
+        
+        // 使用事件委托，在父元素上监听
+        delegateList.addEventListener('click', function(e) {
+            if (e.target.classList.contains('delete-btn')) {
+                let item = e.target.parentElement;
+                delegateOutput.innerHTML = '删除: ' + item.textContent.trim();
+                item.remove();
+            }
+        });
+        
+        console.log("=== 事件处理示例 ===");
+    </script>
+</body>
+</html>

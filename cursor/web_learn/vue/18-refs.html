@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>模板引用</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            border-bottom: 3px solid #4CAF50;
+            padding-bottom: 10px;
+        }
+        .section {
+            margin: 30px 0;
+            padding: 20px;
+            background: #f9f9f9;
+            border-left: 4px solid #4CAF50;
+            border-radius: 5px;
+        }
+        .demo-box {
+            padding: 20px;
+            background: #e8f5e9;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+        input {
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            margin: 10px 0;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        .highlight {
+            background: yellow;
+            padding: 10px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div class="container">
+            <h1>模板引用（Refs）</h1>
+            
+            <div class="section">
+                <h2>1. 基础 ref</h2>
+                <div class="demo-box">
+                    <input ref="inputRef" v-model="text" placeholder="输入文本">
+                    <button @click="focusInput">聚焦输入框</button>
+                    <button @click="getInputValue">获取输入值</button>
+                    <p>输入值：{{ text }}</p>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2>2. 多个 ref</h2>
+                <div class="demo-box">
+                    <input ref="firstName" placeholder="名">
+                    <input ref="lastName" placeholder="姓">
+                    <button @click="focusFirstName">聚焦名</button>
+                    <button @click="focusLastName">聚焦姓</button>
+                    <button @click="getAllValues">获取所有值</button>
+                    <p>{{ fullName }}</p>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2>3. 在 v-for 中使用 ref</h2>
+                <div class="demo-box">
+                    <input 
+                        v-for="(item, index) in items" 
+                        :key="index"
+                        :ref="el => { if (el) inputRefs[index] = el }"
+                        v-model="item"
+                        :placeholder="`项目 ${index + 1}`"
+                    >
+                    <button @click="focusFirstInput">聚焦第一个输入框</button>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2>4. 组件 ref</h2>
+                <div class="demo-box">
+                    <child-component ref="childRef"></child-component>
+                    <button @click="callChildMethod">调用子组件方法</button>
+                    <p>{{ childMessage }}</p>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2>5. 获取元素属性</h2>
+                <div class="demo-box">
+                    <div ref="elementRef" class="highlight">
+                        这是一个可引用的元素
+                    </div>
+                    <button @click="getElementInfo">获取元素信息</button>
+                    <p>{{ elementInfo }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const { createApp } = Vue;
+
+        // 子组件
+        const ChildComponent = {
+            data() {
+                return {
+                    message: '子组件消息'
+                }
+            },
+            methods: {
+                greet() {
+                    this.message = 'Hello from child!';
+                    return this.message;
+                }
+            },
+            template: `
+                <div style="padding: 15px; background: #fff3cd; border-radius: 5px;">
+                    <p>{{ message }}</p>
+                </div>
+            `
+        };
+
+        createApp({
+            components: {
+                ChildComponent
+            },
+            data() {
+                return {
+                    text: '',
+                    fullName: '',
+                    items: ['项目1', '项目2', '项目3'],
+                    inputRefs: [],
+                    childMessage: '',
+                    elementInfo: ''
+                }
+            },
+            methods: {
+                focusInput() {
+                    this.$refs.inputRef.focus();
+                },
+                getInputValue() {
+                    alert('输入值: ' + this.$refs.inputRef.value);
+                },
+                focusFirstName() {
+                    this.$refs.firstName.focus();
+                },
+                focusLastName() {
+                    this.$refs.lastName.focus();
+                },
+                getAllValues() {
+                    const first = this.$refs.firstName.value;
+                    const last = this.$refs.lastName.value;
+                    this.fullName = `${first} ${last}`.trim();
+                },
+                focusFirstInput() {
+                    if (this.inputRefs[0]) {
+                        this.inputRefs[0].focus();
+                    }
+                },
+                callChildMethod() {
+                    if (this.$refs.childRef) {
+                        this.childMessage = this.$refs.childRef.greet();
+                    }
+                },
+                getElementInfo() {
+                    const el = this.$refs.elementRef;
+                    if (el) {
+                        this.elementInfo = `
+                            标签: ${el.tagName}
+                            文本: ${el.textContent}
+                            宽度: ${el.offsetWidth}px
+                            高度: ${el.offsetHeight}px
+                        `;
+                    }
+                }
+            }
+        }).mount('#app');
+    </script>
+</body>
+</html>

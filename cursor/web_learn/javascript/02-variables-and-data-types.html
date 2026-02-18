@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>变量和数据类型</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            border-bottom: 3px solid #4CAF50;
+            padding-bottom: 10px;
+        }
+        .section {
+            margin: 30px 0;
+            padding: 20px;
+            background: #f9f9f9;
+            border-left: 4px solid #4CAF50;
+            border-radius: 5px;
+        }
+        h2 {
+            color: #555;
+            margin-bottom: 15px;
+        }
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+        }
+        button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background: #45a049;
+        }
+        .output {
+            background: #e8f5e9;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            border-left: 4px solid #4CAF50;
+            font-family: 'Courier New', monospace;
+        }
+        .data-type-box {
+            display: inline-block;
+            padding: 10px 15px;
+            margin: 5px;
+            background: #e3f2fd;
+            border-radius: 5px;
+            border: 2px solid #2196F3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>变量和数据类型</h1>
+        
+        <div class="section">
+            <h2>1. 变量声明（var, let, const）</h2>
+            <div class="code-block">
+// var - 函数作用域，可以重复声明
+var name = "张三";
+var name = "李四";  // 可以重复声明
+
+// let - 块作用域，不能重复声明
+let age = 25;
+// let age = 30;  // 错误：不能重复声明
+
+// const - 块作用域，常量，不能重新赋值
+const PI = 3.14159;
+// PI = 3.14;  // 错误：不能重新赋值
+            </div>
+            <button onclick="demoVarLetConst()">运行示例</button>
+            <div id="var-output" class="output"></div>
+        </div>
+        
+        <div class="section">
+            <h2>2. JavaScript 数据类型</h2>
+            <div class="data-type-box">Number（数字）</div>
+            <div class="data-type-box">String（字符串）</div>
+            <div class="data-type-box">Boolean（布尔值）</div>
+            <div class="data-type-box">Undefined（未定义）</div>
+            <div class="data-type-box">Null（空值）</div>
+            <div class="data-type-box">Object（对象）</div>
+            <div class="data-type-box">Symbol（符号）</div>
+            <div class="data-type-box">BigInt（大整数）</div>
+        </div>
+        
+        <div class="section">
+            <h2>3. Number（数字类型）</h2>
+            <div class="code-block">
+let integer = 42;           // 整数
+let decimal = 3.14;         // 小数
+let negative = -10;          // 负数
+let scientific = 1.5e3;     // 科学计数法 (1500)
+let infinity = Infinity;    // 无穷大
+let notANumber = NaN;       // 非数字
+            </div>
+            <button onclick="demoNumber()">运行示例</button>
+            <div id="number-output" class="output"></div>
+        </div>
+        
+        <div class="section">
+            <h2>4. String（字符串类型）</h2>
+            <div class="code-block">
+let singleQuote = '单引号字符串';
+let doubleQuote = "双引号字符串";
+let templateLiteral = `模板字符串 ${variable}`;
+
+// 字符串方法
+let str = "Hello World";
+str.length;           // 长度
+str.toUpperCase();     // 转大写
+str.toLowerCase();     // 转小写
+str.charAt(0);        // 获取字符
+            </div>
+            <button onclick="demoString()">运行示例</button>
+            <div id="string-output" class="output"></div>
+        </div>
+        
+        <div class="section">
+            <h2>5. Boolean（布尔类型）</h2>
+            <div class="code-block">
+let isTrue = true;
+let isFalse = false;
+
+// 布尔转换
+Boolean(1);        // true
+Boolean(0);        // false
+Boolean("");       // false
+Boolean("text");   // true
+Boolean(null);     // false
+Boolean(undefined); // false
+            </div>
+            <button onclick="demoBoolean()">运行示例</button>
+            <div id="boolean-output" class="output"></div>
+        </div>
+        
+        <div class="section">
+            <h2>6. Undefined 和 Null</h2>
+            <div class="code-block">
+let undefinedVar;        // undefined - 未赋值的变量
+let nullVar = null;      // null - 空值（有意的空值）
+
+// 区别
+undefined == null;   // true（值相等）
+undefined === null;  // false（类型不同）
+            </div>
+            <button onclick="demoUndefinedNull()">运行示例</button>
+            <div id="null-output" class="output"></div>
+        </div>
+        
+        <div class="section">
+            <h2>7. Object（对象类型）</h2>
+            <div class="code-block">
+// 对象字面量
+let person = {
+    name: "张三",
+    age: 25,
+    city: "北京"
+};
+
+// 访问属性
+person.name;        // "张三"
+person["age"];      // 25
+
+// 添加属性
+person.email = "zhang@example.com";
+            </div>
+            <button onclick="demoObject()">运行示例</button>
+            <div id="object-output" class="output"></div>
+        </div>
+        
+        <div class="section">
+            <h2>8. 类型检测</h2>
+            <div class="code-block">
+typeof 42;              // "number"
+typeof "hello";         // "string"
+typeof true;            // "boolean"
+typeof undefined;       // "undefined"
+typeof null;            // "object" (历史遗留问题)
+typeof {};              // "object"
+typeof [];              // "object"
+
+// 更好的类型检测
+Array.isArray([]);      // true
+instanceof Array;        // 检查实例
+            </div>
+            <button onclick="demoTypeof()">运行示例</button>
+            <div id="typeof-output" class="output"></div>
+        </div>
+        
+        <div class="section">
+            <h2>9. 类型转换</h2>
+            <div class="code-block">
+// 转换为字符串
+String(123);        // "123"
+(123).toString();   // "123"
+
+// 转换为数字
+Number("123");      // 123
+parseInt("123");    // 123
+parseFloat("3.14"); // 3.14
+
+// 转换为布尔值
+Boolean(1);         // true
+Boolean(0);          // false
+            </div>
+            <button onclick="demoTypeConversion()">运行示例</button>
+            <div id="conversion-output" class="output"></div>
+        </div>
+    </div>
+
+    <script>
+        function demoVarLetConst() {
+            let output = "";
+            
+            var varName = "var 变量";
+            var varName = "var 可以重复声明";
+            output += "var: " + varName + "<br>";
+            
+            let letName = "let 变量";
+            // let letName = "错误";  // 不能重复声明
+            output += "let: " + letName + "<br>";
+            
+            const constName = "const 常量";
+            // constName = "错误";  // 不能重新赋值
+            output += "const: " + constName + "<br>";
+            
+            // 作用域示例
+            {
+                let blockVar = "块作用域变量";
+                output += "块内: " + blockVar + "<br>";
+            }
+            // console.log(blockVar);  // 错误：blockVar 未定义
+            
+            document.getElementById('var-output').innerHTML = output;
+        }
+        
+        function demoNumber() {
+            let output = "";
+            let num1 = 42;
+            let num2 = 3.14;
+            let num3 = -10;
+            let num4 = 1.5e3;
+            
+            output += "整数: " + num1 + "<br>";
+            output += "小数: " + num2 + "<br>";
+            output += "负数: " + num3 + "<br>";
+            output += "科学计数法: " + num4 + "<br>";
+            output += "类型: " + typeof num1 + "<br>";
+            output += "运算: " + (num1 + num2) + "<br>";
+            
+            document.getElementById('number-output').innerHTML = output;
+        }
+        
+        function demoString() {
+            let output = "";
+            let str1 = "单引号";
+            let str2 = "双引号";
+            let name = "JavaScript";
+            let str3 = `模板字符串: ${name}`;
+            
+            output += "str1: " + str1 + "<br>";
+            output += "str2: " + str2 + "<br>";
+            output += "str3: " + str3 + "<br>";
+            output += "长度: " + str1.length + "<br>";
+            output += "大写: " + name.toUpperCase() + "<br>";
+            output += "小写: " + name.toLowerCase() + "<br>";
+            output += "拼接: " + str1 + str2 + "<br>";
+            
+            document.getElementById('string-output').innerHTML = output;
+        }
+        
+        function demoBoolean() {
+            let output = "";
+            let isTrue = true;
+            let isFalse = false;
+            
+            output += "isTrue: " + isTrue + " (类型: " + typeof isTrue + ")<br>";
+            output += "isFalse: " + isFalse + "<br>";
+            output += "Boolean(1): " + Boolean(1) + "<br>";
+            output += "Boolean(0): " + Boolean(0) + "<br>";
+            output += "Boolean(''): " + Boolean("") + "<br>";
+            output += "Boolean('text'): " + Boolean("text") + "<br>";
+            
+            document.getElementById('boolean-output').innerHTML = output;
+        }
+        
+        function demoUndefinedNull() {
+            let output = "";
+            let undefinedVar;
+            let nullVar = null;
+            
+            output += "undefinedVar: " + undefinedVar + " (类型: " + typeof undefinedVar + ")<br>";
+            output += "nullVar: " + nullVar + " (类型: " + typeof nullVar + ")<br>";
+            output += "undefined == null: " + (undefined == null) + "<br>";
+            output += "undefined === null: " + (undefined === null) + "<br>";
+            
+            document.getElementById('null-output').innerHTML = output;
+        }
+        
+        function demoObject() {
+            let output = "";
+            let person = {
+                name: "张三",
+                age: 25,
+                city: "北京"
+            };
+            
+            output += "person.name: " + person.name + "<br>";
+            output += "person['age']: " + person["age"] + "<br>";
+            output += "完整对象: " + JSON.stringify(person) + "<br>";
+            
+            person.email = "zhang@example.com";
+            output += "添加属性后: " + JSON.stringify(person) + "<br>";
+            
+            document.getElementById('object-output').innerHTML = output;
+        }
+        
+        function demoTypeof() {
+            let output = "";
+            output += "typeof 42: " + typeof 42 + "<br>";
+            output += "typeof 'hello': " + typeof "hello" + "<br>";
+            output += "typeof true: " + typeof true + "<br>";
+            output += "typeof undefined: " + typeof undefined + "<br>";
+            output += "typeof null: " + typeof null + "<br>";
+            output += "typeof {}: " + typeof {} + "<br>";
+            output += "typeof []: " + typeof [] + "<br>";
+            output += "Array.isArray([]): " + Array.isArray([]) + "<br>";
+            
+            document.getElementById('typeof-output').innerHTML = output;
+        }
+        
+        function demoTypeConversion() {
+            let output = "";
+            output += "String(123): " + String(123) + " (类型: " + typeof String(123) + ")<br>";
+            output += "Number('123'): " + Number("123") + " (类型: " + typeof Number("123") + ")<br>";
+            output += "parseInt('123.45'): " + parseInt("123.45") + "<br>";
+            output += "parseFloat('3.14'): " + parseFloat("3.14") + "<br>";
+            output += "Boolean(1): " + Boolean(1) + "<br>";
+            output += "Boolean(0): " + Boolean(0) + "<br>";
+            output += "Boolean(''): " + Boolean("") + "<br>";
+            
+            document.getElementById('conversion-output').innerHTML = output;
+        }
+        
+        // 页面加载时输出
+        console.log("=== 变量和数据类型示例 ===");
+        console.log("打开开发者工具（F12）查看控制台");
+    </script>
+</body>
+</html>

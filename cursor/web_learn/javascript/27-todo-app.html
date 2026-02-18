@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>待办事项应用</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+        
+        .input-section {
+            padding: 30px;
+        }
+        
+        .input-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        #todo-input {
+            flex: 1;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+        
+        #todo-input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        .btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        .btn-danger {
+            background: #e74c3c;
+            color: white;
+            padding: 8px 15px;
+            font-size: 0.9rem;
+        }
+        
+        .btn-danger:hover {
+            background: #c0392b;
+        }
+        
+        .todo-list {
+            padding: 0 30px 30px;
+        }
+        
+        .todo-item {
+            background: #f5f5f5;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transition: all 0.3s ease;
+        }
+        
+        .todo-item:hover {
+            background: #eeeeee;
+        }
+        
+        .todo-item.completed {
+            opacity: 0.6;
+            text-decoration: line-through;
+        }
+        
+        .todo-item input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+        
+        .todo-item span {
+            flex: 1;
+            font-size: 1rem;
+        }
+        
+        .stats {
+            padding: 20px 30px;
+            background: #f9f9f9;
+            border-top: 1px solid #e0e0e0;
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+            color: #999;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📝 待办事项</h1>
+            <p>管理您的任务</p>
+        </div>
+        
+        <div class="input-section">
+            <div class="input-group">
+                <input 
+                    type="text" 
+                    id="todo-input" 
+                    placeholder="输入新的待办事项..."
+                    onkeypress="handleKeyPress(event)"
+                >
+                <button class="btn btn-primary" onclick="addTodo()">添加</button>
+            </div>
+        </div>
+        
+        <div class="todo-list" id="todo-list">
+            <div class="empty-state">暂无待办事项，添加一个吧！</div>
+        </div>
+        
+        <div class="stats">
+            <span>总计: <strong id="total-count">0</strong></span>
+            <span>已完成: <strong id="completed-count">0</strong></span>
+            <span>未完成: <strong id="pending-count">0</strong></span>
+        </div>
+    </div>
+
+    <script>
+        // 存储待办事项
+        let todos = [];
+        
+        // 从本地存储加载数据
+        function loadTodos() {
+            const saved = localStorage.getItem('todos');
+            if (saved) {
+                todos = JSON.parse(saved);
+                renderTodos();
+            }
+        }
+        
+        // 保存到本地存储
+        function saveTodos() {
+            localStorage.setItem('todos', JSON.stringify(todos));
+        }
+        
+        // 添加待办事项
+        function addTodo() {
+            const input = document.getElementById('todo-input');
+            const text = input.value.trim();
+            
+            if (text === '') {
+                alert('请输入待办事项！');
+                return;
+            }
+            
+            const todo = {
+                id: Date.now(),
+                text: text,
+                completed: false,
+                createdAt: new Date().toISOString()
+            };
+            
+            todos.push(todo);
+            input.value = '';
+            saveTodos();
+            renderTodos();
+        }
+        
+        // 切换完成状态
+        function toggleTodo(id) {
+            const todo = todos.find(t => t.id === id);
+            if (todo) {
+                todo.completed = !todo.completed;
+                saveTodos();
+                renderTodos();
+            }
+        }
+        
+        // 删除待办事项
+        function deleteTodo(id) {
+            todos = todos.filter(t => t.id !== id);
+            saveTodos();
+            renderTodos();
+        }
+        
+        // 渲染待办列表
+        function renderTodos() {
+            const list = document.getElementById('todo-list');
+            
+            if (todos.length === 0) {
+                list.innerHTML = '<div class="empty-state">暂无待办事项，添加一个吧！</div>';
+            } else {
+                list.innerHTML = todos.map(todo => `
+                    <div class="todo-item ${todo.completed ? 'completed' : ''}">
+                        <input 
+                            type="checkbox" 
+                            ${todo.completed ? 'checked' : ''}
+                            onchange="toggleTodo(${todo.id})"
+                        >
+                        <span>${todo.text}</span>
+                        <button class="btn btn-danger" onclick="deleteTodo(${todo.id})">删除</button>
+                    </div>
+                `).join('');
+            }
+            
+            updateStats();
+        }
+        
+        // 更新统计信息
+        function updateStats() {
+            const total = todos.length;
+            const completed = todos.filter(t => t.completed).length;
+            const pending = total - completed;
+            
+            document.getElementById('total-count').textContent = total;
+            document.getElementById('completed-count').textContent = completed;
+            document.getElementById('pending-count').textContent = pending;
+        }
+        
+        // 处理回车键
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                addTodo();
+            }
+        }
+        
+        // 页面加载时加载数据
+        loadTodos();
+        
+        console.log("=== 待办事项应用 ===");
+    </script>
+</body>
+</html>

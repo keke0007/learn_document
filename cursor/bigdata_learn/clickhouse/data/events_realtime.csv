@@ -1,0 +1,22 @@
+event_time,user_id,event_type,page,device,os,network,duration
+2024-03-14 10:00:01,1,page_view,/home,ios,iOS,wifi,12
+2024-03-14 10:00:05,2,page_view,/home,android,Android,4g,8
+2024-03-14 10:00:10,1,click,/product,ios,iOS,wifi,5
+2024-03-14 10:01:02,3,page_view,/home,pc,Windows,wifi,20
+2024-03-14 10:01:15,1,page_view,/product,ios,iOS,wifi,15
+2024-03-14 10:01:40,2,click,/cart,android,Android,4g,3
+2024-03-14 10:02:05,4,page_view,/home,android,Android,4g,9
+2024-03-14 10:02:18,2,page_view,/product,android,Android,4g,11
+2024-03-14 10:02:33,3,click,/product,pc,Windows,wifi,4
+2024-03-14 10:03:01,1,page_view,/home,ios,iOS,wifi,13
+2024-03-14 10:03:22,4,click,/product,android,Android,4g,6
+2024-03-14 10:03:45,2,page_view,/home,android,Android,4g,7
+2024-03-14 10:04:10,3,page_view,/cart,pc,Windows,wifi,10
+2024-03-14 10:04:25,1,page_view,/product,ios,iOS,wifi,18
+2024-03-14 10:04:40,2,page_view,/product,android,Android,4g,14
+2024-03-14 10:05:05,4,page_view,/home,android,Android,4g,9
+2024-03-14 10:05:20,3,click,/order,pc,Windows,wifi,2
+2024-03-14 10:05:35,1,page_view,/order,ios,iOS,wifi,16
+2024-03-14 10:05:50,2,page_view,/home,android,Android,4g,10
+2024-03-14 10:06:05,4,page_view,/product,android,Android,4g,12
+

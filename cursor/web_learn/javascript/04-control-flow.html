@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>控制流程</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            border-bottom: 3px solid #4CAF50;
+            padding-bottom: 10px;
+        }
+        .section {
+            margin: 30px 0;
+            padding: 20px;
+            background: #f9f9f9;
+            border-left: 4px solid #4CAF50;
+            border-radius: 5px;
+        }
+        button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        .output {
+            background: #e8f5e9;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+        }
+        input {
+            padding: 8px;
+            margin: 5px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>控制流程（条件语句和循环）</h1>
+        
+        <div class="section">
+            <h2>1. if/else 语句</h2>
+            <input type="number" id="age-input" placeholder="输入年龄" value="20">
+            <button onclick="demoIfElse()">判断年龄</button>
+            <div id="ifelse-output" class="output"></div>
+        </div>
+        
+        <div class="section">
+            <h2>2. switch 语句</h2>
+            <input type="number" id="day-input" placeholder="输入1-7" value="1" min="1" max="7">
+            <button onclick="demoSwitch()">判断星期</button>
+            <div id="switch-output" class="output"></div>
+        </div>
+        
+        <div class="section">
+            <h2>3. for 循环</h2>
+            <button onclick="demoFor()">运行示例</button>
+            <div id="for-output" class="output"></div>
+        </div>
+        
+        <div class="section">
+            <h2>4. while 循环</h2>
+            <button onclick="demoWhile()">运行示例</button>
+            <div id="while-output" class="output"></div>
+        </div>
+        
+        <div class="section">
+            <h2>5. do...while 循环</h2>
+            <button onclick="demoDoWhile()">运行示例</button>
+            <div id="dowhile-output" class="output"></div>
+        </div>
+        
+        <div class="section">
+            <h2>6. for...in 和 for...of</h2>
+            <button onclick="demoForInOf()">运行示例</button>
+            <div id="forinof-output" class="output"></div>
+        </div>
+        
+        <div class="section">
+            <h2>7. break 和 continue</h2>
+            <button onclick="demoBreakContinue()">运行示例</button>
+            <div id="breakcontinue-output" class="output"></div>
+        </div>
+    </div>
+
+    <script>
+        function demoIfElse() {
+            let age = parseInt(document.getElementById('age-input').value) || 0;
+            let output = "";
+            
+            if (age < 0) {
+                output = "年龄不能为负数！";
+            } else if (age < 18) {
+                output = "您是未成年人";
+            } else if (age < 60) {
+                output = "您是成年人";
+            } else {
+                output = "您是老年人";
+            }
+            
+            document.getElementById('ifelse-output').innerHTML = 
+                `年龄: ${age}<br>结果: ${output}`;
+        }
+        
+        function demoSwitch() {
+            let day = parseInt(document.getElementById('day-input').value) || 1;
+            let dayName = "";
+            
+            switch(day) {
+                case 1:
+                    dayName = "星期一";
+                    break;
+                case 2:
+                    dayName = "星期二";
+                    break;
+                case 3:
+                    dayName = "星期三";
+                    break;
+                case 4:
+                    dayName = "星期四";
+                    break;
+                case 5:
+                    dayName = "星期五";
+                    break;
+                case 6:
+                    dayName = "星期六";
+                    break;
+                case 7:
+                    dayName = "星期日";
+                    break;
+                default:
+                    dayName = "无效的日期";
+            }
+            
+            document.getElementById('switch-output').innerHTML = 
+                `输入: ${day}<br>结果: ${dayName}`;
+        }
+        
+        function demoFor() {
+            let output = "for 循环 1 到 5:<br>";
+            for (let i = 1; i <= 5; i++) {
+                output += i + " ";
+            }
+            output += "<br><br>计算 1 到 10 的和:<br>";
+            let sum = 0;
+            for (let i = 1; i <= 10; i++) {
+                sum += i;
+            }
+            output += `总和 = ${sum}`;
+            
+            document.getElementById('for-output').innerHTML = output;
+        }
+        
+        function demoWhile() {
+            let output = "while 循环倒计时:<br>";
+            let count = 5;
+            while (count > 0) {
+                output += count + " ";
+                count--;
+            }
+            output += "结束！";
+            
+            document.getElementById('while-output').innerHTML = output;
+        }
+        
+        function demoDoWhile() {
+            let output = "do...while 循环（至少执行一次）:<br>";
+            let i = 1;
+            do {
+                output += i + " ";
+                i++;
+            } while (i <= 5);
+            
+            document.getElementById('dowhile-output').innerHTML = output;
+        }
+        
+        function demoForInOf() {
+            let output = "";
+            
+            // for...in 遍历对象
+            let person = {name: "张三", age: 25, city: "北京"};
+            output += "for...in 遍历对象:<br>";
+            for (let key in person) {
+                output += `${key}: ${person[key]}<br>`;
+            }
+            
+            // for...of 遍历数组
+            let arr = ['苹果', '香蕉', '橙子'];
+            output += "<br>for...of 遍历数组:<br>";
+            for (let item of arr) {
+                output += item + " ";
+            }
+            
+            document.getElementById('forinof-output').innerHTML = output;
+        }
+        
+        function demoBreakContinue() {
+            let output = "";
+            
+            output += "使用 break（遇到 5 时退出）:<br>";
+            for (let i = 1; i <= 10; i++) {
+                if (i === 5) break;
+                output += i + " ";
+            }
+            
+            output += "<br><br>使用 continue（跳过偶数）:<br>";
+            for (let i = 1; i <= 10; i++) {
+                if (i % 2 === 0) continue;
+                output += i + " ";
+            }
+            
+            document.getElementById('breakcontinue-output').innerHTML = output;
+        }
+        
+        console.log("=== 控制流程示例 ===");
+    </script>
+</body>
+</html>

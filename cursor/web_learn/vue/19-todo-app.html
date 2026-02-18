@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>待办事项应用</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+        
+        .input-section {
+            padding: 30px;
+        }
+        
+        .input-group {
+            display: flex;
+            gap: 10px;
+        }
+        
+        input {
+            flex: 1;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1rem;
+        }
+        
+        input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        button {
+            padding: 15px 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+        }
+        
+        .todo-list {
+            padding: 0 30px 30px;
+        }
+        
+        .todo-item {
+            background: #f5f5f5;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transition: all 0.3s ease;
+        }
+        
+        .todo-item:hover {
+            background: #eeeeee;
+        }
+        
+        .todo-item.completed {
+            opacity: 0.6;
+            text-decoration: line-through;
+        }
+        
+        .todo-item input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+        
+        .todo-item span {
+            flex: 1;
+            font-size: 1rem;
+        }
+        
+        .todo-item button {
+            padding: 8px 15px;
+            font-size: 0.9rem;
+            background: #e74c3c;
+        }
+        
+        .stats {
+            padding: 20px 30px;
+            background: #f9f9f9;
+            border-top: 1px solid #e0e0e0;
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+            color: #999;
+        }
+        
+        .filter-buttons {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .filter-btn {
+            padding: 8px 15px;
+            border: 2px solid #667eea;
+            background: white;
+            color: #667eea;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .filter-btn.active {
+            background: #667eea;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div class="container">
+            <div class="header">
+                <h1>📝 待办事项</h1>
+                <p>管理您的任务</p>
+            </div>
+            
+            <div class="input-section">
+                <div class="input-group">
+                    <input 
+                        type="text" 
+                        v-model="newTodo" 
+                        @keyup.enter="addTodo"
+                        placeholder="输入新的待办事项..."
+                    >
+                    <button @click="addTodo">添加</button>
+                </div>
+            </div>
+            
+            <div class="todo-list">
+                <div class="filter-buttons">
+                    <button 
+                        class="filter-btn" 
+                        :class="{ active: filter === 'all' }"
+                        @click="filter = 'all'"
+                    >
+                        全部
+                    </button>
+                    <button 
+                        class="filter-btn" 
+                        :class="{ active: filter === 'active' }"
+                        @click="filter = 'active'"
+                    >
+                        未完成
+                    </button>
+                    <button 
+                        class="filter-btn" 
+                        :class="{ active: filter === 'completed' }"
+                        @click="filter = 'completed'"
+                    >
+                        已完成
+                    </button>
+                </div>
+                
+                <div v-if="filteredTodos.length === 0" class="empty-state">
+                    暂无待办事项
+                </div>
+                
+                <div v-for="todo in filteredTodos" :key="todo.id" class="todo-item" :class="{ completed: todo.completed }">
+                    <input 
+                        type="checkbox" 
+                        v-model="todo.completed"
+                    >
+                    <span>{{ todo.text }}</span>
+                    <button @click="deleteTodo(todo.id)">删除</button>
+                </div>
+            </div>
+            
+            <div class="stats">
+                <span>总计: <strong>{{ todos.length }}</strong></span>
+                <span>已完成: <strong>{{ completedCount }}</strong></span>
+                <span>未完成: <strong>{{ activeCount }}</strong></span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const { createApp } = Vue;
+
+        createApp({
+            data() {
+                return {
+                    todos: [],
+                    newTodo: '',
+                    filter: 'all',
+                    nextId: 1
+                }
+            },
+            computed: {
+                filteredTodos() {
+                    switch(this.filter) {
+                        case 'active':
+                            return this.todos.filter(todo => !todo.completed);
+                        case 'completed':
+                            return this.todos.filter(todo => todo.completed);
+                        default:
+                            return this.todos;
+                    }
+                },
+                completedCount() {
+                    return this.todos.filter(todo => todo.completed).length;
+                },
+                activeCount() {
+                    return this.todos.filter(todo => !todo.completed).length;
+                }
+            },
+            methods: {
+                addTodo() {
+                    if (this.newTodo.trim()) {
+                        this.todos.push({
+                            id: this.nextId++,
+                            text: this.newTodo.trim(),
+                            completed: false,
+                            createdAt: new Date()
+                        });
+                        this.newTodo = '';
+                        this.saveTodos();
+                    }
+                },
+                deleteTodo(id) {
+                    this.todos = this.todos.filter(todo => todo.id !== id);
+                    this.saveTodos();
+                },
+                saveTodos() {
+                    localStorage.setItem('todos', JSON.stringify(this.todos));
+                },
+                loadTodos() {
+                    const saved = localStorage.getItem('todos');
+                    if (saved) {
+                        this.todos = JSON.parse(saved);
+                        if (this.todos.length > 0) {
+                            this.nextId = Math.max(...this.todos.map(t => t.id)) + 1;
+                        }
+                    }
+                }
+            },
+            mounted() {
+                this.loadTodos();
+            },
+            watch: {
+                todos: {
+                    handler() {
+                        this.saveTodos();
+                    },
+                    deep: true
+                }
+            }
+        }).mount('#app');
+    </script>
+</body>
+</html>

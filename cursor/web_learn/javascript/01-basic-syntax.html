@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript 基础语法</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            border-bottom: 3px solid #4CAF50;
+            padding-bottom: 10px;
+        }
+        .section {
+            margin: 30px 0;
+            padding: 20px;
+            background: #f9f9f9;
+            border-left: 4px solid #4CAF50;
+            border-radius: 5px;
+        }
+        h2 {
+            color: #555;
+            margin-bottom: 15px;
+        }
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+        }
+        button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background: #45a049;
+        }
+        .output {
+            background: #e8f5e9;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            border-left: 4px solid #4CAF50;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>JavaScript 基础语法</h1>
+        
+        <div class="section">
+            <h2>1. 注释</h2>
+            <div class="code-block">
+// 这是单行注释
+
+/* 
+   这是多行注释
+   可以写多行内容
+*/
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2>2. 输出方式</h2>
+            <button onclick="showAlert()">alert() 弹窗</button>
+            <button onclick="showConsole()">console.log() 控制台</button>
+            <button onclick="showDocument()">document.write() 文档</button>
+            <button onclick="showInnerHTML()">innerHTML 元素</button>
+            
+            <div id="output" class="output" style="margin-top: 15px;">
+                <strong>输出区域：</strong><br>
+                <span id="content"></span>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2>3. 语句和分号</h2>
+            <div class="code-block">
+// JavaScript 语句以分号结尾（可选，但建议使用）
+let name = "张三";
+let age = 25;
+
+// 也可以不使用分号（不推荐）
+let city = "北京"
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2>4. 代码块</h2>
+            <div class="code-block">
+// 使用花括号 {} 定义代码块
+{
+    let x = 10;
+    let y = 20;
+    console.log(x + y);
+}
+
+// 函数代码块
+function greet() {
+    console.log("Hello!");
+}
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2>5. 标识符命名规则</h2>
+            <div class="code-block">
+// 合法标识符
+let userName = "张三";      // 驼峰命名
+let user_age = 25;          // 下划线命名
+let $price = 100;           // 可以以 $ 开头
+let _count = 5;             // 可以以 _ 开头
+
+// 不合法标识符
+// let 123name = "test";    // 不能以数字开头
+// let user-name = "test";  // 不能包含连字符
+// let let = "test";        // 不能使用关键字
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2>6. 关键字和保留字</h2>
+            <p>JavaScript 关键字：if, else, for, while, function, var, let, const, return, class, import, export 等</p>
+            <p>这些词不能用作变量名、函数名或其他标识符</p>
+        </div>
+        
+        <div class="section">
+            <h2>7. 严格模式</h2>
+            <div class="code-block">
+// 在脚本开头使用 "use strict" 启用严格模式
+"use strict";
+
+// 严格模式下，未声明的变量会报错
+// x = 10;  // 错误：x is not defined
+
+// 必须使用 let, const 或 var 声明变量
+let x = 10;  // 正确
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 输出函数示例
+        function showAlert() {
+            alert("这是 alert() 弹窗输出");
+        }
+        
+        function showConsole() {
+            console.log("这是 console.log() 输出");
+            console.log("打开浏览器开发者工具（F12）查看控制台");
+        }
+        
+        function showDocument() {
+            document.write("<p style='color: green;'>这是 document.write() 输出</p>");
+        }
+        
+        function showInnerHTML() {
+            document.getElementById('content').innerHTML = 
+                "这是 innerHTML 输出<br>" + 
+                "当前时间：" + new Date().toLocaleString();
+        }
+        
+        // 页面加载时在控制台输出欢迎信息
+        console.log("=== JavaScript 基础语法示例 ===");
+        console.log("打开开发者工具（F12）查看控制台输出");
+        
+        // 演示代码块
+        {
+            let blockVar = "代码块内的变量";
+            console.log("代码块示例:", blockVar);
+        }
+        
+        // 演示严格模式
+        function strictModeDemo() {
+            "use strict";
+            // 在严格模式下，以下代码会报错
+            // undeclaredVar = "test";  // ReferenceError
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>表单样式</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 40px 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+        }
+        
+        .form-section {
+            background: white;
+            padding: 30px;
+            margin-bottom: 30px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        h2 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+        
+        /* 基础输入框样式 */
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            font-weight: 500;
+        }
+        
+        input[type="text"],
+        input[type="email"],
+        input[type="password"],
+        input[type="number"],
+        input[type="date"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+        
+        input:focus,
+        textarea:focus,
+        select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        
+        /* 按钮样式 */
+        .btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+        
+        .btn-secondary:hover {
+            background: #5a6268;
+        }
+        
+        /* 复选框和单选框 */
+        .checkbox-group,
+        .radio-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .checkbox-item,
+        .radio-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        input[type="checkbox"],
+        input[type="radio"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+        
+        /* 输入框状态 */
+        .input-success {
+            border-color: #28a745;
+        }
+        
+        .input-error {
+            border-color: #dc3545;
+        }
+        
+        .input-error:focus {
+            box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.1);
+        }
+        
+        .error-message {
+            color: #dc3545;
+            font-size: 0.875rem;
+            margin-top: 5px;
+        }
+        
+        /* 输入框图标 */
+        .input-with-icon {
+            position: relative;
+        }
+        
+        .input-icon {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #999;
+        }
+        
+        .input-with-icon input {
+            padding-left: 40px;
+        }
+        
+        /* 浮动标签 */
+        .floating-label {
+            position: relative;
+        }
+        
+        .floating-label input {
+            padding-top: 20px;
+        }
+        
+        .floating-label label {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #999;
+            transition: all 0.3s ease;
+            pointer-events: none;
+        }
+        
+        .floating-label input:focus + label,
+        .floating-label input:not(:placeholder-shown) + label {
+            top: 10px;
+            font-size: 0.75rem;
+            color: #667eea;
+        }
+        
+        /* 开关按钮 */
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+        
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: 0.4s;
+            border-radius: 34px;
+        }
+        
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: 0.4s;
+            border-radius: 50%;
+        }
+        
+        input:checked + .slider {
+            background-color: #667eea;
+        }
+        
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>表单样式案例集合</h1>
+        
+        <!-- 基础表单 -->
+        <div class="form-section">
+            <h2>1. 基础表单样式</h2>
+            <form>
+                <div class="form-group">
+                    <label for="name">姓名</label>
+                    <input type="text" id="name" placeholder="请输入姓名">
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">邮箱</label>
+                    <input type="email" id="email" placeholder="example@email.com">
+                </div>
+                
+                <div class="form-group">
+                    <label for="message">留言</label>
+                    <textarea id="message" rows="4" placeholder="请输入留言内容"></textarea>
+                </div>
+                
+                <button type="submit" class="btn btn-primary">提交</button>
+            </form>
+        </div>
+        
+        <!-- 输入框状态 -->
+        <div class="form-section">
+            <h2>2. 输入框状态</h2>
+            <div class="form-group">
+                <label>成功状态</label>
+                <input type="text" class="input-success" value="输入正确">
+            </div>
+            
+            <div class="form-group">
+                <label>错误状态</label>
+                <input type="text" class="input-error" value="输入错误">
+                <div class="error-message">请输入正确的格式</div>
+            </div>
+        </div>
+        
+        <!-- 带图标的输入框 -->
+        <div class="form-section">
+            <h2>3. 带图标的输入框</h2>
+            <div class="form-group">
+                <div class="input-with-icon">
+                    <span class="input-icon">🔍</span>
+                    <input type="text" placeholder="搜索...">
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <div class="input-with-icon">
+                    <span class="input-icon">✉️</span>
+                    <input type="email" placeholder="邮箱地址">
+                </div>
+            </div>
+        </div>
+        
+        <!-- 浮动标签 -->
+        <div class="form-section">
+            <h2>4. 浮动标签效果</h2>
+            <div class="form-group">
+                <div class="floating-label">
+                    <input type="text" id="float-name" placeholder=" ">
+                    <label for="float-name">姓名</label>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <div class="floating-label">
+                    <input type="email" id="float-email" placeholder=" ">
+                    <label for="float-email">邮箱</label>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 复选框和单选框 -->
+        <div class="form-section">
+            <h2>5. 复选框和单选框</h2>
+            <div class="form-group">
+                <label>兴趣爱好</label>
+                <div class="checkbox-group">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="hobby1">
+                        <label for="hobby1">阅读</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="hobby2">
+                        <label for="hobby2">运动</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="hobby3">
+                        <label for="hobby3">音乐</label>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label>性别</label>
+                <div class="radio-group">
+                    <div class="radio-item">
+                        <input type="radio" id="male" name="gender" value="male">
+                        <label for="male">男</label>
+                    </div>
+                    <div class="radio-item">
+                        <input type="radio" id="female" name="gender" value="female">
+                        <label for="female">女</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 开关按钮 -->
+        <div class="form-section">
+            <h2>6. 开关按钮</h2>
+            <div class="form-group">
+                <label style="display: flex; align-items: center; gap: 15px;">
+                    <span>启用通知</span>
+                    <label class="switch">
+                        <input type="checkbox">
+                        <span class="slider"></span>
+                    </label>
+                </label>
+            </div>
+        </div>
+        
+        <!-- 按钮样式 -->
+        <div class="form-section">
+            <h2>7. 按钮样式</h2>
+            <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+                <button class="btn btn-primary">主要按钮</button>
+                <button class="btn btn-secondary">次要按钮</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

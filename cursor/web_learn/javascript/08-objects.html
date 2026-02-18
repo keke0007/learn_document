@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>对象操作</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            border-bottom: 3px solid #4CAF50;
+            padding-bottom: 10px;
+        }
+        .section {
+            margin: 30px 0;
+            padding: 20px;
+            background: #f9f9f9;
+            border-left: 4px solid #4CAF50;
+            border-radius: 5px;
+        }
+        button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        .output {
+            background: #e8f5e9;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>对象操作</h1>
+        
+        <div class="section">
+            <h2>1. 创建对象</h2>
+            <button onclick="demoCreate()">运行示例</button>
+            <div id="create-output" class="output"></div>
+        </div>
+        
+        <div class="section">
+            <h2>2. 访问和修改属性</h2>
+            <button onclick="demoAccess()">运行示例</button>
+            <div id="access-output" class="output"></div>
+        </div>
+        
+        <div class="section">
+            <h2>3. 对象方法</h2>
+            <button onclick="demoMethods()">运行示例</button>
+            <div id="methods-output" class="output"></div>
+        </div>
+        
+        <div class="section">
+            <h2>4. 遍历对象</h2>
+            <button onclick="demoIterate()">运行示例</button>
+            <div id="iterate-output" class="output"></div>
+        </div>
+        
+        <div class="section">
+            <h2>5. 对象方法（Object.keys, Object.values 等）</h2>
+            <button onclick="demoObjectMethods()">运行示例</button>
+            <div id="objectmethods-output" class="output"></div>
+        </div>
+        
+        <div class="section">
+            <h2>6. 对象合并和复制</h2>
+            <button onclick="demoMergeCopy()">运行示例</button>
+            <div id="mergecopy-output" class="output"></div>
+        </div>
+    </div>
+
+    <script>
+        // 1. 创建对象
+        function demoCreate() {
+            let output = "";
+            
+            // 字面量方式
+            let person1 = {
+                name: "张三",
+                age: 25,
+                city: "北京"
+            };
+            
+            // 构造函数方式
+            let person2 = new Object();
+            person2.name = "李四";
+            person2.age = 30;
+            
+            // 使用 Object.create
+            let person3 = Object.create({});
+            person3.name = "王五";
+            
+            output += `字面量: ${JSON.stringify(person1)}<br>`;
+            output += `构造函数: ${JSON.stringify(person2)}<br>`;
+            output += `Object.create: ${JSON.stringify(person3)}<br>`;
+            
+            document.getElementById('create-output').innerHTML = output;
+        }
+        
+        // 2. 访问和修改属性
+        function demoAccess() {
+            let output = "";
+            let person = {
+                name: "张三",
+                age: 25
+            };
+            
+            output += `原对象: ${JSON.stringify(person)}<br>`;
+            output += `person.name: ${person.name}<br>`;
+            output += `person["age"]: ${person["age"]}<br>`;
+            
+            // 修改属性
+            person.age = 26;
+            person["city"] = "北京";
+            person.email = "zhang@example.com";
+            
+            output += `修改后: ${JSON.stringify(person)}<br>`;
+            
+            // 删除属性
+            delete person.email;
+            output += `删除 email 后: ${JSON.stringify(person)}<br>`;
+            
+            document.getElementById('access-output').innerHTML = output;
+        }
+        
+        // 3. 对象方法
+        function demoMethods() {
+            let output = "";
+            let calculator = {
+                value: 0,
+                add: function(num) {
+                    this.value += num;
+                    return this;
+                },
+                subtract: function(num) {
+                    this.value -= num;
+                    return this;
+                },
+                multiply: function(num) {
+                    this.value *= num;
+                    return this;
+                },
+                getValue: function() {
+                    return this.value;
+                }
+            };
+            
+            calculator.add(10).multiply(2).subtract(5);
+            output += `链式调用结果: ${calculator.getValue()}<br>`;
+            
+            // 简写方法
+            let person = {
+                name: "张三",
+                greet() {
+                    return `Hello, ${this.name}!`;
+                }
+            };
+            
+            output += `person.greet(): ${person.greet()}<br>`;
+            
+            document.getElementById('methods-output').innerHTML = output;
+        }
+        
+        // 4. 遍历对象
+        function demoIterate() {
+            let output = "";
+            let person = {
+                name: "张三",
+                age: 25,
+                city: "北京"
+            };
+            
+            output += "for...in 遍历:<br>";
+            for (let key in person) {
+                output += `${key}: ${person[key]}<br>`;
+            }
+            
+            output += "<br>Object.keys():<br>";
+            Object.keys(person).forEach(key => {
+                output += `${key}: ${person[key]}<br>`;
+            });
+            
+            document.getElementById('iterate-output').innerHTML = output;
+        }
+        
+        // 5. 对象方法
+        function demoObjectMethods() {
+            let output = "";
+            let person = {
+                name: "张三",
+                age: 25,
+                city: "北京"
+            };
+            
+            output += `Object.keys(): [${Object.keys(person).join(', ')}]<br>`;
+            output += `Object.values(): [${Object.values(person).join(', ')}]<br>`;
+            output += `Object.entries(): ${JSON.stringify(Object.entries(person))}<br>`;
+            output += `Object.hasOwnProperty('name'): ${person.hasOwnProperty('name')}<br>`;
+            output += `Object.hasOwnProperty('email'): ${person.hasOwnProperty('email')}<br>`;
+            
+            document.getElementById('objectmethods-output').innerHTML = output;
+        }
+        
+        // 6. 对象合并和复制
+        function demoMergeCopy() {
+            let output = "";
+            let obj1 = {a: 1, b: 2};
+            let obj2 = {b: 3, c: 4};
+            
+            // 合并对象
+            let merged = Object.assign({}, obj1, obj2);
+            output += `obj1: ${JSON.stringify(obj1)}<br>`;
+            output += `obj2: ${JSON.stringify(obj2)}<br>`;
+            output += `Object.assign({}, obj1, obj2): ${JSON.stringify(merged)}<br>`;
+            
+            // 展开运算符合并
+            let merged2 = {...obj1, ...obj2};
+            output += `{...obj1, ...obj2}: ${JSON.stringify(merged2)}<br>`;
+            
+            // 浅拷贝
+            let original = {name: "张三", info: {age: 25}};
+            let shallowCopy = Object.assign({}, original);
+            shallowCopy.name = "李四";
+            shallowCopy.info.age = 30;
+            
+            output += `<br>浅拷贝:<br>`;
+            output += `original: ${JSON.stringify(original)}<br>`;
+            output += `shallowCopy: ${JSON.stringify(shallowCopy)}<br>`;
+            output += `注意：嵌套对象是引用，会同时改变<br>`;
+            
+            // 深拷贝（简单方法）
+            let deepCopy = JSON.parse(JSON.stringify(original));
+            deepCopy.info.age = 26;
+            output += `<br>深拷贝:<br>`;
+            output += `original: ${JSON.stringify(original)}<br>`;
+            output += `deepCopy: ${JSON.stringify(deepCopy)}<br>`;
+            
+            document.getElementById('mergecopy-output').innerHTML = output;
+        }
+        
+        console.log("=== 对象操作示例 ===");
+    </script>
+</body>
+</html>

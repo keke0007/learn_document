@@ -1,0 +1,37 @@
+[
+  {
+    "timestamp": "2024-01-26T10:00:00Z",
+    "user_id": "user_001",
+    "event_type": "click",
+    "page": "home",
+    "value": 100
+  },
+  {
+    "timestamp": "2024-01-26T10:00:01Z",
+    "user_id": "user_002",
+    "event_type": "view",
+    "page": "product",
+    "value": 200
+  },
+  {
+    "timestamp": "2024-01-26T10:00:02Z",
+    "user_id": "user_001",
+    "event_type": "purchase",
+    "page": "checkout",
+    "value": 500
+  },
+  {
+    "timestamp": "2024-01-26T10:00:03Z",
+    "user_id": "user_003",
+    "event_type": "click",
+    "page": "home",
+    "value": 150
+  },
+  {
+    "timestamp": "2024-01-26T10:00:04Z",
+    "user_id": "user_002",
+    "event_type": "view",
+    "page": "cart",
+    "value": 300
+  }
+]

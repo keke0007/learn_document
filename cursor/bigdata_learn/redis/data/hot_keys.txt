@@ -1,0 +1,6 @@
+示例热点 Key 设计：
+
+- cache:user:<id>          # 用户信息缓存
+- rank:event2024           # 活动 2024 排行榜
+- cnt:login:<yyyyMMddHHmm> # 登录接口每分钟计数
+

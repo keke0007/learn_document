@@ -1,0 +1,21 @@
+{ "index": { "_id": 1 } }
+{ "product_id": 1, "name": "旗舰手机", "category": "电子产品", "brand": "Apple", "price": 6999.0, "tags": ["手机", "5G"] }
+{ "index": { "_id": 2 } }
+{ "product_id": 2, "name": "入门手机", "category": "电子产品", "brand": "Huawei", "price": 1999.0, "tags": ["手机"] }
+{ "index": { "_id": 3 } }
+{ "product_id": 3, "name": "游戏本电脑", "category": "电子产品", "brand": "Lenovo", "price": 8999.0, "tags": ["笔记本", "游戏"] }
+{ "index": { "_id": 4 } }
+{ "product_id": 4, "name": "轻薄本电脑", "category": "电子产品", "brand": "Apple", "price": 9999.0, "tags": ["笔记本"] }
+{ "index": { "_id": 5 } }
+{ "product_id": 5, "name": "机械键盘", "category": "外设", "brand": "Logitech", "price": 499.0, "tags": ["键盘"] }
+{ "index": { "_id": 6 } }
+{ "product_id": 6, "name": "无线鼠标", "category": "外设", "brand": "Logitech", "price": 199.0, "tags": ["鼠标"] }
+{ "index": { "_id": 7 } }
+{ "product_id": 7, "name": "蓝牙耳机", "category": "电子产品", "brand": "Sony", "price": 999.0, "tags": ["耳机"] }
+{ "index": { "_id": 8 } }
+{ "product_id": 8, "name": "4K 显示器", "category": "电子产品", "brand": "Dell", "price": 2999.0, "tags": ["显示器"] }
+{ "index": { "_id": 9 } }
+{ "product_id": 9, "name": "智能手表", "category": "智能设备", "brand": "Apple", "price": 2599.0, "tags": ["手表"] }
+{ "index": { "_id": 10 } }
+{ "product_id": 10, "name": "智能音箱", "category": "智能设备", "brand": "Baidu", "price": 399.0, "tags": ["音箱"] }
+

@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>组件基础</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            border-bottom: 3px solid #4CAF50;
+            padding-bottom: 10px;
+        }
+        .section {
+            margin: 30px 0;
+            padding: 20px;
+            background: #f9f9f9;
+            border-left: 4px solid #4CAF50;
+            border-radius: 5px;
+        }
+        .button-counter {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        .alert {
+            padding: 15px;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .alert-warning {
+            background: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeaa7;
+        }
+        .alert-danger {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div class="container">
+            <h1>组件基础</h1>
+            
+            <div class="section">
+                <h2>1. 基础组件</h2>
+                <button-counter></button-counter>
+                <button-counter></button-counter>
+            </div>
+            
+            <div class="section">
+                <h2>2. 组件数据</h2>
+                <user-card name="张三" age="25"></user-card>
+                <user-card name="李四" age="30"></user-card>
+            </div>
+            
+            <div class="section">
+                <h2>3. 组件方法</h2>
+                <greeting-button></greeting-button>
+            </div>
+            
+            <div class="section">
+                <h2>4. 组件样式</h2>
+                <alert-box type="success" message="操作成功！"></alert-box>
+                <alert-box type="warning" message="请注意！"></alert-box>
+                <alert-box type="danger" message="操作失败！"></alert-box>
+            </div>
+            
+            <div class="section">
+                <h2>5. 组件复用</h2>
+                <todo-item 
+                    v-for="(todo, index) in todos" 
+                    :key="index"
+                    :text="todo"
+                ></todo-item>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const { createApp } = Vue;
+
+        // 1. 按钮计数器组件
+        const ButtonCounter = {
+            data() {
+                return {
+                    count: 0
+                }
+            },
+            template: `
+                <div>
+                    <button class="button-counter" @click="count++">
+                        点击了 {{ count }} 次
+                    </button>
+                </div>
+            `
+        };
+
+        // 2. 用户卡片组件
+        const UserCard = {
+            props: ['name', 'age'],
+            template: `
+                <div style="padding: 15px; background: #e8f5e9; border-radius: 5px; margin: 10px 0;">
+                    <h3>{{ name }}</h3>
+                    <p>年龄: {{ age }} 岁</p>
+                </div>
+            `
+        };
+
+        // 3. 问候按钮组件
+        const GreetingButton = {
+            data() {
+                return {
+                    message: ''
+                }
+            },
+            methods: {
+                greet() {
+                    this.message = 'Hello, Vue!';
+                    setTimeout(() => {
+                        this.message = '';
+                    }, 2000);
+                }
+            },
+            template: `
+                <div>
+                    <button class="button-counter" @click="greet">点击问候</button>
+                    <p v-if="message">{{ message }}</p>
+                </div>
+            `
+        };
+
+        // 4. 警告框组件
+        const AlertBox = {
+            props: ['type', 'message'],
+            template: `
+                <div :class="['alert', 'alert-' + type]">
+                    {{ message }}
+                </div>
+            `
+        };
+
+        // 5. 待办项组件
+        const TodoItem = {
+            props: ['text'],
+            template: `
+                <div style="padding: 10px; background: #f5f5f5; border-radius: 5px; margin: 5px 0;">
+                    {{ text }}
+                </div>
+            `
+        };
+
+        createApp({
+            components: {
+                ButtonCounter,
+                UserCard,
+                GreetingButton,
+                AlertBox,
+                TodoItem
+            },
+            data() {
+                return {
+                    todos: ['学习 Vue', '练习组件', '完成项目']
+                }
+            }
+        }).mount('#app');
+    </script>
+</body>
+</html>

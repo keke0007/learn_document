@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>链接和图片</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.8;
+        }
+        
+        h1 {
+            color: #333;
+            border-bottom: 3px solid #4CAF50;
+            padding-bottom: 10px;
+        }
+        
+        .section {
+            background: #f9f9f9;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            border-left: 4px solid #4CAF50;
+        }
+        
+        h2 {
+            color: #555;
+            margin-bottom: 15px;
+        }
+        
+        /* 链接样式 */
+        a {
+            color: #2196F3;
+            text-decoration: none;
+        }
+        
+        a:hover {
+            color: #1976D2;
+            text-decoration: underline;
+        }
+        
+        a:visited {
+            color: #7B1FA2;
+        }
+        
+        a:active {
+            color: #E91E63;
+        }
+        
+        /* 按钮样式链接 */
+        .btn-link {
+            display: inline-block;
+            padding: 12px 24px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 5px;
+            transition: transform 0.3s ease;
+        }
+        
+        .btn-link:hover {
+            transform: translateY(-2px);
+            text-decoration: none;
+        }
+        
+        /* 图片样式 */
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+        
+        .img-rounded {
+            border-radius: 10px;
+        }
+        
+        .img-circle {
+            border-radius: 50%;
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+        }
+        
+        .img-thumbnail {
+            border: 3px solid #ddd;
+            padding: 5px;
+            border-radius: 5px;
+        }
+        
+        .img-shadow {
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        
+        /* 图片容器 */
+        .image-container {
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        .image-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .gallery-item {
+            overflow: hidden;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .gallery-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+        
+        /* 链接图标 */
+        .link-with-icon::before {
+            content: "🔗 ";
+        }
+        
+        .external-link::after {
+            content: " ↗";
+        }
+    </style>
+</head>
+<body>
+    <h1>链接和图片案例</h1>
+    
+    <div class="section">
+        <h2>1. 基础链接样式</h2>
+        <p>这是一个 <a href="#">普通链接</a></p>
+        <p>这是一个 <a href="#" class="link-with-icon">带图标的链接</a></p>
+        <p>这是一个 <a href="#" class="external-link">外部链接</a></p>
+    </div>
+    
+    <div class="section">
+        <h2>2. 链接状态</h2>
+        <p><a href="#">未访问链接（蓝色）</a></p>
+        <p><a href="#" style="color: #7B1FA2;">已访问链接（紫色）</a></p>
+        <p><a href="#" style="color: #E91E63;">激活状态（点击时，粉色）</a></p>
+    </div>
+    
+    <div class="section">
+        <h2>3. 按钮样式链接</h2>
+        <a href="#" class="btn-link">按钮样式链接</a>
+        <a href="#" class="btn-link" style="margin-left: 15px;">另一个按钮</a>
+    </div>
+    
+    <div class="section">
+        <h2>4. 基础图片</h2>
+        <div class="image-container">
+            <img src="https://via.placeholder.com/400x300/667eea/ffffff?text=示例图片" alt="示例图片">
+        </div>
+    </div>
+    
+    <div class="section">
+        <h2>5. 图片样式</h2>
+        <div style="display: flex; gap: 20px; flex-wrap: wrap; align-items: center;">
+            <div>
+                <p>圆角图片：</p>
+                <img src="https://via.placeholder.com/200/667eea/ffffff?text=圆角" alt="圆角" class="img-rounded">
+            </div>
+            <div>
+                <p>圆形图片：</p>
+                <img src="https://via.placeholder.com/200/764ba2/ffffff?text=圆形" alt="圆形" class="img-circle">
+            </div>
+            <div>
+                <p>缩略图：</p>
+                <img src="https://via.placeholder.com/200/e74c3c/ffffff?text=缩略图" alt="缩略图" class="img-thumbnail">
+            </div>
+            <div>
+                <p>带阴影：</p>
+                <img src="https://via.placeholder.com/200/2ecc71/ffffff?text=阴影" alt="阴影" class="img-shadow">
+            </div>
+        </div>
+    </div>
+    
+    <div class="section">
+        <h2>6. 图片画廊</h2>
+        <div class="image-gallery">
+            <div class="gallery-item">
+                <img src="https://via.placeholder.com/300/667eea/ffffff?text=图片1" alt="图片1">
+            </div>
+            <div class="gallery-item">
+                <img src="https://via.placeholder.com/300/764ba2/ffffff?text=图片2" alt="图片2">
+            </div>
+            <div class="gallery-item">
+                <img src="https://via.placeholder.com/300/e74c3c/ffffff?text=图片3" alt="图片3">
+            </div>
+            <div class="gallery-item">
+                <img src="https://via.placeholder.com/300/2ecc71/ffffff?text=图片4" alt="图片4">
+            </div>
+        </div>
+    </div>
+    
+    <div class="section">
+        <h2>7. 响应式图片</h2>
+        <p>图片会自动适应容器宽度：</p>
+        <img src="https://via.placeholder.com/800x400/3498db/ffffff?text=响应式图片" alt="响应式图片" style="width: 100%;">
+    </div>
+    
+    <div class="section">
+        <h2>链接和图片最佳实践</h2>
+        <ul style="line-height: 2;">
+            <li><strong>alt 属性</strong> - 图片必须包含 alt 属性，提高可访问性</li>
+            <li><strong>响应式图片</strong> - 使用 max-width: 100% 让图片自适应</li>
+            <li><strong>链接状态</strong> - 提供清晰的 hover、active、visited 状态</li>
+            <li><strong>语义化</strong> - 使用合适的标签（&lt;a&gt; 用于链接，&lt;img&gt; 用于图片）</li>
+            <li><strong>性能优化</strong> - 压缩图片，使用合适的格式（WebP, JPEG, PNG）</li>
+        </ul>
+    </div>
+</body>
+</html>

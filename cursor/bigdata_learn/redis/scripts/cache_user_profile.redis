@@ -1,0 +1,8 @@
+# 用户信息缓存示例命令
+
+HSET cache:user:1 name "张三" age 25 city "北京"
+EXPIRE cache:user:1 3600
+
+HGETALL cache:user:1
+TTL cache:user:1
+

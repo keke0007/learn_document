@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>事件处理</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            border-bottom: 3px solid #4CAF50;
+            padding-bottom: 10px;
+        }
+        .section {
+            margin: 30px 0;
+            padding: 20px;
+            background: #f9f9f9;
+            border-left: 4px solid #4CAF50;
+            border-radius: 5px;
+        }
+        .demo-box {
+            padding: 20px;
+            background: #e8f5e9;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+        button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background: #45a049;
+        }
+        input {
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            margin: 10px 0;
+        }
+        .clickable {
+            padding: 20px;
+            background: #fff3cd;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div class="container">
+            <h1>事件处理</h1>
+            
+            <div class="section">
+                <h2>1. 基础事件处理</h2>
+                <div class="demo-box">
+                    <button @click="counter++">点击次数: {{ counter }}</button>
+                    <button @click="greet">问候</button>
+                    <p>{{ message }}</p>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2>2. 事件对象</h2>
+                <div class="demo-box">
+                    <button @click="showEventInfo">显示事件信息</button>
+                    <p v-if="eventInfo">{{ eventInfo }}</p>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2>3. 传递参数</h2>
+                <div class="demo-box">
+                    <button @click="sayHello('张三')">问候张三</button>
+                    <button @click="sayHello('李四')">问候李四</button>
+                    <button @click="sayHello('王五', $event)">问候王五（带事件对象）</button>
+                    <p>{{ greeting }}</p>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2>4. 事件修饰符</h2>
+                <div class="demo-box">
+                    <p>.stop - 阻止事件冒泡</p>
+                    <div @click="outerClick" style="padding: 20px; background: #e3f2fd; border-radius: 5px;">
+                        外层
+                        <button @click.stop="innerClick">内层按钮（.stop）</button>
+                    </div>
+                    <p>点击次数：{{ clickCount }}</p>
+                    
+                    <p>.prevent - 阻止默认行为</p>
+                    <a href="https://vuejs.org" @click.prevent="linkClick">链接（.prevent）</a>
+                    
+                    <p>.once - 只触发一次</p>
+                    <button @click.once="onceClick">只触发一次（.once）</button>
+                    <p>once 触发次数：{{ onceCount }}</p>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2>5. 按键修饰符</h2>
+                <div class="demo-box">
+                    <input @keyup.enter="onEnter" placeholder="按回车键">
+                    <input @keyup.esc="onEsc" placeholder="按 ESC 键">
+                    <input @keyup.ctrl.enter="onCtrlEnter" placeholder="按 Ctrl+Enter">
+                    <p>{{ keyMessage }}</p>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2>6. 鼠标修饰符</h2>
+                <div class="demo-box">
+                    <div 
+                        class="clickable"
+                        @click.left="leftClick"
+                        @click.right.prevent="rightClick"
+                        @click.middle="middleClick"
+                    >
+                        点击我（左键/右键/中键）
+                    </div>
+                    <p>{{ mouseMessage }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const { createApp } = Vue;
+
+        createApp({
+            data() {
+                return {
+                    counter: 0,
+                    message: '',
+                    eventInfo: '',
+                    greeting: '',
+                    clickCount: 0,
+                    onceCount: 0,
+                    keyMessage: '',
+                    mouseMessage: ''
+                }
+            },
+            methods: {
+                greet() {
+                    this.message = 'Hello, Vue!';
+                },
+                showEventInfo(event) {
+                    this.eventInfo = `
+                        事件类型: ${event.type}
+                        目标元素: ${event.target.tagName}
+                        鼠标X: ${event.clientX}
+                        鼠标Y: ${event.clientY}
+                    `;
+                },
+                sayHello(name, event) {
+                    this.greeting = `Hello, ${name}!`;
+                    if (event) {
+                        console.log('事件对象:', event);
+                    }
+                },
+                outerClick() {
+                    this.clickCount++;
+                },
+                innerClick() {
+                    this.clickCount++;
+                },
+                linkClick() {
+                    alert('链接点击被阻止');
+                },
+                onceClick() {
+                    this.onceCount++;
+                },
+                onEnter() {
+                    this.keyMessage = '按下了回车键';
+                },
+                onEsc() {
+                    this.keyMessage = '按下了 ESC 键';
+                },
+                onCtrlEnter() {
+                    this.keyMessage = '按下了 Ctrl+Enter';
+                },
+                leftClick() {
+                    this.mouseMessage = '左键点击';
+                },
+                rightClick() {
+                    this.mouseMessage = '右键点击';
+                },
+                middleClick() {
+                    this.mouseMessage = '中键点击';
+                }
+            }
+        }).mount('#app');
+    </script>
+</body>
+</html>

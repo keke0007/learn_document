@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>模块化</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            border-bottom: 3px solid #4CAF50;
+            padding-bottom: 10px;
+        }
+        .section {
+            margin: 30px 0;
+            padding: 20px;
+            background: #f9f9f9;
+            border-left: 4px solid #4CAF50;
+            border-radius: 5px;
+        }
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+        }
+        .warning {
+            background: #fff3cd;
+            padding: 15px;
+            border-radius: 5px;
+            border-left: 4px solid #ffc107;
+            margin: 15px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>模块化</h1>
+        
+        <div class="warning">
+            <strong>注意：</strong>ES6 模块需要在服务器环境下运行，不能直接通过 file:// 协议打开。
+            可以使用本地服务器（如 Live Server）或查看代码示例。
+        </div>
+        
+        <div class="section">
+            <h2>1. 导出（export）</h2>
+            <div class="code-block">
+// math.js - 命名导出
+export function add(a, b) {
+    return a + b;
+}
+
+export function multiply(a, b) {
+    return a * b;
+}
+
+export const PI = 3.14159;
+
+// 或者使用 export { }
+const subtract = (a, b) => a - b;
+export { subtract };
+
+// 默认导出
+export default function divide(a, b) {
+    return a / b;
+}
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2>2. 导入（import）</h2>
+            <div class="code-block">
+// 导入命名导出
+import { add, multiply, PI } from './math.js';
+
+// 导入默认导出
+import divide from './math.js';
+
+// 导入所有命名导出
+import * as math from './math.js';
+math.add(1, 2);
+
+// 重命名导入
+import { add as sum } from './math.js';
+
+// 同时导入默认和命名
+import divide, { add, multiply } from './math.js';
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2>3. 模块示例结构</h2>
+            <div class="code-block">
+// utils.js
+export function formatDate(date) {
+    return date.toLocaleDateString();
+}
+
+export function formatCurrency(amount) {
+    return `¥${amount.toFixed(2)}`;
+}
+
+// user.js
+export class User {
+    constructor(name, email) {
+        this.name = name;
+        this.email = email;
+    }
+    
+    greet() {
+        return `Hello, ${this.name}!`;
+    }
+}
+
+// main.js
+import { formatDate, formatCurrency } from './utils.js';
+import { User } from './user.js';
+
+const user = new User("张三", "zhang@example.com");
+console.log(user.greet());
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2>4. 动态导入</h2>
+            <div class="code-block">
+// 动态导入（返回 Promise）
+async function loadModule() {
+    const module = await import('./math.js');
+    console.log(module.add(1, 2));
+}
+
+// 条件导入
+if (condition) {
+    import('./moduleA.js').then(module => {
+        // 使用模块
+    });
+}
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2>5. HTML 中使用模块</h2>
+            <div class="code-block">
+&lt;script type="module"&gt;
+    import { add } from './math.js';
+    console.log(add(1, 2));
+&lt;/script&gt;
+
+&lt;!-- 或者外部模块 --&gt;
+&lt;script type="module" src="main.js"&gt;&lt;/script&gt;
+            </div>
+        </div>
+    </div>
+
+    <script>
+        console.log("=== 模块化示例 ===");
+        console.log("ES6 模块使用 export 和 import 进行模块化");
+        console.log("注意：需要在服务器环境下运行");
+        
+        // 模拟模块功能（实际项目中应使用真正的模块）
+        const mathModule = {
+            add: (a, b) => a + b,
+            multiply: (a, b) => a * b,
+            PI: 3.14159
+        };
+        
+        console.log("模拟模块:", mathModule);
+        console.log("add(2, 3):", mathModule.add(2, 3));
+    </script>
+</body>
+</html>

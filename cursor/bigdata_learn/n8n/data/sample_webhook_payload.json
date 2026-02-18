@@ -1,0 +1,79 @@
+{
+  "description": "Webhook 请求体示例集合",
+  "examples": [
+    {
+      "name": "订单创建通知",
+      "payload": {
+        "event_type": "order.created",
+        "order_id": "ORD20240115001",
+        "user_id": "U1001",
+        "product_id": "P2001",
+        "product_name": "无线蓝牙耳机",
+        "quantity": 2,
+        "unit_price": 99.50,
+        "amount": 199.00,
+        "currency": "CNY",
+        "status": "pending",
+        "shipping_address": {
+          "name": "张三",
+          "phone": "13800138000",
+          "province": "广东省",
+          "city": "深圳市",
+          "district": "南山区",
+          "address": "科技园路100号"
+        },
+        "timestamp": "2024-01-15T10:30:00Z"
+      }
+    },
+    {
+      "name": "支付完成通知",
+      "payload": {
+        "event_type": "payment.completed",
+        "order_id": "ORD20240115001",
+        "payment_id": "PAY20240115001",
+        "amount": 199.00,
+        "currency": "CNY",
+        "payment_method": "wechat_pay",
+        "paid_at": "2024-01-15T10:35:00Z",
+        "transaction_id": "TXN4200001234567890"
+      }
+    },
+    {
+      "name": "物流更新通知",
+      "payload": {
+        "event_type": "shipping.updated",
+        "order_id": "ORD20240115001",
+        "tracking_number": "SF1234567890",
+        "carrier": "顺丰速运",
+        "status": "in_transit",
+        "location": "深圳转运中心",
+        "updated_at": "2024-01-16T08:00:00Z"
+      }
+    },
+    {
+      "name": "用户注册通知",
+      "payload": {
+        "event_type": "user.registered",
+        "user_id": "U1002",
+        "username": "lisi",
+        "email": "lisi@example.com",
+        "phone": "13900139000",
+        "register_source": "mobile_app",
+        "registered_at": "2024-01-15T14:20:00Z"
+      }
+    },
+    {
+      "name": "库存告警通知",
+      "payload": {
+        "event_type": "inventory.low_stock",
+        "product_id": "P2001",
+        "product_name": "无线蓝牙耳机",
+        "current_stock": 5,
+        "threshold": 10,
+        "warehouse": "WH-SZ-001",
+        "alert_level": "warning",
+        "triggered_at": "2024-01-15T16:00:00Z"
+      }
+    }
+  ]
+}

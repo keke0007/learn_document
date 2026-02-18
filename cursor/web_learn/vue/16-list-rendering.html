@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>列表渲染</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            border-bottom: 3px solid #4CAF50;
+            padding-bottom: 10px;
+        }
+        .section {
+            margin: 30px 0;
+            padding: 20px;
+            background: #f9f9f9;
+            border-left: 4px solid #4CAF50;
+            border-radius: 5px;
+        }
+        .demo-box {
+            padding: 20px;
+            background: #e8f5e9;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            padding: 10px;
+            margin: 5px 0;
+            background: white;
+            border-radius: 5px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+        th {
+            background: #4CAF50;
+            color: white;
+        }
+        button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        input {
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div class="container">
+            <h1>列表渲染</h1>
+            
+            <div class="section">
+                <h2>1. 基础 v-for</h2>
+                <div class="demo-box">
+                    <ul>
+                        <li v-for="item in items" :key="item">
+                            {{ item }}
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2>2. 带索引的 v-for</h2>
+                <div class="demo-box">
+                    <ul>
+                        <li v-for="(item, index) in items" :key="index">
+                            {{ index + 1 }}. {{ item }}
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2>3. 遍历对象数组</h2>
+                <div class="demo-box">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>姓名</th>
+                                <th>年龄</th>
+                                <th>城市</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="user in users" :key="user.id">
+                                <td>{{ user.id }}</td>
+                                <td>{{ user.name }}</td>
+                                <td>{{ user.age }}</td>
+                                <td>{{ user.city }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2>4. 遍历对象</h2>
+                <div class="demo-box">
+                    <ul>
+                        <li v-for="(value, key) in person" :key="key">
+                            {{ key }}: {{ value }}
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2>5. 遍历数字</h2>
+                <div class="demo-box">
+                    <ul>
+                        <li v-for="n in 5" :key="n">
+                            第 {{ n }} 项
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2>6. 动态添加/删除</h2>
+                <div class="demo-box">
+                    <input v-model="newItem" @keyup.enter="addItem" placeholder="添加新项目">
+                    <button @click="addItem">添加</button>
+                    <ul>
+                        <li v-for="(item, index) in dynamicItems" :key="index">
+                            {{ item }}
+                            <button @click="removeItem(index)">删除</button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2>7. 使用 key 的重要性</h2>
+                <div class="demo-box">
+                    <p>使用 :key 可以帮助 Vue 跟踪每个节点的身份，提高渲染性能</p>
+                    <p>推荐使用唯一标识符作为 key，如 id</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const { createApp } = Vue;
+
+        createApp({
+            data() {
+                return {
+                    items: ['苹果', '香蕉', '橙子'],
+                    users: [
+                        { id: 1, name: '张三', age: 25, city: '北京' },
+                        { id: 2, name: '李四', age: 30, city: '上海' },
+                        { id: 3, name: '王五', age: 28, city: '广州' }
+                    ],
+                    person: {
+                        name: '张三',
+                        age: 25,
+                        city: '北京',
+                        email: 'zhang@example.com'
+                    },
+                    dynamicItems: ['项目1', '项目2', '项目3'],
+                    newItem: ''
+                }
+            },
+            methods: {
+                addItem() {
+                    if (this.newItem.trim()) {
+                        this.dynamicItems.push(this.newItem);
+                        this.newItem = '';
+                    }
+                },
+                removeItem(index) {
+                    this.dynamicItems.splice(index, 1);
+                }
+            }
+        }).mount('#app');
+    </script>
+</body>
+</html>

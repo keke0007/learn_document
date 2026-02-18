@@ -1,0 +1,6 @@
+# 常用 HBase shell 命令示例
+
+list
+describe 'user_profile'
+scan 'user_profile', { LIMIT => 10 }
+

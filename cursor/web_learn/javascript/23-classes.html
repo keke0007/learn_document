@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>类和继承</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            border-bottom: 3px solid #4CAF50;
+            padding-bottom: 10px;
+        }
+        .section {
+            margin: 30px 0;
+            padding: 20px;
+            background: #f9f9f9;
+            border-left: 4px solid #4CAF50;
+            border-radius: 5px;
+        }
+        button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        .output {
+            background: #e8f5e9;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>类和继承</h1>
+        
+        <div class="section">
+            <h2>1. 基础类定义</h2>
+            <button onclick="demoBasicClass()">运行示例</button>
+            <div id="basic-output" class="output"></div>
+        </div>
+        
+        <div class="section">
+            <h2>2. 构造函数和方法</h2>
+            <button onclick="demoConstructor()">运行示例</button>
+            <div id="constructor-output" class="output"></div>
+        </div>
+        
+        <div class="section">
+            <h2>3. 继承</h2>
+            <button onclick="demoInheritance()">运行示例</button>
+            <div id="inheritance-output" class="output"></div>
+        </div>
+        
+        <div class="section">
+            <h2>4. 静态方法和属性</h2>
+            <button onclick="demoStatic()">运行示例</button>
+            <div id="static-output" class="output"></div>
+        </div>
+        
+        <div class="section">
+            <h2>5. getter 和 setter</h2>
+            <button onclick="demoGetterSetter()">运行示例</button>
+            <div id="getset-output" class="output"></div>
+        </div>
+    </div>
+
+    <script>
+        // 1. 基础类定义
+        class Person {
+            constructor(name, age) {
+                this.name = name;
+                this.age = age;
+            }
+            
+            greet() {
+                return `Hello, I'm ${this.name}`;
+            }
+        }
+        
+        function demoBasicClass() {
+            let output = "";
+            let person = new Person("张三", 25);
+            
+            output += `person.name: ${person.name}<br>`;
+            output += `person.age: ${person.age}<br>`;
+            output += `person.greet(): ${person.greet()}<br>`;
+            output += `person instanceof Person: ${person instanceof Person}`;
+            
+            document.getElementById('basic-output').innerHTML = output;
+        }
+        
+        // 2. 构造函数和方法
+        class Calculator {
+            constructor(value = 0) {
+                this.value = value;
+            }
+            
+            add(num) {
+                this.value += num;
+                return this;
+            }
+            
+            subtract(num) {
+                this.value -= num;
+                return this;
+            }
+            
+            multiply(num) {
+                this.value *= num;
+                return this;
+            }
+            
+            getValue() {
+                return this.value;
+            }
+        }
+        
+        function demoConstructor() {
+            let output = "";
+            let calc = new Calculator(10);
+            
+            calc.add(5).multiply(2).subtract(3);
+            output += `链式调用结果: ${calc.getValue()}<br>`;
+            output += `计算过程: 10 + 5 = 15, 15 × 2 = 30, 30 - 3 = 27`;
+            
+            document.getElementById('constructor-output').innerHTML = output;
+        }
+        
+        // 3. 继承
+        class Animal {
+            constructor(name) {
+                this.name = name;
+            }
+            
+            speak() {
+                return `${this.name} makes a sound`;
+            }
+        }
+        
+        class Dog extends Animal {
+            constructor(name, breed) {
+                super(name); // 调用父类构造函数
+                this.breed = breed;
+            }
+            
+            speak() {
+                return `${this.name} barks!`;
+            }
+            
+            getInfo() {
+                return `${this.name} is a ${this.breed}`;
+            }
+        }
+        
+        function demoInheritance() {
+            let output = "";
+            let animal = new Animal("动物");
+            let dog = new Dog("旺财", "金毛");
+            
+            output += `animal.speak(): ${animal.speak()}<br>`;
+            output += `dog.speak(): ${dog.speak()}<br>`;
+            output += `dog.getInfo(): ${dog.getInfo()}<br>`;
+            output += `dog instanceof Dog: ${dog instanceof Dog}<br>`;
+            output += `dog instanceof Animal: ${dog instanceof Animal}`;
+            
+            document.getElementById('inheritance-output').innerHTML = output;
+        }
+        
+        // 4. 静态方法和属性
+        class MathHelper {
+            static PI = 3.14159;
+            
+            static add(a, b) {
+                return a + b;
+            }
+            
+            static multiply(a, b) {
+                return a * b;
+            }
+        }
+        
+        function demoStatic() {
+            let output = "";
+            
+            output += `MathHelper.PI: ${MathHelper.PI}<br>`;
+            output += `MathHelper.add(5, 3): ${MathHelper.add(5, 3)}<br>`;
+            output += `MathHelper.multiply(4, 2): ${MathHelper.multiply(4, 2)}<br>`;
+            output += "注意：静态方法通过类名调用，不需要实例化";
+            
+            document.getElementById('static-output').innerHTML = output;
+        }
+        
+        // 5. getter 和 setter
+        class Temperature {
+            constructor(celsius) {
+                this._celsius = celsius;
+            }
+            
+            get celsius() {
+                return this._celsius;
+            }
+            
+            set celsius(value) {
+                if (value < -273.15) {
+                    throw new Error('温度不能低于绝对零度');
+                }
+                this._celsius = value;
+            }
+            
+            get fahrenheit() {
+                return this._celsius * 9/5 + 32;
+            }
+            
+            set fahrenheit(value) {
+                this._celsius = (value - 32) * 5/9;
+            }
+        }
+        
+        function demoGetterSetter() {
+            let output = "";
+            let temp = new Temperature(25);
+            
+            output += `temp.celsius: ${temp.celsius}°C<br>`;
+            output += `temp.fahrenheit: ${temp.fahrenheit.toFixed(2)}°F<br>`;
+            
+            temp.celsius = 30;
+            output += `<br>设置 celsius = 30<br>`;
+            output += `temp.celsius: ${temp.celsius}°C<br>`;
+            output += `temp.fahrenheit: ${temp.fahrenheit.toFixed(2)}°F<br>`;
+            
+            temp.fahrenheit = 86;
+            output += `<br>设置 fahrenheit = 86<br>`;
+            output += `temp.celsius: ${temp.celsius.toFixed(2)}°C<br>`;
+            output += `temp.fahrenheit: ${temp.fahrenheit.toFixed(2)}°F`;
+            
+            document.getElementById('getset-output').innerHTML = output;
+        }
+        
+        console.log("=== 类和继承示例 ===");
+        console.log("ES6 类提供了更清晰的面向对象编程语法");
+    </script>
+</body>
+</html>

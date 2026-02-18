@@ -1,0 +1,21 @@
+{ "index": {} }
+{ "user_id": 1, "name": "张三", "city": "北京", "last_login": "2024-03-14T10:00:05", "tags": ["金卡"] }
+{ "index": {} }
+{ "user_id": 2, "name": "李四", "city": "上海", "last_login": "2024-03-14T10:01:40", "tags": ["银卡"] }
+{ "index": {} }
+{ "user_id": 3, "name": "王五", "city": "广州", "last_login": "2024-03-13T09:30:00", "tags": ["普通"] }
+{ "index": {} }
+{ "user_id": 4, "name": "赵六", "city": "深圳", "last_login": "2024-03-12T20:15:00", "tags": ["金卡"] }
+{ "index": {} }
+{ "user_id": 5, "name": "小红", "city": "杭州", "last_login": "2024-03-11T18:00:00", "tags": ["普通"] }
+{ "index": {} }
+{ "user_id": 6, "name": "小明", "city": "成都", "last_login": "2024-03-10T16:45:00", "tags": ["银卡"] }
+{ "index": {} }
+{ "user_id": 7, "name": "小李", "city": "武汉", "last_login": "2024-03-09T14:20:00", "tags": ["普通"] }
+{ "index": {} }
+{ "user_id": 8, "name": "小王", "city": "西安", "last_login": "2024-03-08T12:10:00", "tags": ["金卡"] }
+{ "index": {} }
+{ "user_id": 9, "name": "新用户A", "city": "北京", "last_login": "2024-03-14T09:00:00", "tags": ["普通"] }
+{ "index": {} }
+{ "user_id": 10, "name": "新用户B", "city": "上海", "last_login": "2024-03-14T09:15:00", "tags": ["普通"] }
+

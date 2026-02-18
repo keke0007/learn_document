@@ -1,0 +1,5 @@
+# 在 HBase shell 中执行的示例脚本
+
+create 'user_profile', { NAME => 'info', VERSIONS => 1 }, { NAME => 'stat', VERSIONS => 1 }
+create 'orders', { NAME => 'd', VERSIONS => 1 }
+

@@ -1,0 +1,6 @@
+[
+  { "cmd": "switch", "target": "relay1", "state": "ON",  "ts": "2024-03-14T10:05:00Z" },
+  { "cmd": "switch", "target": "relay1", "state": "OFF", "ts": "2024-03-14T10:06:00Z" },
+  { "cmd": "set_threshold", "sensor": "temperature", "value": 30, "ts": "2024-03-14T10:07:00Z" }
+]
+

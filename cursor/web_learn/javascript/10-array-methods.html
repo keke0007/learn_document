@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>数组方法</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            border-bottom: 3px solid #4CAF50;
+            padding-bottom: 10px;
+        }
+        .section {
+            margin: 30px 0;
+            padding: 20px;
+            background: #f9f9f9;
+            border-left: 4px solid #4CAF50;
+            border-radius: 5px;
+        }
+        button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        .output {
+            background: #e8f5e9;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>数组方法（map, filter, reduce 等）</h1>
+        
+        <div class="section">
+            <h2>1. map() - 映射</h2>
+            <button onclick="demoMap()">运行示例</button>
+            <div id="map-output" class="output"></div>
+        </div>
+        
+        <div class="section">
+            <h2>2. filter() - 过滤</h2>
+            <button onclick="demoFilter()">运行示例</button>
+            <div id="filter-output" class="output"></div>
+        </div>
+        
+        <div class="section">
+            <h2>3. reduce() - 归约</h2>
+            <button onclick="demoReduce()">运行示例</button>
+            <div id="reduce-output" class="output"></div>
+        </div>
+        
+        <div class="section">
+            <h2>4. forEach() - 遍历</h2>
+            <button onclick="demoForEach()">运行示例</button>
+            <div id="foreach-output" class="output"></div>
+        </div>
+        
+        <div class="section">
+            <h2>5. find() 和 findIndex()</h2>
+            <button onclick="demoFind()">运行示例</button>
+            <div id="find-output" class="output"></div>
+        </div>
+        
+        <div class="section">
+            <h2>6. some() 和 every()</h2>
+            <button onclick="demoSomeEvery()">运行示例</button>
+            <div id="someevery-output" class="output"></div>
+        </div>
+        
+        <div class="section">
+            <h2>7. 方法链式调用</h2>
+            <button onclick="demoChain()">运行示例</button>
+            <div id="chain-output" class="output"></div>
+        </div>
+    </div>
+
+    <script>
+        function demoMap() {
+            let output = "";
+            let numbers = [1, 2, 3, 4, 5];
+            
+            // 每个数字乘以 2
+            let doubled = numbers.map(x => x * 2);
+            
+            // 转换为字符串
+            let strings = numbers.map(x => `数字${x}`);
+            
+            output += `原数组: [${numbers.join(', ')}]<br>`;
+            output += `map(x => x * 2): [${doubled.join(', ')}]<br>`;
+            output += `map(x => "数字" + x): [${strings.join(', ')}]<br>`;
+            
+            document.getElementById('map-output').innerHTML = output;
+        }
+        
+        function demoFilter() {
+            let output = "";
+            let numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+            
+            // 过滤偶数
+            let evens = numbers.filter(x => x % 2 === 0);
+            
+            // 过滤大于 5 的数
+            let greaterThan5 = numbers.filter(x => x > 5);
+            
+            output += `原数组: [${numbers.join(', ')}]<br>`;
+            output += `filter(x => x % 2 === 0): [${evens.join(', ')}]<br>`;
+            output += `filter(x => x > 5): [${greaterThan5.join(', ')}]<br>`;
+            
+            document.getElementById('filter-output').innerHTML = output;
+        }
+        
+        function demoReduce() {
+            let output = "";
+            let numbers = [1, 2, 3, 4, 5];
+            
+            // 求和
+            let sum = numbers.reduce((acc, x) => acc + x, 0);
+            
+            // 求乘积
+            let product = numbers.reduce((acc, x) => acc * x, 1);
+            
+            // 找最大值
+            let max = numbers.reduce((acc, x) => x > acc ? x : acc, numbers[0]);
+            
+            output += `原数组: [${numbers.join(', ')}]<br>`;
+            output += `reduce 求和: ${sum}<br>`;
+            output += `reduce 求积: ${product}<br>`;
+            output += `reduce 找最大值: ${max}<br>`;
+            
+            document.getElementById('reduce-output').innerHTML = output;
+        }
+        
+        function demoForEach() {
+            let output = "";
+            let fruits = ['苹果', '香蕉', '橙子'];
+            
+            output += "forEach 遍历数组:<br>";
+            fruits.forEach((fruit, index) => {
+                output += `${index + 1}. ${fruit}<br>`;
+            });
+            
+            document.getElementById('foreach-output').innerHTML = output;
+        }
+        
+        function demoFind() {
+            let output = "";
+            let users = [
+                {id: 1, name: "张三", age: 25},
+                {id: 2, name: "李四", age: 30},
+                {id: 3, name: "王五", age: 28}
+            ];
+            
+            // find - 找第一个匹配的元素
+            let user = users.find(u => u.age > 26);
+            
+            // findIndex - 找第一个匹配的索引
+            let index = users.findIndex(u => u.name === "李四");
+            
+            output += `原数组: ${JSON.stringify(users, null, 2)}<br><br>`;
+            output += `find(u => u.age > 26): ${JSON.stringify(user)}<br>`;
+            output += `findIndex(u => u.name === "李四"): ${index}<br>`;
+            
+            document.getElementById('find-output').innerHTML = output;
+        }
+        
+        function demoSomeEvery() {
+            let output = "";
+            let numbers = [2, 4, 6, 8, 10];
+            
+            // some - 至少有一个满足条件
+            let hasEven = numbers.some(x => x % 2 === 0);
+            let hasOdd = numbers.some(x => x % 2 !== 0);
+            
+            // every - 所有元素都满足条件
+            let allEven = numbers.every(x => x % 2 === 0);
+            let allGreaterThan5 = numbers.every(x => x > 5);
+            
+            output += `原数组: [${numbers.join(', ')}]<br>`;
+            output += `some(x => x % 2 === 0): ${hasEven}<br>`;
+            output += `some(x => x % 2 !== 0): ${hasOdd}<br>`;
+            output += `every(x => x % 2 === 0): ${allEven}<br>`;
+            output += `every(x => x > 5): ${allGreaterThan5}<br>`;
+            
+            document.getElementById('someevery-output').innerHTML = output;
+        }
+        
+        function demoChain() {
+            let output = "";
+            let numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+            
+            // 链式调用：过滤 -> 映射 -> 求和
+            let result = numbers
+                .filter(x => x % 2 === 0)  // 过滤偶数
+                .map(x => x * 2)           // 每个乘以 2
+                .reduce((acc, x) => acc + x, 0);  // 求和
+            
+            output += `原数组: [${numbers.join(', ')}]<br>`;
+            output += `链式操作: filter(偶数) -> map(×2) -> reduce(求和)<br>`;
+            output += `结果: ${result}<br><br>`;
+            
+            // 步骤分解
+            let step1 = numbers.filter(x => x % 2 === 0);
+            let step2 = step1.map(x => x * 2);
+            let step3 = step2.reduce((acc, x) => acc + x, 0);
+            
+            output += `步骤1 (filter): [${step1.join(', ')}]<br>`;
+            output += `步骤2 (map): [${step2.join(', ')}]<br>`;
+            output += `步骤3 (reduce): ${step3}`;
+            
+            document.getElementById('chain-output').innerHTML = output;
+        }
+        
+        console.log("=== 数组方法示例 ===");
+    </script>
+</body>
+</html>

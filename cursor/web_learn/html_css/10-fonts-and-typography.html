@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>字体和排版</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+        }
+        
+        .section {
+            background: white;
+            padding: 30px;
+            margin-bottom: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        h2 {
+            color: #555;
+            margin-bottom: 20px;
+        }
+        
+        /* 字体族 */
+        .font-serif { font-family: 'Times New Roman', serif; }
+        .font-sans { font-family: Arial, sans-serif; }
+        .font-mono { font-family: 'Courier New', monospace; }
+        .font-google { font-family: 'Roboto', sans-serif; }
+        
+        /* 字体大小 */
+        .size-small { font-size: 0.875rem; }
+        .size-base { font-size: 1rem; }
+        .size-large { font-size: 1.5rem; }
+        .size-xl { font-size: 2rem; }
+        
+        /* 字体粗细 */
+        .weight-light { font-weight: 300; }
+        .weight-normal { font-weight: 400; }
+        .weight-bold { font-weight: 700; }
+        
+        /* 字体样式 */
+        .style-normal { font-style: normal; }
+        .style-italic { font-style: italic; }
+        .style-oblique { font-style: oblique; }
+        
+        /* 文本装饰 */
+        .decoration-none { text-decoration: none; }
+        .decoration-underline { text-decoration: underline; }
+        .decoration-line-through { text-decoration: line-through; }
+        
+        /* 行高 */
+        .line-height-tight { line-height: 1.2; }
+        .line-height-normal { line-height: 1.6; }
+        .line-height-loose { line-height: 2.5; }
+        
+        /* 字间距 */
+        .letter-spacing-tight { letter-spacing: -1px; }
+        .letter-spacing-normal { letter-spacing: 0; }
+        .letter-spacing-wide { letter-spacing: 3px; }
+        
+        .demo-box {
+            padding: 15px;
+            margin: 10px 0;
+            background: #f9f9f9;
+            border-left: 4px solid #4CAF50;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>字体和排版案例</h1>
+        
+        <div class="section">
+            <h2>1. 字体族 (font-family)</h2>
+            <div class="demo-box font-serif">
+                <strong>Serif 字体：</strong> Times New Roman - 衬线字体，适合正式文档
+            </div>
+            <div class="demo-box font-sans">
+                <strong>Sans-serif 字体：</strong> Arial - 无衬线字体，现代简洁
+            </div>
+            <div class="demo-box font-mono">
+                <strong>Monospace 字体：</strong> Courier New - 等宽字体，适合代码
+            </div>
+            <div class="demo-box font-google">
+                <strong>Google 字体：</strong> Roboto - 从 Google Fonts 引入的字体
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2>2. 字体大小 (font-size)</h2>
+            <div class="demo-box size-small">小号字体 (0.875rem / 14px)</div>
+            <div class="demo-box size-base">基础字体 (1rem / 16px)</div>
+            <div class="demo-box size-large">大号字体 (1.5rem / 24px)</div>
+            <div class="demo-box size-xl">超大字体 (2rem / 32px)</div>
+        </div>
+        
+        <div class="section">
+            <h2>3. 字体粗细 (font-weight)</h2>
+            <div class="demo-box weight-light">细体 (300)</div>
+            <div class="demo-box weight-normal">正常 (400)</div>
+            <div class="demo-box weight-bold">粗体 (700)</div>
+        </div>
+        
+        <div class="section">
+            <h2>4. 字体样式 (font-style)</h2>
+            <div class="demo-box style-normal">正常样式</div>
+            <div class="demo-box style-italic">斜体 (italic)</div>
+            <div class="demo-box style-oblique">倾斜 (oblique)</div>
+        </div>
+        
+        <div class="section">
+            <h2>5. 文本装饰 (text-decoration)</h2>
+            <div class="demo-box decoration-none">无装饰</div>
+            <div class="demo-box decoration-underline">下划线</div>
+            <div class="demo-box decoration-line-through">删除线</div>
+        </div>
+        
+        <div class="section">
+            <h2>6. 行高 (line-height)</h2>
+            <div class="demo-box line-height-tight">
+                <strong>紧密行高 (1.2)：</strong> 这是紧密行高的示例文本。行与行之间的距离较小，适合标题或短文本。
+            </div>
+            <div class="demo-box line-height-normal">
+                <strong>正常行高 (1.6)：</strong> 这是正常行高的示例文本。行与行之间的距离适中，适合正文阅读。
+            </div>
+            <div class="demo-box line-height-loose">
+                <strong>宽松行高 (2.5)：</strong> 这是宽松行高的示例文本。行与行之间的距离较大，适合需要更多空间的排版。
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2>7. 字间距 (letter-spacing)</h2>
+            <div class="demo-box letter-spacing-tight">紧密字间距 (-1px)</div>
+            <div class="demo-box letter-spacing-normal">正常字间距 (0)</div>
+            <div class="demo-box letter-spacing-wide">宽松字间距 (3px)</div>
+        </div>
+        
+        <div class="section">
+            <h2>8. 字体简写 (font shorthand)</h2>
+            <div class="demo-box" style="font: italic bold 1.2rem/1.6 'Roboto', sans-serif;">
+                <strong>font 简写：</strong> font: italic bold 1.2rem/1.6 'Roboto', sans-serif;
+                <br>包含：style weight size/line-height family
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2>9. 文本对齐和排版</h2>
+            <div class="demo-box" style="text-align: left;">
+                <strong>左对齐：</strong> 文本靠左对齐，这是默认的对齐方式。
+            </div>
+            <div class="demo-box" style="text-align: center;">
+                <strong>居中对齐：</strong> 文本居中显示。
+            </div>
+            <div class="demo-box" style="text-align: right;">
+                <strong>右对齐：</strong> 文本靠右对齐。
+            </div>
+            <div class="demo-box" style="text-align: justify;">
+                <strong>两端对齐：</strong> 文本在左右两边都对齐，通过调整单词之间的间距来实现。这种对齐方式常用于书籍和正式文档中。
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2>字体和排版属性总结</h2>
+            <ul style="line-height: 2;">
+                <li><strong>font-family</strong> - 字体族</li>
+                <li><strong>font-size</strong> - 字体大小 (px, em, rem, %)</li>
+                <li><strong>font-weight</strong> - 字体粗细 (100-900, normal, bold)</li>
+                <li><strong>font-style</strong> - 字体样式 (normal, italic, oblique)</li>
+                <li><strong>text-decoration</strong> - 文本装饰 (none, underline, line-through)</li>
+                <li><strong>line-height</strong> - 行高 (数字, px, em, %)</li>
+                <li><strong>letter-spacing</strong> - 字间距</li>
+                <li><strong>text-align</strong> - 文本对齐 (left, center, right, justify)</li>
+                <li><strong>font</strong> - 字体简写属性</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

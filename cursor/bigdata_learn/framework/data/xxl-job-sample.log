@@ -1,0 +1,17 @@
+2024-01-26 10:00:00.123 [xxl-job, JobScheduleHelper#scheduleThread] INFO  com.xxl.job.core.scheduler.XxlJobScheduler - >>>>>>>>>> xxl-job trigger start, jobId:1
+2024-01-26 10:00:00.124 [xxl-job, JobScheduleHelper#scheduleThread] INFO  com.xxl.job.core.trigger.XxlJobTrigger - >>>>>>>>>> xxl-job trigger, jobId:1, executorHandler:userJobHandler, executorParam:null, executorBlockStrategy:SERIAL_EXECUTION, executorTimeout:0
+2024-01-26 10:00:00.125 [xxl-job, JobScheduleHelper#scheduleThread] DEBUG com.xxl.job.core.router.ExecutorRouteStrategyEnum - Route strategy: ROUND
+2024-01-26 10:00:00.126 [xxl-job, JobScheduleHelper#scheduleThread] DEBUG com.xxl.job.core.router.ExecutorRouteStrategyEnum - Executor addresses: [http://192.168.1.100:9999, http://192.168.1.101:9999]
+2024-01-26 10:00:00.127 [xxl-job, JobScheduleHelper#scheduleThread] DEBUG com.xxl.job.core.router.ExecutorRouteStrategyEnum - Selected executor: http://192.168.1.100:9999
+2024-01-26 10:00:00.128 [xxl-job, JobScheduleHelper#scheduleThread] INFO  com.xxl.job.core.trigger.XxlJobTrigger - >>>>>>>>>> xxl-job trigger success, jobId:1, executorHandler:userJobHandler, executorAddress:http://192.168.1.100:9999
+2024-01-26 10:00:00.200 [xxl-job, executorJobHandler#pool-1-thread-1] INFO  com.xxl.job.core.executor.XxlJobExecutor - >>>>>>>>>> xxl-job job handler execute, jobId:1, executorHandler:userJobHandler, executorParam:null
+2024-01-26 10:00:00.201 [xxl-job, executorJobHandler#pool-1-thread-1] INFO  com.xxl.job.core.handler.impl.MethodJobHandler - >>>>>>>>>> xxl-job method job handler execute, jobId:1, method:execute, param:null
+2024-01-26 10:00:00.202 [xxl-job, executorJobHandler#pool-1-thread-1] DEBUG com.example.trace.XxlJobHandlerTrace - [TRACE] Job handler executed
+2024-01-26 10:00:00.203 [xxl-job, executorJobHandler#pool-1-thread-1] DEBUG com.example.trace.XxlJobHandlerTrace - [TRACE] Job param: null
+2024-01-26 10:00:00.204 [xxl-job, executorJobHandler#pool-1-thread-1] DEBUG com.example.trace.XxlJobHandlerTrace - [TRACE] Business logic executed
+2024-01-26 10:00:05.300 [xxl-job, executorJobHandler#pool-1-thread-1] INFO  com.xxl.job.core.executor.XxlJobExecutor - >>>>>>>>>> xxl-job job handler execute success, jobId:1, executorHandler:userJobHandler, executorParam:null, result:SUCCESS
+2024-01-26 10:00:05.301 [xxl-job, executorJobHandler#pool-1-thread-1] INFO  com.xxl.job.core.executor.XxlJobExecutor - >>>>>>>>>> xxl-job callback, jobId:1, handleCode:200, handleMsg:SUCCESS
+2024-01-26 10:00:05.302 [xxl-job, JobScheduleHelper#scheduleThread] INFO  com.xxl.job.core.scheduler.XxlJobScheduler - >>>>>>>>>> xxl-job trigger end, jobId:1
+2024-01-26 10:00:30.123 [xxl-job, ExecutorRegistryThread] INFO  com.xxl.job.core.executor.XxlJobSpringExecutor - >>>>>>>>>> xxl-job executor registry, appname:xxl-job-executor, address:http://192.168.1.100:9999
+2024-01-26 10:00:30.124 [xxl-job, ExecutorRegistryThread] DEBUG com.xxl.job.core.registry.ExecutorRegistryRegistry - Registry request: POST /api/registry
+2024-01-26 10:00:30.125 [xxl-job, ExecutorRegistryThread] DEBUG com.xxl.job.core.registry.ExecutorRegistryRegistry - Registry response: {"code":200,"msg":"success"}

@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS 过渡效果</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+        }
+        
+        .section {
+            background: white;
+            padding: 30px;
+            margin-bottom: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        h2 {
+            color: #555;
+            margin-bottom: 20px;
+        }
+        
+        /* 基础过渡 */
+        .transition-basic {
+            width: 200px;
+            height: 100px;
+            background: #667eea;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .transition-basic:hover {
+            background: #764ba2;
+            transform: scale(1.1);
+        }
+        
+        /* 颜色过渡 */
+        .transition-color {
+            width: 200px;
+            height: 100px;
+            background: #e74c3c;
+            border-radius: 5px;
+            transition: background-color 0.5s ease;
+            cursor: pointer;
+        }
+        
+        .transition-color:hover {
+            background: #2ecc71;
+        }
+        
+        /* 尺寸过渡 */
+        .transition-size {
+            width: 200px;
+            height: 100px;
+            background: #3498db;
+            border-radius: 5px;
+            transition: width 0.5s ease, height 0.5s ease;
+            cursor: pointer;
+        }
+        
+        .transition-size:hover {
+            width: 300px;
+            height: 150px;
+        }
+        
+        /* 变换过渡 */
+        .transition-transform {
+            width: 200px;
+            height: 100px;
+            background: #f39c12;
+            border-radius: 5px;
+            transition: transform 0.5s ease;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+        
+        .transition-transform:hover {
+            transform: rotate(15deg) scale(1.2);
+        }
+        
+        /* 阴影过渡 */
+        .transition-shadow {
+            width: 200px;
+            height: 100px;
+            background: #9b59b6;
+            border-radius: 5px;
+            transition: box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .transition-shadow:hover {
+            box-shadow: 0 10px 30px rgba(155, 89, 182, 0.5);
+        }
+        
+        /* 多个属性过渡 */
+        .transition-multiple {
+            width: 200px;
+            height: 100px;
+            background: #1abc9c;
+            border-radius: 5px;
+            transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .transition-multiple:hover {
+            background: #16a085;
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(22, 160, 133, 0.4);
+        }
+        
+        /* 过渡时间函数 */
+        .timing-ease { transition: all 1s ease; }
+        .timing-ease-in { transition: all 1s ease-in; }
+        .timing-ease-out { transition: all 1s ease-out; }
+        .timing-ease-in-out { transition: all 1s ease-in-out; }
+        .timing-linear { transition: all 1s linear; }
+        
+        .timing-box {
+            width: 100px;
+            height: 50px;
+            background: #667eea;
+            margin: 10px 0;
+            cursor: pointer;
+        }
+        
+        .timing-box:hover {
+            transform: translateX(200px);
+        }
+        
+        /* 过渡延迟 */
+        .transition-delay {
+            width: 200px;
+            height: 100px;
+            background: #e67e22;
+            border-radius: 5px;
+            transition: all 0.5s ease 0.3s; /* 延迟 0.3 秒 */
+            cursor: pointer;
+        }
+        
+        .transition-delay:hover {
+            background: #d35400;
+            transform: scale(1.1);
+        }
+        
+        .demo-box {
+            margin: 20px 0;
+            padding: 20px;
+            background: #f9f9f9;
+            border-radius: 5px;
+        }
+        
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>CSS 过渡效果 (Transitions) 案例</h1>
+        
+        <div class="section">
+            <h2>1. 基础过渡效果</h2>
+            <p>鼠标悬停查看效果：</p>
+            <div class="demo-box">
+                <div class="transition-basic">悬停我</div>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2>2. 颜色过渡</h2>
+            <div class="demo-box">
+                <div class="transition-color"></div>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2>3. 尺寸过渡</h2>
+            <div class="demo-box">
+                <div class="transition-size"></div>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2>4. 变换过渡</h2>
+            <div class="demo-box">
+                <div class="transition-transform">旋转和缩放</div>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2>5. 阴影过渡</h2>
+            <div class="demo-box">
+                <div class="transition-shadow"></div>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2>6. 多个属性过渡</h2>
+            <div class="demo-box">
+                <div class="transition-multiple"></div>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2>7. 过渡时间函数 (timing-function)</h2>
+            <p>不同时间函数的过渡效果（悬停查看）：</p>
+            <div class="demo-box">
+                <div class="timing-box timing-ease">ease (默认)</div>
+                <div class="timing-box timing-ease-in">ease-in</div>
+                <div class="timing-box timing-ease-out">ease-out</div>
+                <div class="timing-box timing-ease-in-out">ease-in-out</div>
+                <div class="timing-box timing-linear">linear</div>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2>8. 过渡延迟 (transition-delay)</h2>
+            <div class="demo-box">
+                <div class="transition-delay">延迟 0.3 秒后过渡</div>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2>过渡属性总结</h2>
+            <ul style="line-height: 2;">
+                <li><strong>transition-property</strong> - 要过渡的属性 (all, color, width 等)</li>
+                <li><strong>transition-duration</strong> - 过渡持续时间 (0.3s, 500ms 等)</li>
+                <li><strong>transition-timing-function</strong> - 时间函数
+                    <ul style="margin-left: 20px; margin-top: 5px;">
+                        <li>ease - 慢-快-慢（默认）</li>
+                        <li>ease-in - 慢-快</li>
+                        <li>ease-out - 快-慢</li>
+                        <li>ease-in-out - 慢-快-慢（对称）</li>
+                        <li>linear - 匀速</li>
+                    </ul>
+                </li>
+                <li><strong>transition-delay</strong> - 过渡延迟时间</li>
+                <li><strong>transition</strong> - 简写属性 (property duration timing-function delay)</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

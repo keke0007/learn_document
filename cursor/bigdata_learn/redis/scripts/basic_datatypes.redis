@@ -1,0 +1,20 @@
+# 基础数据结构命令示例（在 redis-cli 中使用：source scripts/basic_datatypes.redis）
+
+SET counter 0
+INCR counter
+GET counter
+
+HSET user:1 name "张三" age 25 city "北京"
+HGETALL user:1
+
+LPUSH recent_logs "log1"
+LPUSH recent_logs "log2"
+LRANGE recent_logs 0 -1
+
+SADD user:1:tags "金卡" "高价值"
+SMEMBERS user:1:tags
+
+ZADD rank:test 100 "user1"
+ZADD rank:test 200 "user2"
+ZREVRANGE rank:test 0 -1 WITHSCORES
+

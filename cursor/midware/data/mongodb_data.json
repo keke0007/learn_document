@@ -1,0 +1,67 @@
+{
+  "users": [
+    {
+      "_id": "507f1f77bcf86cd799439011",
+      "name": "Alice",
+      "age": 25,
+      "email": "alice@example.com",
+      "department": "IT",
+      "salary": 15000,
+      "tags": ["developer", "python", "mongodb"],
+      "address": {
+        "city": "Beijing",
+        "street": "Main Street",
+        "zip": "100000"
+      },
+      "created_at": "2024-01-26T10:00:00Z"
+    },
+    {
+      "_id": "507f1f77bcf86cd799439012",
+      "name": "Bob",
+      "age": 30,
+      "email": "bob@example.com",
+      "department": "HR",
+      "salary": 12000,
+      "tags": ["developer", "java"],
+      "address": {
+        "city": "Shanghai",
+        "street": "Second Street",
+        "zip": "200000"
+      },
+      "created_at": "2024-01-25T10:00:00Z"
+    },
+    {
+      "_id": "507f1f77bcf86cd799439013",
+      "name": "Charlie",
+      "age": 28,
+      "email": "charlie@example.com",
+      "department": "Finance",
+      "salary": 20000,
+      "tags": ["designer", "ui"],
+      "address": {
+        "city": "Guangzhou",
+        "street": "Third Street",
+        "zip": "510000"
+      },
+      "created_at": "2024-01-24T10:00:00Z"
+    }
+  ],
+  "orders": [
+    {
+      "_id": "507f191e810c19729de860ea",
+      "order_id": "ORD001",
+      "user_id": "507f1f77bcf86cd799439011",
+      "amount": 1000,
+      "status": "completed",
+      "created_at": "2024-01-26T10:00:00Z"
+    },
+    {
+      "_id": "507f191e810c19729de860eb",
+      "order_id": "ORD002",
+      "user_id": "507f1f77bcf86cd799439012",
+      "amount": 2000,
+      "status": "pending",
+      "created_at": "2024-01-25T10:00:00Z"
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "code": 200,
+  "message": "success",
+  "data": {
+    "articles": [
+      {
+        "id": 1,
+        "title": "Python 爬虫入门",
+        "author": "张三",
+        "publish_time": "2024-01-26",
+        "content": "这是一篇关于 Python 爬虫的入门文章。",
+        "tags": ["Python", "爬虫", "入门"]
+      },
+      {
+        "id": 2,
+        "title": "Scrapy 框架详解",
+        "author": "李四",
+        "publish_time": "2024-01-25",
+        "content": "详细介绍 Scrapy 框架的使用方法。",
+        "tags": ["Python", "Scrapy", "框架"]
+      }
+    ],
+    "total": 100,
+    "page": 1,
+    "page_size": 10
+  },
+  "timestamp": 1706284800000
+}

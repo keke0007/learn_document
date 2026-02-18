@@ -1,0 +1,17 @@
+2024-01-26 10:00:00.123 [reactor-http-nio-1] DEBUG org.springframework.cloud.gateway.handler.RoutePredicateHandlerMapping - Mapping [Exchange: GET http://localhost:8080/api/users/1] to Route{id='user-service-route', uri=lb://user-service, order=0, predicate=Paths: [/api/users/**], match=true, gatewayFilters=[[[AddRequestHeader X-Request-Id = '550e8400-e29b-41d4-a716-446655440000'], order=1], [[Retry retries=3], order=2]]}
+2024-01-26 10:00:00.124 [reactor-http-nio-1] DEBUG org.springframework.cloud.gateway.filter.RouteToRequestUrlFilter - RouteToRequestUrlFilter start
+2024-01-26 10:00:00.125 [reactor-http-nio-1] DEBUG org.springframework.cloud.gateway.filter.LoadBalancerClientFilter - LoadBalancerClientFilter url changed: http://user-service/api/users/1 -> http://192.168.1.100:8080/api/users/1
+2024-01-26 10:00:00.126 [reactor-http-nio-1] DEBUG org.springframework.cloud.gateway.handler.FilteringWebHandler - Sorted gatewayFilter: [AuthFilter{order=-100}, AddRequestHeader{order=1}, Retry{order=2}, LogFilter{order=100}]
+2024-01-26 10:00:00.127 [reactor-http-nio-1] DEBUG org.springframework.cloud.gateway.filter.GatewayFilterChain - FilteringWebHandler start
+2024-01-26 10:00:00.128 [reactor-http-nio-1] DEBUG com.example.trace.GatewayFilterTrace$AuthFilter - AuthFilter executed: order=-100
+2024-01-26 10:00:00.129 [reactor-http-nio-1] DEBUG org.springframework.cloud.gateway.filter.AddRequestHeaderGatewayFilterFactory - AddRequestHeader filter applied: X-Request-Id=550e8400-e29b-41d4-a716-446655440000
+2024-01-26 10:00:00.130 [reactor-http-nio-1] DEBUG org.springframework.cloud.gateway.filter.NettyRoutingFilter - NettyRoutingFilter start
+2024-01-26 10:00:00.131 [reactor-http-nio-1] DEBUG org.springframework.cloud.gateway.filter.NettyRoutingFilter - Outbound Connection: http://192.168.1.100:8080/api/users/1
+2024-01-26 10:00:00.132 [reactor-http-nio-1] DEBUG reactor.netty.http.client.HttpClientConnect - [id: 0x12345678, L:/192.168.1.100:54321 - R:/192.168.1.100:8080] Connected
+2024-01-26 10:00:00.200 [reactor-http-nio-1] DEBUG org.springframework.cloud.gateway.filter.NettyRoutingFilter - Response received: 200 OK
+2024-01-26 10:00:00.201 [reactor-http-nio-1] DEBUG org.springframework.cloud.gateway.filter.NettyWriteResponseFilter - NettyWriteResponseFilter writing response
+2024-01-26 10:00:00.202 [reactor-http-nio-1] DEBUG com.example.trace.GatewayFilterTrace$LogFilter - LogFilter executed: order=100
+2024-01-26 10:00:00.203 [reactor-http-nio-1] DEBUG com.example.trace.GatewayFilterTrace$LogFilter - Request processed in 80ms
+2024-01-26 10:00:00.204 [reactor-http-nio-1] DEBUG org.springframework.cloud.gateway.filter.GatewayFilterChain - FilteringWebHandler completed
+2024-01-26 10:00:00.205 [reactor-http-nio-1] INFO  org.springframework.cloud.gateway.handler.RoutePredicateHandlerMapping - Route matched: user-service-route
+2024-01-26 10:00:00.206 [reactor-http-nio-1] INFO  org.springframework.cloud.gateway.handler.predicate.PathRoutePredicateFactory - Path matched: /api/users/**

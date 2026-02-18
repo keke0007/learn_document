@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>箭头函数</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            border-bottom: 3px solid #4CAF50;
+            padding-bottom: 10px;
+        }
+        .section {
+            margin: 30px 0;
+            padding: 20px;
+            background: #f9f9f9;
+            border-left: 4px solid #4CAF50;
+            border-radius: 5px;
+        }
+        button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        .output {
+            background: #e8f5e9;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>箭头函数</h1>
+        
+        <div class="section">
+            <h2>1. 基础箭头函数</h2>
+            <button onclick="demoBasic()">运行示例</button>
+            <div id="basic-output" class="output"></div>
+        </div>
+        
+        <div class="section">
+            <h2>2. 单参数箭头函数</h2>
+            <button onclick="demoSingleParam()">运行示例</button>
+            <div id="single-output" class="output"></div>
+        </div>
+        
+        <div class="section">
+            <h2>3. 多参数箭头函数</h2>
+            <button onclick="demoMultiParam()">运行示例</button>
+            <div id="multi-output" class="output"></div>
+        </div>
+        
+        <div class="section">
+            <h2>4. 箭头函数与 this</h2>
+            <button onclick="demoThis()">运行示例</button>
+            <div id="this-output" class="output"></div>
+        </div>
+        
+        <div class="section">
+            <h2>5. 箭头函数在数组方法中</h2>
+            <button onclick="demoArrayMethods()">运行示例</button>
+            <div id="array-output" class="output"></div>
+        </div>
+    </div>
+
+    <script>
+        function demoBasic() {
+            let output = "";
+            
+            // 传统函数
+            function traditional(x) {
+                return x * 2;
+            }
+            
+            // 箭头函数
+            const arrow = (x) => {
+                return x * 2;
+            };
+            
+            // 简化箭头函数（单表达式）
+            const arrowSimple = (x) => x * 2;
+            
+            output += `传统函数: traditional(5) = ${traditional(5)}<br>`;
+            output += `箭头函数: arrow(5) = ${arrow(5)}<br>`;
+            output += `简化箭头: arrowSimple(5) = ${arrowSimple(5)}<br>`;
+            
+            document.getElementById('basic-output').innerHTML = output;
+        }
+        
+        function demoSingleParam() {
+            let output = "";
+            
+            // 单参数可以省略括号
+            const square = x => x * x;
+            const greet = name => `Hello, ${name}!`;
+            
+            output += `square(5) = ${square(5)}<br>`;
+            output += `greet("张三") = ${greet("张三")}<br>`;
+            
+            document.getElementById('single-output').innerHTML = output;
+        }
+        
+        function demoMultiParam() {
+            let output = "";
+            
+            // 多参数需要括号
+            const add = (a, b) => a + b;
+            const multiply = (a, b, c) => a * b * c;
+            
+            output += `add(3, 5) = ${add(3, 5)}<br>`;
+            output += `multiply(2, 3, 4) = ${multiply(2, 3, 4)}<br>`;
+            
+            document.getElementById('multi-output').innerHTML = output;
+        }
+        
+        function demoThis() {
+            let output = "";
+            
+            // 传统函数中的 this
+            const obj1 = {
+                name: "对象1",
+                traditional: function() {
+                    return this.name;
+                }
+            };
+            
+            // 箭头函数中的 this（继承外层作用域）
+            const obj2 = {
+                name: "对象2",
+                arrow: () => {
+                    // 箭头函数不绑定自己的 this
+                    return this.name || "全局作用域";
+                }
+            };
+            
+            output += `传统函数 this: ${obj1.traditional()}<br>`;
+            output += `箭头函数 this: ${obj2.arrow()}<br>`;
+            output += "注意：箭头函数不绑定自己的 this，会继承外层作用域的 this";
+            
+            document.getElementById('this-output').innerHTML = output;
+        }
+        
+        function demoArrayMethods() {
+            let output = "";
+            let numbers = [1, 2, 3, 4, 5];
+            
+            // map
+            let doubled = numbers.map(x => x * 2);
+            output += `原数组: [${numbers.join(', ')}]<br>`;
+            output += `map(x => x * 2): [${doubled.join(', ')}]<br>`;
+            
+            // filter
+            let evens = numbers.filter(x => x % 2 === 0);
+            output += `filter(x => x % 2 === 0): [${evens.join(', ')}]<br>`;
+            
+            // reduce
+            let sum = numbers.reduce((acc, x) => acc + x, 0);
+            output += `reduce((acc, x) => acc + x, 0): ${sum}<br>`;
+            
+            // forEach
+            output += `forEach 输出: `;
+            numbers.forEach(x => output += x + " ");
+            
+            document.getElementById('array-output').innerHTML = output;
+        }
+        
+        console.log("=== 箭头函数示例 ===");
+    </script>
+</body>
+</html>

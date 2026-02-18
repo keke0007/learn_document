@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>用户管理</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f5f5;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+        }
+        
+        .header h1 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+        
+        .content {
+            padding: 30px;
+        }
+        
+        .form-section {
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+            font-weight: 500;
+        }
+        
+        input, select {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+        
+        button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        
+        button:hover {
+            background: #45a049;
+        }
+        
+        .btn-danger {
+            background: #e74c3c;
+        }
+        
+        .btn-danger:hover {
+            background: #c0392b;
+        }
+        
+        .btn-edit {
+            background: #2196F3;
+        }
+        
+        .btn-edit:hover {
+            background: #1976D2;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        th {
+            background: #f5f5f5;
+            font-weight: 600;
+        }
+        
+        tr:hover {
+            background: #f9f9f9;
+        }
+        
+        .actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .search-box {
+            margin-bottom: 20px;
+        }
+        
+        .search-box input {
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div class="container">
+            <div class="header">
+                <h1>👥 用户管理系统</h1>
+                <p>添加、编辑和删除用户</p>
+            </div>
+            
+            <div class="content">
+                <div class="form-section">
+                    <h2>{{ editingUser ? '编辑用户' : '添加用户' }}</h2>
+                    <div class="form-group">
+                        <label>姓名</label>
+                        <input v-model="formData.name" placeholder="输入姓名">
+                    </div>
+                    <div class="form-group">
+                        <label>邮箱</label>
+                        <input v-model="formData.email" type="email" placeholder="输入邮箱">
+                    </div>
+                    <div class="form-group">
+                        <label>年龄</label>
+                        <input v-model.number="formData.age" type="number" placeholder="输入年龄">
+                    </div>
+                    <div class="form-group">
+                        <label>城市</label>
+                        <select v-model="formData.city">
+                            <option value="">请选择城市</option>
+                            <option value="北京">北京</option>
+                            <option value="上海">上海</option>
+                            <option value="广州">广州</option>
+                            <option value="深圳">深圳</option>
+                        </select>
+                    </div>
+                    <button @click="saveUser">{{ editingUser ? '更新' : '添加' }}</button>
+                    <button v-if="editingUser" @click="cancelEdit">取消</button>
+                </div>
+                
+                <div class="search-box">
+                    <input v-model="searchQuery" placeholder="搜索用户（姓名、邮箱、城市）">
+                </div>
+                
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>姓名</th>
+                            <th>邮箱</th>
+                            <th>年龄</th>
+                            <th>城市</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="user in filteredUsers" :key="user.id">
+                            <td>{{ user.id }}</td>
+                            <td>{{ user.name }}</td>
+                            <td>{{ user.email }}</td>
+                            <td>{{ user.age }}</td>
+                            <td>{{ user.city }}</td>
+                            <td>
+                                <div class="actions">
+                                    <button class="btn-edit" @click="editUser(user)">编辑</button>
+                                    <button class="btn-danger" @click="deleteUser(user.id)">删除</button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <div style="margin-top: 20px; color: #666;">
+                    共 {{ filteredUsers.length }} 个用户
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const { createApp } = Vue;
+
+        createApp({
+            data() {
+                return {
+                    users: [
+                        { id: 1, name: '张三', email: 'zhang@example.com', age: 25, city: '北京' },
+                        { id: 2, name: '李四', email: 'li@example.com', age: 30, city: '上海' },
+                        { id: 3, name: '王五', email: 'wang@example.com', age: 28, city: '广州' }
+                    ],
+                    formData: {
+                        name: '',
+                        email: '',
+                        age: null,
+                        city: ''
+                    },
+                    editingUser: null,
+                    nextId: 4,
+                    searchQuery: ''
+                }
+            },
+            computed: {
+                filteredUsers() {
+                    if (!this.searchQuery) {
+                        return this.users;
+                    }
+                    const query = this.searchQuery.toLowerCase();
+                    return this.users.filter(user => 
+                        user.name.toLowerCase().includes(query) ||
+                        user.email.toLowerCase().includes(query) ||
+                        user.city.toLowerCase().includes(query)
+                    );
+                }
+            },
+            methods: {
+                saveUser() {
+                    if (!this.formData.name || !this.formData.email) {
+                        alert('请填写姓名和邮箱');
+                        return;
+                    }
+                    
+                    if (this.editingUser) {
+                        // 更新用户
+                        const index = this.users.findIndex(u => u.id === this.editingUser.id);
+                        this.users[index] = { ...this.formData, id: this.editingUser.id };
+                    } else {
+                        // 添加用户
+                        this.users.push({
+                            ...this.formData,
+                            id: this.nextId++
+                        });
+                    }
+                    
+                    this.resetForm();
+                },
+                editUser(user) {
+                    this.editingUser = user;
+                    this.formData = { ...user };
+                },
+                deleteUser(id) {
+                    if (confirm('确定要删除这个用户吗？')) {
+                        this.users = this.users.filter(u => u.id !== id);
+                    }
+                },
+                cancelEdit() {
+                    this.resetForm();
+                },
+                resetForm() {
+                    this.formData = {
+                        name: '',
+                        email: '',
+                        age: null,
+                        city: ''
+                    };
+                    this.editingUser = null;
+                }
+            }
+        }).mount('#app');
+    </script>
+</body>
+</html>

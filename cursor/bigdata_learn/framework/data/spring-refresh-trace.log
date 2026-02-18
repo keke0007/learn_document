@@ -1,0 +1,16 @@
+2024-01-26 10:00:00.123 [main] INFO  org.springframework.context.support.AbstractApplicationContext - Refreshing org.springframework.context.annotation.AnnotationConfigApplicationContext@12345678
+2024-01-26 10:00:00.124 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Creating shared instance of singleton bean 'userService'
+2024-01-26 10:00:00.125 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Creating instance of bean 'userService'
+2024-01-26 10:00:00.126 [main] DEBUG org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory - Eagerly caching bean 'userService' to allow for resolving potential circular references
+2024-01-26 10:00:00.127 [main] DEBUG org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory - Finished creating instance of bean 'userService'
+2024-01-26 10:00:00.128 [main] DEBUG org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory - Invoking afterPropertiesSet() on bean 'userService'
+2024-01-26 10:00:00.129 [main] DEBUG org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory - Initialized bean 'userService'
+2024-01-26 10:00:00.130 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Creating shared instance of singleton bean 'orderService'
+2024-01-26 10:00:00.131 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Creating instance of bean 'orderService'
+2024-01-26 10:00:00.132 [main] DEBUG org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory - Autowiring by type from bean name 'orderService' to bean named 'userService'
+2024-01-26 10:00:00.133 [main] DEBUG org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory - Eagerly caching bean 'orderService' to allow for resolving potential circular references
+2024-01-26 10:00:00.134 [main] DEBUG org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory - Finished creating instance of bean 'orderService'
+2024-01-26 10:00:00.135 [main] DEBUG org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory - Invoking afterPropertiesSet() on bean 'orderService'
+2024-01-26 10:00:00.136 [main] DEBUG org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory - Initialized bean 'orderService'
+2024-01-26 10:00:00.137 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Pre-instantiating singletons finished
+2024-01-26 10:00:00.138 [main] INFO  org.springframework.context.support.AbstractApplicationContext - Closing org.springframework.context.annotation.AnnotationConfigApplicationContext@12345678

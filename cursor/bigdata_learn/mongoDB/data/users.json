@@ -1,0 +1,11 @@
+[
+  { "user_id": 1, "name": "张三", "age": 25, "city": "北京", "tags": ["金卡", "高价值"], "register_date": "2023-01-01T00:00:00Z" },
+  { "user_id": 2, "name": "李四", "age": 30, "city": "上海", "tags": ["银卡"], "register_date": "2023-02-15T00:00:00Z" },
+  { "user_id": 3, "name": "王五", "age": 28, "city": "广州", "tags": ["普通"], "register_date": "2023-03-20T00:00:00Z" },
+  { "user_id": 4, "name": "赵六", "age": 35, "city": "深圳", "tags": ["金卡"], "register_date": "2023-04-10T00:00:00Z" },
+  { "user_id": 5, "name": "小红", "age": 22, "city": "杭州", "tags": ["普通"], "register_date": "2023-05-01T00:00:00Z" },
+  { "user_id": 6, "name": "小明", "age": 26, "city": "成都", "tags": ["银卡"], "register_date": "2023-06-01T00:00:00Z" },
+  { "user_id": 7, "name": "小李", "age": 29, "city": "武汉", "tags": ["普通"], "register_date": "2023-07-01T00:00:00Z" },
+  { "user_id": 8, "name": "小王", "age": 33, "city": "西安", "tags": ["金卡"], "register_date": "2023-08-01T00:00:00Z" }
+]
+

@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>数据绑定</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            border-bottom: 3px solid #4CAF50;
+            padding-bottom: 10px;
+        }
+        .section {
+            margin: 30px 0;
+            padding: 20px;
+            background: #f9f9f9;
+            border-left: 4px solid #4CAF50;
+            border-radius: 5px;
+        }
+        .demo-box {
+            padding: 20px;
+            background: #e8f5e9;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+        input, textarea, select {
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            margin: 10px 0;
+            width: 100%;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div class="container">
+            <h1>数据绑定</h1>
+            
+            <div class="section">
+                <h2>1. 双向绑定（v-model）</h2>
+                <div class="demo-box">
+                    <input v-model="text" placeholder="输入文本">
+                    <p>输入的值：{{ text }}</p>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2>2. 单选框绑定</h2>
+                <div class="demo-box">
+                    <label>
+                        <input type="radio" v-model="selectedOption" value="选项1">
+                        选项1
+                    </label>
+                    <label>
+                        <input type="radio" v-model="selectedOption" value="选项2">
+                        选项2
+                    </label>
+                    <label>
+                        <input type="radio" v-model="selectedOption" value="选项3">
+                        选项3
+                    </label>
+                    <p>选中的选项：{{ selectedOption }}</p>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2>3. 复选框绑定</h2>
+                <div class="demo-box">
+                    <label>
+                        <input type="checkbox" v-model="checkedItems" value="苹果">
+                        苹果
+                    </label>
+                    <label>
+                        <input type="checkbox" v-model="checkedItems" value="香蕉">
+                        香蕉
+                    </label>
+                    <label>
+                        <input type="checkbox" v-model="checkedItems" value="橙子">
+                        橙子
+                    </label>
+                    <p>选中的项目：{{ checkedItems }}</p>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2>4. 下拉选择绑定</h2>
+                <div class="demo-box">
+                    <select v-model="selectedCity">
+                        <option value="">请选择城市</option>
+                        <option value="北京">北京</option>
+                        <option value="上海">上海</option>
+                        <option value="广州">广州</option>
+                        <option value="深圳">深圳</option>
+                    </select>
+                    <p>选中的城市：{{ selectedCity }}</p>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2>5. 文本域绑定</h2>
+                <div class="demo-box">
+                    <textarea v-model="message" rows="4" placeholder="输入消息"></textarea>
+                    <p>消息内容：{{ message }}</p>
+                    <p>字符数：{{ message.length }}</p>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2>6. 修饰符</h2>
+                <div class="demo-box">
+                    <p>.lazy - 在 change 事件后更新</p>
+                    <input v-model.lazy="lazyText" placeholder="失去焦点后更新">
+                    <p>值：{{ lazyText }}</p>
+                    
+                    <p>.number - 自动转换为数字</p>
+                    <input v-model.number="numberValue" type="text" placeholder="输入数字">
+                    <p>值：{{ numberValue }} (类型: {{ typeof numberValue }})</p>
+                    
+                    <p>.trim - 自动去除首尾空格</p>
+                    <input v-model.trim="trimmedText" placeholder="输入（自动去除空格）">
+                    <p>值："{{ trimmedText }}"</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const { createApp } = Vue;
+
+        createApp({
+            data() {
+                return {
+                    text: '',
+                    selectedOption: '',
+                    checkedItems: [],
+                    selectedCity: '',
+                    message: '',
+                    lazyText: '',
+                    numberValue: null,
+                    trimmedText: ''
+                }
+            }
+        }).mount('#app');
+    </script>
+</body>
+</html>

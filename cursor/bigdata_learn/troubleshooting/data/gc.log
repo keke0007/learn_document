@@ -1,0 +1,5 @@
+2024-01-15T09:00:20.123+0800: 0.234: [GC (Allocation Failure) [PSYoungGen: 1024K->512K(2048K)] 1024K->512K(4096K), 0.001234 secs] [Times: user=0.00 sys=0.00, real=0.00 secs]
+2024-01-15T09:00:25.456+0800: 5.567: [GC (Allocation Failure) [PSYoungGen: 1536K->768K(2048K)] 1536K->768K(4096K), 0.001567 secs] [Times: user=0.00 sys=0.00, real=0.00 secs]
+2024-01-15T09:00:30.789+0800: 10.890: [Full GC (Ergonomics) [PSYoungGen: 768K->0K(2048K)] [ParOldGen: 3072K->2048K(4096K)] 3840K->2048K(6144K), 0.012345 secs] [Times: user=0.01 sys=0.00, real=0.01 secs]
+2024-01-15T09:00:35.123+0800: 15.234: [GC (Allocation Failure) [PSYoungGen: 1024K->512K(2048K)] 3072K->2560K(6144K), 0.001890 secs] [Times: user=0.00 sys=0.00, real=0.00 secs]
+2024-01-15T09:00:40.456+0800: 20.567: [GC (Allocation Failure) [PSYoungGen: 1536K->768K(2048K)] 3584K->2816K(6144K), 0.002123 secs] [Times: user=0.00 sys=0.00, real=0.00 secs]

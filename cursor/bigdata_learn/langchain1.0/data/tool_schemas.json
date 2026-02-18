@@ -1,0 +1,142 @@
+{
+  "description": "LangChain Agent 工具定义示例",
+  "tools": [
+    {
+      "name": "search",
+      "description": "搜索网络获取实时信息。当需要查找最新新闻、事件或不确定的信息时使用。",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "query": {
+            "type": "string",
+            "description": "搜索关键词"
+          }
+        },
+        "required": ["query"]
+      }
+    },
+    {
+      "name": "calculator",
+      "description": "执行数学计算。输入应该是有效的数学表达式。",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "expression": {
+            "type": "string",
+            "description": "数学表达式，如 '2+2' 或 '10*5'"
+          }
+        },
+        "required": ["expression"]
+      }
+    },
+    {
+      "name": "weather",
+      "description": "获取指定城市的天气信息。",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "city": {
+            "type": "string",
+            "description": "城市名称"
+          },
+          "date": {
+            "type": "string",
+            "description": "日期，格式 YYYY-MM-DD，默认今天"
+          }
+        },
+        "required": ["city"]
+      }
+    },
+    {
+      "name": "database_query",
+      "description": "查询数据库获取结构化数据。",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "sql": {
+            "type": "string",
+            "description": "SQL 查询语句"
+          },
+          "database": {
+            "type": "string",
+            "description": "数据库名称"
+          }
+        },
+        "required": ["sql", "database"]
+      }
+    },
+    {
+      "name": "send_email",
+      "description": "发送电子邮件。",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "to": {
+            "type": "string",
+            "description": "收件人邮箱"
+          },
+          "subject": {
+            "type": "string",
+            "description": "邮件主题"
+          },
+          "body": {
+            "type": "string",
+            "description": "邮件正文"
+          }
+        },
+        "required": ["to", "subject", "body"]
+      }
+    },
+    {
+      "name": "create_task",
+      "description": "创建待办任务。",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "任务标题"
+          },
+          "description": {
+            "type": "string",
+            "description": "任务描述"
+          },
+          "due_date": {
+            "type": "string",
+            "description": "截止日期"
+          },
+          "priority": {
+            "type": "string",
+            "enum": ["low", "medium", "high"],
+            "description": "优先级"
+          }
+        },
+        "required": ["title"]
+      }
+    },
+    {
+      "name": "knowledge_search",
+      "description": "搜索内部知识库获取企业相关信息。",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "query": {
+            "type": "string",
+            "description": "搜索问题或关键词"
+          },
+          "category": {
+            "type": "string",
+            "enum": ["product", "policy", "faq", "all"],
+            "description": "知识库分类"
+          },
+          "top_k": {
+            "type": "integer",
+            "description": "返回结果数量",
+            "default": 3
+          }
+        },
+        "required": ["query"]
+      }
+    }
+  ]
+}

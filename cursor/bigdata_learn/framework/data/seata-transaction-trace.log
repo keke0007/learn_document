@@ -1,0 +1,24 @@
+2024-01-26 10:00:00.123 [http-nio-8080-exec-1] INFO  io.seata.spring.annotation.GlobalTransactionalInterceptor - Global transaction begin: xid=192.168.1.100:8091:1234567890
+2024-01-26 10:00:00.124 [http-nio-8080-exec-1] DEBUG io.seata.tm.DefaultGlobalTransaction - DefaultGlobalTransaction.begin: xid=192.168.1.100:8091:1234567890
+2024-01-26 10:00:00.125 [http-nio-8080-exec-1] DEBUG io.seata.tm.api.DefaultGlobalTransaction - TM register to TC: xid=192.168.1.100:8091:1234567890
+2024-01-26 10:00:00.126 [http-nio-8080-exec-1] DEBUG io.seata.rm.datasource.DataSourceProxy - DataSourceProxy.getConnection: xid=192.168.1.100:8091:1234567890
+2024-01-26 10:00:00.127 [http-nio-8080-exec-1] DEBUG io.seata.rm.datasource.ConnectionProxy - ConnectionProxy.execute: xid=192.168.1.100:8091:1234567890, branchId=1
+2024-01-26 10:00:00.128 [http-nio-8080-exec-1] DEBUG io.seata.rm.datasource.exec.ExecuteTemplate - ExecuteTemplate.execute: SQL=UPDATE user SET name=?, age=? WHERE id=?
+2024-01-26 10:00:00.129 [http-nio-8080-exec-1] DEBUG io.seata.rm.datasource.exec.AbstractDMLBaseExecutor - AbstractDMLBaseExecutor.execute: building before image
+2024-01-26 10:00:00.130 [http-nio-8080-exec-1] DEBUG io.seata.rm.datasource.exec.AbstractDMLBaseExecutor - Before image: {id=1, name=Alice, age=25}
+2024-01-26 10:00:00.131 [http-nio-8080-exec-1] DEBUG io.seata.rm.datasource.exec.AbstractDMLBaseExecutor - Executing SQL: UPDATE user SET name=?, age=? WHERE id=?
+2024-01-26 10:00:00.132 [http-nio-8080-exec-1] DEBUG io.seata.rm.datasource.exec.AbstractDMLBaseExecutor - AbstractDMLBaseExecutor.execute: building after image
+2024-01-26 10:00:00.133 [http-nio-8080-exec-1] DEBUG io.seata.rm.datasource.exec.AbstractDMLBaseExecutor - After image: {id=1, name=Bob, age=30}
+2024-01-26 10:00:00.134 [http-nio-8080-exec-1] DEBUG io.seata.rm.datasource.undo.UndoLogManager - UndoLogManager.insertUndoLog: branchId=1, xid=192.168.1.100:8091:1234567890
+2024-01-26 10:00:00.135 [http-nio-8080-exec-1] DEBUG io.seata.rm.datasource.undo.UndoLogManager - Undo log inserted: branchId=1, xid=192.168.1.100:8091:1234567890
+2024-01-26 10:00:00.136 [http-nio-8080-exec-1] INFO  io.seata.spring.annotation.GlobalTransactionalInterceptor - Global transaction commit: xid=192.168.1.100:8091:1234567890
+2024-01-26 10:00:00.137 [http-nio-8080-exec-1] DEBUG io.seata.rm.datasource.UndoLogManager - UndoLogManager.deleteUndoLog: branchId=1, xid=192.168.1.100:8091:1234567890
+2024-01-26 10:00:05.200 [seata-server] INFO  io.seata.server.coordinator.DefaultCoordinator - Global transaction rollback: xid=192.168.1.100:8091:1234567890
+2024-01-26 10:00:05.201 [http-nio-8080-exec-2] DEBUG io.seata.rm.datasource.undo.UndoLogManager - UndoLogManager.undo: branchId=1, xid=192.168.1.100:8091:1234567890
+2024-01-26 10:00:05.202 [http-nio-8080-exec-2] DEBUG io.seata.rm.datasource.undo.UndoLogManager - Undo log found: branchId=1, xid=192.168.1.100:8091:1234567890
+2024-01-26 10:00:05.203 [http-nio-8080-exec-2] DEBUG io.seata.rm.datasource.undo.AbstractUndoLogParser - AbstractUndoLogParser.decode: parsing undo_log
+2024-01-26 10:00:05.204 [http-nio-8080-exec-2] DEBUG io.seata.rm.datasource.undo.SQLUndoLog - SQLUndoLog.getUndoSQL: generating reverse SQL
+2024-01-26 10:00:05.205 [http-nio-8080-exec-2] DEBUG io.seata.rm.datasource.undo.SQLUndoLog - Rollback SQL: UPDATE user SET name=?, age=? WHERE id=?
+2024-01-26 10:00:05.206 [http-nio-8080-exec-2] DEBUG io.seata.rm.datasource.undo.SQLUndoLog - Rollback parameters: [Alice, 25, 1]
+2024-01-26 10:00:05.207 [http-nio-8080-exec-2] DEBUG io.seata.rm.datasource.undo.UndoLogManager - Rollback executed successfully
+2024-01-26 10:00:05.208 [http-nio-8080-exec-2] DEBUG io.seata.rm.datasource.UndoLogManager - Undo log deleted: branchId=1, xid=192.168.1.100:8091:1234567890

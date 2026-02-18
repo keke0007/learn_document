@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>async/await</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            border-bottom: 3px solid #4CAF50;
+            padding-bottom: 10px;
+        }
+        .section {
+            margin: 30px 0;
+            padding: 20px;
+            background: #f9f9f9;
+            border-left: 4px solid #4CAF50;
+            border-radius: 5px;
+        }
+        button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        .output {
+            background: #e8f5e9;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            min-height: 50px;
+        }
+        .loading {
+            color: #ff9800;
+        }
+        .success {
+            color: #4CAF50;
+        }
+        .error {
+            color: #f44336;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>async/await</h1>
+        
+        <div class="section">
+            <h2>1. 基础 async/await</h2>
+            <button onclick="demoBasic()">运行示例</button>
+            <div id="basic-output" class="output"></div>
+        </div>
+        
+        <div class="section">
+            <h2>2. 错误处理</h2>
+            <button onclick="demoErrorHandling()">运行示例</button>
+            <div id="error-output" class="output"></div>
+        </div>
+        
+        <div class="section">
+            <h2>3. 并行执行</h2>
+            <button onclick="demoParallel()">运行示例</button>
+            <div id="parallel-output" class="output"></div>
+        </div>
+        
+        <div class="section">
+            <h2>4. 顺序执行</h2>
+            <button onclick="demoSequential()">运行示例</button>
+            <div id="sequential-output" class="output"></div>
+        </div>
+    </div>
+
+    <script>
+        // 模拟异步函数
+        function delay(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+        
+        function fetchData(id) {
+            return new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    if (Math.random() > 0.2) {
+                        resolve({id: id, data: `数据${id}`});
+                    } else {
+                        reject(new Error(`获取数据${id}失败`));
+                    }
+                }, 1000);
+            });
+        }
+        
+        // 1. 基础 async/await
+        async function demoBasic() {
+            let output = document.getElementById('basic-output');
+            output.innerHTML = '<span class="loading">执行中...</span>';
+            
+            try {
+                await delay(1000);
+                let data = await fetchData(1);
+                output.innerHTML = `<span class="success">✓ 成功获取: ${JSON.stringify(data)}</span>`;
+            } catch (error) {
+                output.innerHTML = `<span class="error">✗ ${error.message}</span>`;
+            }
+        }
+        
+        // 2. 错误处理
+        async function demoErrorHandling() {
+            let output = document.getElementById('error-output');
+            output.innerHTML = '<span class="loading">执行中...</span>';
+            
+            try {
+                let data = await fetchData(999);
+                output.innerHTML = `<span class="success">✓ ${JSON.stringify(data)}</span>`;
+            } catch (error) {
+                output.innerHTML = `<span class="error">✗ 错误: ${error.message}</span>`;
+            }
+        }
+        
+        // 3. 并行执行
+        async function demoParallel() {
+            let output = document.getElementById('parallel-output');
+            output.innerHTML = '<span class="loading">并行执行中...</span>';
+            
+            let startTime = Date.now();
+            
+            try {
+                // 使用 Promise.all 并行执行
+                let results = await Promise.all([
+                    fetchData(1),
+                    fetchData(2),
+                    fetchData(3)
+                ]);
+                
+                let endTime = Date.now();
+                let duration = ((endTime - startTime) / 1000).toFixed(2);
+                
+                output.innerHTML = `<span class="success">✓ 所有任务完成！<br>` +
+                    `结果: ${JSON.stringify(results)}<br>` +
+                    `耗时: ${duration} 秒（并行执行）</span>`;
+            } catch (error) {
+                output.innerHTML = `<span class="error">✗ ${error.message}</span>`;
+            }
+        }
+        
+        // 4. 顺序执行
+        async function demoSequential() {
+            let output = document.getElementById('sequential-output');
+            output.innerHTML = '<span class="loading">顺序执行中...</span>';
+            
+            let startTime = Date.now();
+            let results = [];
+            
+            try {
+                // 顺序执行
+                results.push(await fetchData(1));
+                results.push(await fetchData(2));
+                results.push(await fetchData(3));
+                
+                let endTime = Date.now();
+                let duration = ((endTime - startTime) / 1000).toFixed(2);
+                
+                output.innerHTML = `<span class="success">✓ 所有任务完成！<br>` +
+                    `结果: ${JSON.stringify(results)}<br>` +
+                    `耗时: ${duration} 秒（顺序执行）</span>`;
+            } catch (error) {
+                output.innerHTML = `<span class="error">✗ ${error.message}</span>`;
+            }
+        }
+        
+        console.log("=== async/await 示例 ===");
+        console.log("async/await 是 Promise 的语法糖，让异步代码看起来像同步代码");
+    </script>
+</body>
+</html>

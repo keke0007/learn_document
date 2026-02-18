@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Promise</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            border-bottom: 3px solid #4CAF50;
+            padding-bottom: 10px;
+        }
+        .section {
+            margin: 30px 0;
+            padding: 20px;
+            background: #f9f9f9;
+            border-left: 4px solid #4CAF50;
+            border-radius: 5px;
+        }
+        h2 {
+            color: #555;
+            margin-bottom: 15px;
+        }
+        button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background: #45a049;
+        }
+        .output {
+            background: #e8f5e9;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            border-left: 4px solid #4CAF50;
+            font-family: 'Courier New', monospace;
+            min-height: 50px;
+        }
+        .loading {
+            color: #ff9800;
+        }
+        .success {
+            color: #4CAF50;
+        }
+        .error {
+            color: #f44336;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Promise</h1>
+        
+        <div class="section">
+            <h2>1. 基础 Promise</h2>
+            <button onclick="demoBasicPromise()">运行示例</button>
+            <div id="basic-output" class="output"></div>
+        </div>
+        
+        <div class="section">
+            <h2>2. Promise 链式调用</h2>
+            <button onclick="demoPromiseChain()">运行示例</button>
+            <div id="chain-output" class="output"></div>
+        </div>
+        
+        <div class="section">
+            <h2>3. Promise.all() - 并行执行</h2>
+            <button onclick="demoPromiseAll()">运行示例</button>
+            <div id="all-output" class="output"></div>
+        </div>
+        
+        <div class="section">
+            <h2>4. Promise.race() - 竞速</h2>
+            <button onclick="demoPromiseRace()">运行示例</button>
+            <div id="race-output" class="output"></div>
+        </div>
+        
+        <div class="section">
+            <h2>5. 错误处理</h2>
+            <button onclick="demoErrorHandling()">运行示例</button>
+            <div id="error-output" class="output"></div>
+        </div>
+        
+        <div class="section">
+            <h2>6. 模拟异步操作</h2>
+            <button onclick="demoAsyncOperation()">模拟加载数据</button>
+            <div id="async-output" class="output"></div>
+        </div>
+    </div>
+
+    <script>
+        // 1. 基础 Promise
+        function demoBasicPromise() {
+            let output = document.getElementById('basic-output');
+            output.innerHTML = '<span class="loading">执行中...</span>';
+            
+            // 创建一个 Promise
+            let promise = new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    let success = Math.random() > 0.3; // 70% 成功率
+                    if (success) {
+                        resolve("操作成功！");
+                    } else {
+                        reject("操作失败！");
+                    }
+                }, 1000);
+            });
+            
+            promise
+                .then(result => {
+                    output.innerHTML = '<span class="success">✓ ' + result + '</span>';
+                })
+                .catch(error => {
+                    output.innerHTML = '<span class="error">✗ ' + error + '</span>';
+                });
+        }
+        
+        // 2. Promise 链式调用
+        function demoPromiseChain() {
+            let output = document.getElementById('chain-output');
+            output.innerHTML = '<span class="loading">执行中...</span>';
+            
+            // 模拟异步操作
+            function step1() {
+                return new Promise(resolve => {
+                    setTimeout(() => resolve(10), 500);
+                });
+            }
+            
+            function step2(value) {
+                return new Promise(resolve => {
+                    setTimeout(() => resolve(value * 2), 500);
+                });
+            }
+            
+            function step3(value) {
+                return new Promise(resolve => {
+                    setTimeout(() => resolve(value + 5), 500);
+                });
+            }
+            
+            step1()
+                .then(step2)
+                .then(step3)
+                .then(result => {
+                    output.innerHTML = '<span class="success">步骤1: 10<br>步骤2: 10 × 2 = 20<br>步骤3: 20 + 5 = 25<br>最终结果: ' + result + '</span>';
+                });
+        }
+        
+        // 3. Promise.all()
+        function demoPromiseAll() {
+            let output = document.getElementById('all-output');
+            output.innerHTML = '<span class="loading">并行执行中...</span>';
+            
+            let promise1 = new Promise(resolve => {
+                setTimeout(() => resolve("任务1完成"), 1000);
+            });
+            
+            let promise2 = new Promise(resolve => {
+                setTimeout(() => resolve("任务2完成"), 1500);
+            });
+            
+            let promise3 = new Promise(resolve => {
+                setTimeout(() => resolve("任务3完成"), 800);
+            });
+            
+            let startTime = Date.now();
+            
+            Promise.all([promise1, promise2, promise3])
+                .then(results => {
+                    let endTime = Date.now();
+                    let duration = ((endTime - startTime) / 1000).toFixed(2);
+                    output.innerHTML = '<span class="success">所有任务完成！<br>' + 
+                        results.join('<br>') + 
+                        '<br>总耗时: ' + duration + ' 秒（并行执行，取最长任务时间）</span>';
+                });
+        }
+        
+        // 4. Promise.race()
+        function demoPromiseRace() {
+            let output = document.getElementById('race-output');
+            output.innerHTML = '<span class="loading">竞速中...</span>';
+            
+            let promise1 = new Promise(resolve => {
+                setTimeout(() => resolve("任务1获胜"), 2000);
+            });
+            
+            let promise2 = new Promise(resolve => {
+                setTimeout(() => resolve("任务2获胜"), 1500);
+            });
+            
+            let promise3 = new Promise(resolve => {
+                setTimeout(() => resolve("任务3获胜"), 1000);
+            });
+            
+            Promise.race([promise1, promise2, promise3])
+                .then(result => {
+                    output.innerHTML = '<span class="success">' + result + '<br>（最快完成的任务）</span>';
+                });
+        }
+        
+        // 5. 错误处理
+        function demoErrorHandling() {
+            let output = document.getElementById('error-output');
+            output.innerHTML = '<span class="loading">执行中...</span>';
+            
+            function riskyOperation() {
+                return new Promise((resolve, reject) => {
+                    setTimeout(() => {
+                        let random = Math.random();
+                        if (random > 0.5) {
+                            resolve("操作成功！");
+                        } else {
+                            reject(new Error("操作失败：随机数小于0.5"));
+                        }
+                    }, 1000);
+                });
+            }
+            
+            riskyOperation()
+                .then(result => {
+                    output.innerHTML = '<span class="success">✓ ' + result + '</span>';
+                })
+                .catch(error => {
+                    output.innerHTML = '<span class="error">✗ ' + error.message + '</span>';
+                });
+        }
+        
+        // 6. 模拟异步操作
+        function demoAsyncOperation() {
+            let output = document.getElementById('async-output');
+            output.innerHTML = '<span class="loading">加载中...</span>';
+            
+            // 模拟从服务器获取数据
+            function fetchData() {
+                return new Promise((resolve, reject) => {
+                    setTimeout(() => {
+                        let data = {
+                            id: 1,
+                            name: "示例数据",
+                            value: Math.floor(Math.random() * 100)
+                        };
+                        resolve(data);
+                    }, 2000);
+                });
+            }
+            
+            fetchData()
+                .then(data => {
+                    output.innerHTML = '<span class="success">数据加载成功！<br>' +
+                        'ID: ' + data.id + '<br>' +
+                        '名称: ' + data.name + '<br>' +
+                        '值: ' + data.value + '</span>';
+                })
+                .catch(error => {
+                    output.innerHTML = '<span class="error">数据加载失败: ' + error + '</span>';
+                });
+        }
+        
+        console.log("=== Promise 示例 ===");
+        console.log("Promise 用于处理异步操作，避免回调地狱");
+    </script>
+</body>
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>基础布局示例 - Flexbox</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: Arial, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    header {
+      background: #2c3e50;
+      color: white;
+      padding: 1rem;
+      text-align: center;
+    }
+    
+    .container {
+      flex: 1;
+      display: flex;
+    }
+    
+    aside {
+      width: 200px;
+      background: #34495e;
+      color: white;
+      padding: 1rem;
+    }
+    
+    main {
+      flex: 1;
+      padding: 1rem;
+      background: #ecf0f1;
+    }
+    
+    footer {
+      background: #2c3e50;
+      color: white;
+      padding: 1rem;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <header>Header（顶部导航）</header>
+  <div class="container">
+    <aside>Sidebar（侧边栏）</aside>
+    <main>
+      <h2>Main Content（主内容区）</h2>
+      <p>这是一个基础的三栏布局示例，使用 Flexbox 实现。</p>
+    </main>
+  </div>
+  <footer>Footer（页脚）</footer>
+</body>
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML 基础结构</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        h1 {
+            color: #333;
+            border-bottom: 2px solid #4CAF50;
+            padding-bottom: 10px;
+        }
+        .code-block {
+            background: #f4f4f4;
+            padding: 15px;
+            border-left: 4px solid #4CAF50;
+            margin: 20px 0;
+        }
+        .highlight {
+            background: yellow;
+        }
+    </style>
+</head>
+<body>
+    <h1>HTML 基础结构</h1>
+    
+    <h2>1. HTML 文档结构</h2>
+    <p>每个 HTML 文档都包含以下基本结构：</p>
+    
+    <div class="code-block">
+        <pre>&lt;!DOCTYPE html&gt;          <!-- 文档类型声明 -->
+&lt;html&gt;                 <!-- 根元素 -->
+  &lt;head&gt;               <!-- 头部：元数据 -->
+    &lt;title&gt;标题&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;               <!-- 主体：可见内容 -->
+    内容
+  &lt;/body&gt;
+&lt;/html&gt;</pre>
+    </div>
+    
+    <h2>2. 常用标签</h2>
+    <ul>
+        <li><strong>&lt;h1&gt; 到 &lt;h6&gt;</strong> - 标题标签</li>
+        <li><strong>&lt;p&gt;</strong> - 段落</li>
+        <li><strong>&lt;div&gt;</strong> - 块级容器</li>
+        <li><strong>&lt;span&gt;</strong> - 行内容器</li>
+        <li><strong>&lt;a&gt;</strong> - 链接</li>
+        <li><strong>&lt;img&gt;</strong> - 图片</li>
+        <li><strong>&lt;ul&gt;, &lt;ol&gt;, &lt;li&gt;</strong> - 列表</li>
+    </ul>
+    
+    <h2>3. 语义化标签（HTML5）</h2>
+    <ul>
+        <li><strong>&lt;header&gt;</strong> - 页眉</li>
+        <li><strong>&lt;nav&gt;</strong> - 导航</li>
+        <li><strong>&lt;main&gt;</strong> - 主要内容</li>
+        <li><strong>&lt;article&gt;</strong> - 文章</li>
+        <li><strong>&lt;section&gt;</strong> - 章节</li>
+        <li><strong>&lt;aside&gt;</strong> - 侧边栏</li>
+        <li><strong>&lt;footer&gt;</strong> - 页脚</li>
+    </ul>
+    
+    <h2>4. 示例：语义化结构</h2>
+    <div class="code-block">
+        <pre>&lt;header&gt;
+  &lt;h1&gt;网站标题&lt;/h1&gt;
+  &lt;nav&gt;导航菜单&lt;/nav&gt;
+&lt;/header&gt;
+
+&lt;main&gt;
+  &lt;article&gt;
+    &lt;h2&gt;文章标题&lt;/h2&gt;
+    &lt;p&gt;文章内容...&lt;/p&gt;
+  &lt;/article&gt;
+&lt;/main&gt;
+
+&lt;footer&gt;
+  &lt;p&gt;版权信息&lt;/p&gt;
+&lt;/footer&gt;</pre>
+    </div>
+    
+    <p><span class="highlight">提示：</span>使用语义化标签可以让代码更易读，也有利于 SEO 和可访问性。</p>
+</body>
+</html>

@@ -1,0 +1,43 @@
+{
+  "application": {
+    "name": "myapp",
+    "version": "1.0.0",
+    "environment": "production"
+  },
+  "server": {
+    "port": 8080,
+    "management_port": 8081,
+    "context_path": "/"
+  },
+  "jvm": {
+    "heap_min": "2g",
+    "heap_max": "4g",
+    "gc": "G1",
+    "gc_log": true,
+    "heap_dump": true
+  },
+  "database": {
+    "host": "db.example.com",
+    "port": 3306,
+    "name": "myapp",
+    "pool_size": 20,
+    "connection_timeout": 30000
+  },
+  "redis": {
+    "host": "redis.example.com",
+    "port": 6379,
+    "timeout": 2000,
+    "pool_size": 10
+  },
+  "monitoring": {
+    "enabled": true,
+    "metrics_path": "/actuator/prometheus",
+    "health_path": "/actuator/health"
+  },
+  "logging": {
+    "level": "INFO",
+    "file_path": "/opt/logs/app.log",
+    "max_size": "100MB",
+    "max_history": 30
+  }
+}

@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>插槽</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            border-bottom: 3px solid #4CAF50;
+            padding-bottom: 10px;
+        }
+        .section {
+            margin: 30px 0;
+            padding: 20px;
+            background: #f9f9f9;
+            border-left: 4px solid #4CAF50;
+            border-radius: 5px;
+        }
+        .card {
+            background: #e8f5e9;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+        }
+        .card-header {
+            background: #4CAF50;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+        .card-footer {
+            background: #f5f5f5;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div class="container">
+            <h1>插槽（Slots）</h1>
+            
+            <div class="section">
+                <h2>1. 基础插槽</h2>
+                <base-card>
+                    <p>这是插槽内容</p>
+                </base-card>
+            </div>
+            
+            <div class="section">
+                <h2>2. 具名插槽</h2>
+                <named-card>
+                    <template #header>
+                        <h3>卡片标题</h3>
+                    </template>
+                    <template #default>
+                        <p>这是卡片的主要内容</p>
+                    </template>
+                    <template #footer>
+                        <p>卡片底部信息</p>
+                    </template>
+                </named-card>
+            </div>
+            
+            <div class="section">
+                <h2>3. 作用域插槽</h2>
+                <user-list :users="users">
+                    <template #default="{ user }">
+                        <div style="padding: 10px; background: white; margin: 5px 0; border-radius: 5px;">
+                            <strong>{{ user.name }}</strong> - {{ user.email }}
+                        </div>
+                    </template>
+                </user-list>
+            </div>
+            
+            <div class="section">
+                <h2>4. 插槽默认内容</h2>
+                <default-slot-card>
+                    <p>自定义内容</p>
+                </default-slot-card>
+                <default-slot-card></default-slot-card>
+            </div>
+            
+            <div class="section">
+                <h2>5. 多个插槽</h2>
+                <multi-slot-card>
+                    <template #title>
+                        <h2>多插槽示例</h2>
+                    </template>
+                    <template #content>
+                        <p>这是内容区域</p>
+                        <p>可以包含多个元素</p>
+                    </template>
+                    <template #actions>
+                        <button style="background: #4CAF50; color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer;">
+                            操作按钮
+                        </button>
+                    </template>
+                </multi-slot-card>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const { createApp } = Vue;
+
+        // 1. 基础插槽组件
+        const BaseCard = {
+            template: `
+                <div class="card">
+                    <slot></slot>
+                </div>
+            `
+        };
+
+        // 2. 具名插槽组件
+        const NamedCard = {
+            template: `
+                <div class="card">
+                    <div class="card-header">
+                        <slot name="header"></slot>
+                    </div>
+                    <slot></slot>
+                    <div class="card-footer">
+                        <slot name="footer"></slot>
+                    </div>
+                </div>
+            `
+        };
+
+        // 3. 作用域插槽组件
+        const UserList = {
+            props: {
+                users: {
+                    type: Array,
+                    required: true
+                }
+            },
+            template: `
+                <div>
+                    <div v-for="user in users" :key="user.id">
+                        <slot :user="user"></slot>
+                    </div>
+                </div>
+            `
+        };
+
+        // 4. 默认内容插槽
+        const DefaultSlotCard = {
+            template: `
+                <div class="card">
+                    <slot>
+                        <p>这是默认内容（如果没有提供插槽内容）</p>
+                    </slot>
+                </div>
+            `
+        };
+
+        // 5. 多插槽组件
+        const MultiSlotCard = {
+            template: `
+                <div class="card">
+                    <slot name="title"></slot>
+                    <div style="margin: 15px 0;">
+                        <slot name="content"></slot>
+                    </div>
+                    <div style="margin-top: 15px;">
+                        <slot name="actions"></slot>
+                    </div>
+                </div>
+            `
+        };
+
+        createApp({
+            components: {
+                BaseCard,
+                NamedCard,
+                UserList,
+                DefaultSlotCard,
+                MultiSlotCard
+            },
+            data() {
+                return {
+                    users: [
+                        { id: 1, name: '张三', email: 'zhang@example.com' },
+                        { id: 2, name: '李四', email: 'li@example.com' },
+                        { id: 3, name: '王五', email: 'wang@example.com' }
+                    ]
+                }
+            }
+        }).mount('#app');
+    </script>
+</body>
+</html>

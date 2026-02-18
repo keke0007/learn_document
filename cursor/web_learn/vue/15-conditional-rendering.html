@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>条件渲染</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            border-bottom: 3px solid #4CAF50;
+            padding-bottom: 10px;
+        }
+        .section {
+            margin: 30px 0;
+            padding: 20px;
+            background: #f9f9f9;
+            border-left: 4px solid #4CAF50;
+            border-radius: 5px;
+        }
+        .demo-box {
+            padding: 20px;
+            background: #e8f5e9;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+        button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        input {
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+        .success { color: #4CAF50; }
+        .warning { color: #ff9800; }
+        .error { color: #f44336; }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div class="container">
+            <h1>条件渲染</h1>
+            
+            <div class="section">
+                <h2>1. v-if</h2>
+                <div class="demo-box">
+                    <p v-if="isVisible">这段文字使用 v-if 控制</p>
+                    <button @click="isVisible = !isVisible">切换显示</button>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2>2. v-else</h2>
+                <div class="demo-box">
+                    <p v-if="isLoggedIn">欢迎回来！</p>
+                    <p v-else>请登录</p>
+                    <button @click="isLoggedIn = !isLoggedIn">切换登录状态</button>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2>3. v-else-if</h2>
+                <div class="demo-box">
+                    <input type="number" v-model.number="score" placeholder="输入分数">
+                    <p v-if="score >= 90" class="success">优秀</p>
+                    <p v-else-if="score >= 80" class="success">良好</p>
+                    <p v-else-if="score >= 60" class="warning">及格</p>
+                    <p v-else-if="score > 0" class="error">不及格</p>
+                    <p v-else>请输入分数</p>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2>4. v-show</h2>
+                <div class="demo-box">
+                    <p v-show="isVisible">这段文字使用 v-show 控制（通过 CSS display）</p>
+                    <button @click="isVisible = !isVisible">切换显示</button>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2>5. v-if vs v-show</h2>
+                <div class="demo-box">
+                    <p><strong>v-if：</strong>条件为 false 时，元素不会被渲染到 DOM</p>
+                    <p><strong>v-show：</strong>元素始终被渲染，只是通过 CSS 控制显示/隐藏</p>
+                    <p><strong>使用建议：</strong>频繁切换用 v-show，条件很少改变用 v-if</p>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2>6. template 上的 v-if</h2>
+                <div class="demo-box">
+                    <template v-if="showDetails">
+                        <h3>详细信息</h3>
+                        <p>这是详细信息内容</p>
+                        <p>可以包含多个元素</p>
+                    </template>
+                    <button @click="showDetails = !showDetails">切换详细信息</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const { createApp } = Vue;
+
+        createApp({
+            data() {
+                return {
+                    isVisible: true,
+                    isLoggedIn: false,
+                    score: 0,
+                    showDetails: false
+                }
+            }
+        }).mount('#app');
+    </script>
+</body>
+</html>

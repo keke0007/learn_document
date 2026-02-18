@@ -1,0 +1,15 @@
+2024-01-26 10:00:00.123 [http-nio-8080-exec-1] DEBUG com.alibaba.csp.sentinel.CtSph - Entry created: resource=userService
+2024-01-26 10:00:00.124 [http-nio-8080-exec-1] DEBUG com.alibaba.csp.sentinel.slotchain.ProcessorSlotChain - SlotChain entry: resource=userService
+2024-01-26 10:00:00.125 [http-nio-8080-exec-1] DEBUG com.alibaba.csp.sentinel.slots.nodeselector.NodeSelectorSlot - NodeSelectorSlot.entry: resource=userService
+2024-01-26 10:00:00.126 [http-nio-8080-exec-1] DEBUG com.alibaba.csp.sentinel.slots.clusterbuilder.ClusterBuilderSlot - ClusterBuilderSlot.entry: resource=userService
+2024-01-26 10:00:00.127 [http-nio-8080-exec-1] DEBUG com.alibaba.csp.sentinel.slots.logger.LogSlot - LogSlot.entry: resource=userService
+2024-01-26 10:00:00.128 [http-nio-8080-exec-1] DEBUG com.alibaba.csp.sentinel.slots.statistic.StatisticSlot - StatisticSlot.entry: resource=userService
+2024-01-26 10:00:00.129 [http-nio-8080-exec-1] DEBUG com.alibaba.csp.sentinel.slots.statistic.ArrayMetric - ArrayMetric.addPass: resource=userService, count=1
+2024-01-26 10:00:00.130 [http-nio-8080-exec-1] DEBUG com.alibaba.csp.sentinel.slots.statistic.LeapArray - LeapArray.currentWindow: resource=userService, windowStart=1640000000000
+2024-01-26 10:00:00.131 [http-nio-8080-exec-1] DEBUG com.alibaba.csp.sentinel.slots.system.SystemSlot - SystemSlot.entry: resource=userService
+2024-01-26 10:00:00.132 [http-nio-8080-exec-1] DEBUG com.alibaba.csp.sentinel.slots.authority.AuthoritySlot - AuthoritySlot.entry: resource=userService
+2024-01-26 10:00:00.133 [http-nio-8080-exec-1] DEBUG com.alibaba.csp.sentinel.slots.block.flow.FlowSlot - FlowSlot.entry: resource=userService
+2024-01-26 10:00:00.134 [http-nio-8080-exec-1] DEBUG com.alibaba.csp.sentinel.slots.block.flow.FlowRuleChecker - FlowRuleChecker.checkFlow: resource=userService, currentQps=100, threshold=50
+2024-01-26 10:00:00.135 [http-nio-8080-exec-1] WARN  com.alibaba.csp.sentinel.slots.block.flow.FlowSlot - Blocked by flow control: resource=userService
+2024-01-26 10:00:00.136 [http-nio-8080-exec-1] DEBUG com.alibaba.csp.sentinel.slots.block.degrade.DegradeSlot - DegradeSlot.entry: resource=userService
+2024-01-26 10:00:00.137 [http-nio-8080-exec-1] DEBUG com.alibaba.csp.sentinel.slots.block.degrade.DegradeRuleChecker - DegradeRuleChecker.isPass: resource=userService, state=CLOSED

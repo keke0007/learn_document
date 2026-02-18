@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>解构赋值</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            border-bottom: 3px solid #4CAF50;
+            padding-bottom: 10px;
+        }
+        .section {
+            margin: 30px 0;
+            padding: 20px;
+            background: #f9f9f9;
+            border-left: 4px solid #4CAF50;
+            border-radius: 5px;
+        }
+        button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        .output {
+            background: #e8f5e9;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>解构赋值</h1>
+        
+        <div class="section">
+            <h2>1. 数组解构</h2>
+            <button onclick="demoArrayDestructuring()">运行示例</button>
+            <div id="array-output" class="output"></div>
+        </div>
+        
+        <div class="section">
+            <h2>2. 对象解构</h2>
+            <button onclick="demoObjectDestructuring()">运行示例</button>
+            <div id="object-output" class="output"></div>
+        </div>
+        
+        <div class="section">
+            <h2>3. 默认值</h2>
+            <button onclick="demoDefaults()">运行示例</button>
+            <div id="defaults-output" class="output"></div>
+        </div>
+        
+        <div class="section">
+            <h2>4. 重命名</h2>
+            <button onclick="demoRenaming()">运行示例</button>
+            <div id="renaming-output" class="output"></div>
+        </div>
+        
+        <div class="section">
+            <h2>5. 嵌套解构</h2>
+            <button onclick="demoNested()">运行示例</button>
+            <div id="nested-output" class="output"></div>
+        </div>
+        
+        <div class="section">
+            <h2>6. 函数参数解构</h2>
+            <button onclick="demoFunctionParams()">运行示例</button>
+            <div id="params-output" class="output"></div>
+        </div>
+    </div>
+
+    <script>
+        function demoArrayDestructuring() {
+            let output = "";
+            
+            // 基础解构
+            let [a, b, c] = [1, 2, 3];
+            output += `[a, b, c] = [1, 2, 3]: a=${a}, b=${b}, c=${c}<br>`;
+            
+            // 跳过元素
+            let [first, , third] = [1, 2, 3];
+            output += `[first, , third] = [1, 2, 3]: first=${first}, third=${third}<br>`;
+            
+            // 剩余元素
+            let [x, ...rest] = [1, 2, 3, 4, 5];
+            output += `[x, ...rest] = [1, 2, 3, 4, 5]: x=${x}, rest=[${rest.join(', ')}]<br>`;
+            
+            // 交换变量
+            let num1 = 10, num2 = 20;
+            [num1, num2] = [num2, num1];
+            output += `交换后: num1=${num1}, num2=${num2}<br>`;
+            
+            document.getElementById('array-output').innerHTML = output;
+        }
+        
+        function demoObjectDestructuring() {
+            let output = "";
+            let person = {
+                name: "张三",
+                age: 25,
+                city: "北京"
+            };
+            
+            // 基础解构
+            let {name, age} = person;
+            output += `{name, age} = person: name=${name}, age=${age}<br>`;
+            
+            // 解构所有属性
+            let {name: n, age: a, city: c} = person;
+            output += `重命名: n=${n}, a=${a}, c=${c}<br>`;
+            
+            // 剩余属性
+            let {name: personName, ...rest} = person;
+            output += `剩余属性: personName=${personName}, rest=${JSON.stringify(rest)}<br>`;
+            
+            document.getElementById('object-output').innerHTML = output;
+        }
+        
+        function demoDefaults() {
+            let output = "";
+            
+            // 数组默认值
+            let [a = 10, b = 20] = [1];
+            output += `[a = 10, b = 20] = [1]: a=${a}, b=${b}<br>`;
+            
+            // 对象默认值
+            let {name = "未知", age = 0} = {};
+            output += `{name = "未知", age = 0} = {}: name=${name}, age=${age}<br>`;
+            
+            // 部分默认值
+            let person = {name: "张三"};
+            let {name: pName, age: pAge = 25, city: pCity = "北京"} = person;
+            output += `部分默认值: pName=${pName}, pAge=${pAge}, pCity=${pCity}<br>`;
+            
+            document.getElementById('defaults-output').innerHTML = output;
+        }
+        
+        function demoRenaming() {
+            let output = "";
+            let person = {
+                name: "张三",
+                age: 25
+            };
+            
+            // 重命名
+            let {name: fullName, age: years} = person;
+            output += `重命名: fullName=${fullName}, years=${years}<br>`;
+            
+            // 重命名 + 默认值
+            let {name: userName = "用户", age: userAge = 0} = {};
+            output += `重命名+默认值: userName=${userName}, userAge=${userAge}<br>`;
+            
+            document.getElementById('renaming-output').innerHTML = output;
+        }
+        
+        function demoNested() {
+            let output = "";
+            let user = {
+                name: "张三",
+                address: {
+                    city: "北京",
+                    street: "中关村大街"
+                },
+                hobbies: ["阅读", "运动"]
+            };
+            
+            // 嵌套对象解构
+            let {name, address: {city, street}} = user;
+            output += `嵌套对象: name=${name}, city=${city}, street=${street}<br>`;
+            
+            // 嵌套数组解构
+            let {hobbies: [firstHobby, secondHobby]} = user;
+            output += `嵌套数组: firstHobby=${firstHobby}, secondHobby=${secondHobby}<br>`;
+            
+            document.getElementById('nested-output').innerHTML = output;
+        }
+        
+        function demoFunctionParams() {
+            let output = "";
+            
+            // 对象参数解构
+            function greet({name, age = 0}) {
+                return `Hello, ${name}! 年龄: ${age}`;
+            }
+            
+            output += `greet({name: "张三", age: 25}): ${greet({name: "张三", age: 25})}<br>`;
+            output += `greet({name: "李四"}): ${greet({name: "李四"})}<br>`;
+            
+            // 数组参数解构
+            function sum([a, b, c = 0]) {
+                return a + b + c;
+            }
+            
+            output += `sum([1, 2, 3]): ${sum([1, 2, 3])}<br>`;
+            output += `sum([1, 2]): ${sum([1, 2])}<br>`;
+            
+            document.getElementById('params-output').innerHTML = output;
+        }
+        
+        console.log("=== 解构赋值示例 ===");
+        console.log("解构赋值可以快速提取数组或对象的值");
+    </script>
+</body>
+</html>

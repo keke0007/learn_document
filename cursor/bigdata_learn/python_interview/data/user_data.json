@@ -1,0 +1,47 @@
+[
+  {
+    "id": 1,
+    "name": "张三",
+    "email": "zhangsan@example.com",
+    "age": 25,
+    "department": "研发部",
+    "skills": ["Python", "Django", "Flask"],
+    "salary": 15000
+  },
+  {
+    "id": 2,
+    "name": "李四",
+    "email": "lisi@example.com",
+    "age": 30,
+    "department": "产品部",
+    "skills": ["产品设计", "项目管理"],
+    "salary": 18000
+  },
+  {
+    "id": 3,
+    "name": "王五",
+    "email": "wangwu@example.com",
+    "age": 28,
+    "department": "研发部",
+    "skills": ["Python", "FastAPI", "React"],
+    "salary": 16000
+  },
+  {
+    "id": 4,
+    "name": "赵六",
+    "email": "zhaoliu@example.com",
+    "age": 32,
+    "department": "测试部",
+    "skills": ["自动化测试", "性能测试"],
+    "salary": 14000
+  },
+  {
+    "id": 5,
+    "name": "钱七",
+    "email": "qianqi@example.com",
+    "age": 27,
+    "department": "研发部",
+    "skills": ["Python", "机器学习", "数据分析"],
+    "salary": 17000
+  }
+]

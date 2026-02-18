@@ -1,0 +1,31 @@
+{
+  "name": "order_assistant_workflow_example",
+  "description": "示例：判断是否需要查单，必要时调用工具并汇总输出（仅用于学习对照）",
+  "nodes": [
+    {
+      "id": "input",
+      "type": "input",
+      "outputs": ["user_question"]
+    },
+    {
+      "id": "classify",
+      "type": "llm_classifier",
+      "inputs": ["user_question"],
+      "outputs": ["need_tool", "order_id"]
+    },
+    {
+      "id": "tool_call",
+      "type": "tool_http",
+      "when": "need_tool == true",
+      "inputs": ["order_id"],
+      "outputs": ["order_status"]
+    },
+    {
+      "id": "answer",
+      "type": "llm_answer",
+      "inputs": ["user_question", "order_status"],
+      "outputs": ["final_answer"]
+    }
+  ]
+}
+

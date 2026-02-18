@@ -1,0 +1,26 @@
+2024-01-15 09:00:00.123 [main] INFO  com.example.App - Application started
+2024-01-15 09:00:05.456 [http-nio-8080-exec-1] INFO  com.example.Controller - Processing request: /api/users
+2024-01-15 09:00:10.789 [http-nio-8080-exec-1] ERROR com.example.Service - Database connection failed
+java.sql.SQLException: Connection refused
+    at com.mysql.jdbc.ConnectionImpl.connectOneTryOnly(ConnectionImpl.java:2400)
+    at com.mysql.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:2300)
+    at com.example.Service.getConnection(Service.java:45)
+2024-01-15 09:00:15.234 [http-nio-8080-exec-2] WARN  com.example.Controller - Request timeout: /api/users
+2024-01-15 09:00:20.567 [GC] INFO  - [GC (Allocation Failure) 1024M->512M, 0.123s]
+2024-01-15 09:00:25.890 [http-nio-8080-exec-3] ERROR com.example.Service - OutOfMemoryError: Java heap space
+java.lang.OutOfMemoryError: Java heap space
+    at java.util.Arrays.copyOf(Arrays.java:3210)
+    at java.util.ArrayList.grow(ArrayList.java:267)
+    at com.example.Service.processData(Service.java:78)
+2024-01-15 09:00:30.123 [scheduler-1] INFO  com.example.Scheduler - Scheduled task executed
+2024-01-15 09:00:35.456 [http-nio-8080-exec-4] ERROR com.example.Controller - NullPointerException
+java.lang.NullPointerException
+    at com.example.Controller.handleRequest(Controller.java:32)
+    at com.example.Controller.doGet(Controller.java:15)
+2024-01-15 09:00:40.789 [http-nio-8080-exec-5] INFO  com.example.Service - Processing completed in 5000ms
+2024-01-15 09:00:45.123 [http-nio-8080-exec-6] ERROR com.example.Service - Thread pool exhausted
+java.util.concurrent.RejectedExecutionException: Thread pool is full
+    at java.util.concurrent.ThreadPoolExecutor.reject(ThreadPoolExecutor.java:823)
+    at com.example.Service.submitTask(Service.java:120)
+2024-01-15 09:00:50.456 [http-nio-8080-exec-7] INFO  com.example.Service - Cache hit rate: 85%
+2024-01-15 09:00:55.789 [GC] INFO  - [Full GC (Ergonomics) 2048M->1024M, 0.456s]

@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS 定位</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+        }
+        
+        .section {
+            background: white;
+            padding: 30px;
+            margin-bottom: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: relative;
+        }
+        
+        h2 {
+            color: #555;
+            margin-bottom: 20px;
+        }
+        
+        .demo-box {
+            background: #e3f2fd;
+            border: 2px solid #2196F3;
+            padding: 20px;
+            margin: 10px 0;
+        }
+        
+        /* 1. Static (默认) */
+        .static {
+            position: static;
+            background: #fff3cd;
+            border-color: #ffc107;
+        }
+        
+        /* 2. Relative */
+        .relative {
+            position: relative;
+            background: #d1ecf1;
+            border-color: #17a2b8;
+        }
+        
+        .relative-offset {
+            position: relative;
+            top: 20px;
+            left: 30px;
+            background: #d4edda;
+            border-color: #28a745;
+        }
+        
+        /* 3. Absolute */
+        .absolute-container {
+            position: relative;
+            height: 200px;
+            background: #f8f9fa;
+            border: 2px dashed #6c757d;
+        }
+        
+        .absolute {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: #f8d7da;
+            border-color: #dc3545;
+            width: 150px;
+        }
+        
+        .absolute-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #e7d4f8;
+            border-color: #9c27b0;
+        }
+        
+        /* 4. Fixed */
+        .fixed {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #667eea;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 25px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            z-index: 1000;
+        }
+        
+        /* 5. Sticky */
+        .sticky {
+            position: sticky;
+            top: 0;
+            background: #2ecc71;
+            color: white;
+            padding: 15px;
+            z-index: 100;
+        }
+        
+        .scroll-content {
+            height: 300px;
+            overflow-y: auto;
+            background: #f8f9fa;
+            padding: 20px;
+        }
+        
+        .scroll-item {
+            padding: 30px;
+            margin: 10px 0;
+            background: white;
+            border-radius: 5px;
+        }
+        
+        /* 6. Z-index */
+        .z-index-container {
+            position: relative;
+            height: 200px;
+        }
+        
+        .z-1 {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 150px;
+            height: 150px;
+            background: rgba(231, 76, 60, 0.8);
+            z-index: 1;
+        }
+        
+        .z-2 {
+            position: absolute;
+            top: 50px;
+            left: 50px;
+            width: 150px;
+            height: 150px;
+            background: rgba(52, 152, 219, 0.8);
+            z-index: 2;
+        }
+        
+        .z-3 {
+            position: absolute;
+            top: 80px;
+            left: 80px;
+            width: 150px;
+            height: 150px;
+            background: rgba(46, 204, 113, 0.8);
+            z-index: 3;
+        }
+        
+        .info-box {
+            background: #e3f2fd;
+            padding: 15px;
+            border-left: 4px solid #2196F3;
+            margin: 15px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>CSS 定位 (Position) 案例</h1>
+        
+        <div class="section">
+            <h2>1. Static (静态定位 - 默认)</h2>
+            <div class="info-box">
+                <p><strong>position: static</strong> - 元素按照正常文档流排列，无法使用 top, right, bottom, left 属性。</p>
+            </div>
+            <div class="demo-box static">Static 定位的元素</div>
+            <div class="demo-box static">另一个 Static 元素</div>
+        </div>
+        
+        <div class="section">
+            <h2>2. Relative (相对定位)</h2>
+            <div class="info-box">
+                <p><strong>position: relative</strong> - 相对于自身原始位置进行偏移，仍占据原空间。</p>
+            </div>
+            <div class="demo-box relative">Relative 定位（未偏移）</div>
+            <div class="demo-box relative-offset">Relative 定位（top: 20px, left: 30px）</div>
+            <div class="demo-box relative">后面的元素不受影响</div>
+        </div>
+        
+        <div class="section">
+            <h2>3. Absolute (绝对定位)</h2>
+            <div class="info-box">
+                <p><strong>position: absolute</strong> - 相对于最近的已定位祖先元素（relative/absolute/fixed），如果没有则相对于 body。</p>
+            </div>
+            <div class="absolute-container">
+                <div class="demo-box absolute">Absolute 定位（右上角）</div>
+                <div class="demo-box absolute-center">Absolute 居中</div>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2>4. Fixed (固定定位)</h2>
+            <div class="info-box">
+                <p><strong>position: fixed</strong> - 相对于浏览器窗口定位，滚动页面时位置不变。</p>
+            </div>
+            <p>滚动页面，右下角的按钮会保持固定位置。</p>
+            <div class="fixed">固定按钮</div>
+        </div>
+        
+        <div class="section">
+            <h2>5. Sticky (粘性定位)</h2>
+            <div class="info-box">
+                <p><strong>position: sticky</strong> - 在滚动到指定位置前表现为 relative，之后表现为 fixed。</p>
+            </div>
+            <div class="sticky">粘性定位标题（滚动查看效果）</div>
+            <div class="scroll-content">
+                <div class="scroll-item">内容 1</div>
+                <div class="scroll-item">内容 2</div>
+                <div class="scroll-item">内容 3</div>
+                <div class="scroll-item">内容 4</div>
+                <div class="scroll-item">内容 5</div>
+                <div class="scroll-item">内容 6</div>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2>6. Z-index (层叠顺序)</h2>
+            <div class="info-box">
+                <p><strong>z-index</strong> - 控制定位元素的层叠顺序，数值越大越在上层。</p>
+            </div>
+            <div class="z-index-container">
+                <div class="z-1">z-index: 1</div>
+                <div class="z-2">z-index: 2</div>
+                <div class="z-3">z-index: 3 (最上层)</div>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2>定位属性总结</h2>
+            <ul style="line-height: 2;">
+                <li><strong>static</strong> - 默认值，正常文档流</li>
+                <li><strong>relative</strong> - 相对定位，相对于自身</li>
+                <li><strong>absolute</strong> - 绝对定位，相对于已定位祖先</li>
+                <li><strong>fixed</strong> - 固定定位，相对于视口</li>
+                <li><strong>sticky</strong> - 粘性定位，relative 和 fixed 的结合</li>
+                <li><strong>top, right, bottom, left</strong> - 偏移属性</li>
+                <li><strong>z-index</strong> - 层叠顺序</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

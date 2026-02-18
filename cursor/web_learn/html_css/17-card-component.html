@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>卡片组件案例</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 40px 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+            font-size: 2.5rem;
+        }
+        
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        /* 基础卡片 */
+        .card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        }
+        
+        .card-image {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 3rem;
+        }
+        
+        .card-content {
+            padding: 25px;
+        }
+        
+        .card-title {
+            font-size: 1.5rem;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .card-text {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        
+        .card-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: transform 0.2s ease;
+        }
+        
+        .card-button:hover {
+            transform: scale(1.05);
+        }
+        
+        /* 带阴影的卡片 */
+        .card-shadow {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1),
+                        0 10px 20px rgba(0,0,0,0.1),
+                        0 20px 30px rgba(0,0,0,0.1);
+        }
+        
+        /* 带边框的卡片 */
+        .card-border {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            border: 3px solid #667eea;
+        }
+        
+        /* 渐变卡片 */
+        .card-gradient {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 15px;
+            padding: 30px;
+        }
+        
+        .card-gradient .card-title {
+            color: white;
+        }
+        
+        .card-gradient .card-text {
+            color: rgba(255,255,255,0.9);
+        }
+        
+        /* 图片卡片 */
+        .card-with-img {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        .card-img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+        
+        /* 统计卡片 */
+        .stats-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .stats-number {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+        
+        .stats-label {
+            color: #666;
+            font-size: 1.1rem;
+        }
+        
+        .section-title {
+            color: white;
+            text-align: center;
+            margin: 50px 0 30px;
+            font-size: 2rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>卡片组件案例集合</h1>
+        
+        <!-- 基础卡片 -->
+        <div class="cards-grid">
+            <div class="card">
+                <div class="card-image">📱</div>
+                <div class="card-content">
+                    <h3 class="card-title">基础卡片</h3>
+                    <p class="card-text">这是一个基础卡片组件，包含图片、标题、文本和按钮。</p>
+                    <button class="card-button">了解更多</button>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-image">💻</div>
+                <div class="card-content">
+                    <h3 class="card-title">悬停效果</h3>
+                    <p class="card-text">鼠标悬停时卡片会向上移动并增强阴影效果。</p>
+                    <button class="card-button">查看详情</button>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-image">🎨</div>
+                <div class="card-content">
+                    <h3 class="card-title">设计卡片</h3>
+                    <p class="card-text">使用现代设计风格，圆角和阴影让卡片更美观。</p>
+                    <button class="card-button">开始使用</button>
+                </div>
+            </div>
+        </div>
+        
+        <h2 class="section-title">其他卡片样式</h2>
+        
+        <div class="cards-grid">
+            <!-- 阴影卡片 -->
+            <div class="card-shadow">
+                <h3 class="card-title">多层阴影卡片</h3>
+                <p class="card-text">使用多层阴影创造深度感，让卡片看起来更有层次。</p>
+            </div>
+            
+            <!-- 边框卡片 -->
+            <div class="card-border">
+                <h3 class="card-title">边框卡片</h3>
+                <p class="card-text">使用彩色边框突出卡片，适合强调重要内容。</p>
+            </div>
+            
+            <!-- 渐变卡片 -->
+            <div class="card-gradient">
+                <h3 class="card-title">渐变背景卡片</h3>
+                <p class="card-text">使用渐变背景让卡片更加醒目和吸引人。</p>
+            </div>
+        </div>
+        
+        <h2 class="section-title">特殊用途卡片</h2>
+        
+        <div class="cards-grid">
+            <!-- 图片卡片 -->
+            <div class="card-with-img">
+                <img src="https://via.placeholder.com/400x250/667eea/ffffff?text=Card+Image" alt="卡片图片" class="card-img">
+                <div class="card-content">
+                    <h3 class="card-title">图片卡片</h3>
+                    <p class="card-text">包含实际图片的卡片，适合展示产品或内容。</p>
+                </div>
+            </div>
+            
+            <!-- 统计卡片 -->
+            <div class="stats-card">
+                <div class="stats-number">1,234</div>
+                <div class="stats-label">用户数量</div>
+            </div>
+            
+            <div class="stats-card">
+                <div class="stats-number">567</div>
+                <div class="stats-label">项目完成</div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

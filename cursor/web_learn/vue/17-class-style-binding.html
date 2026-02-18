@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Class 和 Style 绑定</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            border-bottom: 3px solid #4CAF50;
+            padding-bottom: 10px;
+        }
+        .section {
+            margin: 30px 0;
+            padding: 20px;
+            background: #f9f9f9;
+            border-left: 4px solid #4CAF50;
+            border-radius: 5px;
+        }
+        .demo-box {
+            padding: 20px;
+            background: #e8f5e9;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+        .active {
+            background: #4CAF50;
+            color: white;
+        }
+        .highlight {
+            background: yellow;
+        }
+        .large {
+            font-size: 1.5rem;
+        }
+        .bold {
+            font-weight: bold;
+        }
+        button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        input {
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div class="container">
+            <h1>Class 和 Style 绑定</h1>
+            
+            <div class="section">
+                <h2>1. 对象语法（Class）</h2>
+                <div class="demo-box">
+                    <div :class="{ active: isActive, highlight: isHighlighted }">
+                        动态 Class（对象语法）
+                    </div>
+                    <button @click="isActive = !isActive">切换 active</button>
+                    <button @click="isHighlighted = !isHighlighted">切换 highlight</button>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2>2. 数组语法（Class）</h2>
+                <div class="demo-box">
+                    <div :class="[activeClass, highlightClass]">
+                        动态 Class（数组语法）
+                    </div>
+                    <input v-model="activeClass" placeholder="输入 class 名">
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2>3. 对象语法（Style）</h2>
+                <div class="demo-box">
+                    <div :style="{ color: textColor, fontSize: fontSize + 'px' }">
+                        动态 Style（对象语法）
+                    </div>
+                    <input v-model="textColor" placeholder="输入颜色（如：red）">
+                    <input v-model.number="fontSize" type="number" placeholder="输入字体大小">
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2>4. 数组语法（Style）</h2>
+                <div class="demo-box">
+                    <div :style="[baseStyle, dynamicStyle]">
+                        动态 Style（数组语法）
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2>5. 计算属性绑定</h2>
+                <div class="demo-box">
+                    <div :class="computedClass">
+                        使用计算属性绑定 Class
+                    </div>
+                    <input v-model.number="score" type="number" placeholder="输入分数">
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2>6. 多重条件</h2>
+                <div class="demo-box">
+                    <div :class="['demo-box', { active: isActive, large: isLarge }]">
+                        组合使用：数组 + 对象
+                    </div>
+                    <button @click="isActive = !isActive">切换 active</button>
+                    <button @click="isLarge = !isLarge">切换 large</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const { createApp } = Vue;
+
+        createApp({
+            data() {
+                return {
+                    isActive: true,
+                    isHighlighted: false,
+                    activeClass: 'active',
+                    highlightClass: 'highlight',
+                    textColor: 'blue',
+                    fontSize: 20,
+                    baseStyle: {
+                        padding: '10px',
+                        borderRadius: '5px'
+                    },
+                    dynamicStyle: {
+                        backgroundColor: '#e3f2fd'
+                    },
+                    score: 85,
+                    isLarge: false
+                }
+            },
+            computed: {
+                computedClass() {
+                    if (this.score >= 90) {
+                        return 'active';
+                    } else if (this.score >= 60) {
+                        return 'highlight';
+                    } else {
+                        return '';
+                    }
+                }
+            }
+        }).mount('#app');
+    </script>
+</body>
+</html>

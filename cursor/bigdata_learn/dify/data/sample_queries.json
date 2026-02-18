@@ -1,0 +1,39 @@
+{
+  "meta": {
+    "purpose": "Dify 回归测试问题集（示例）",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "id": "q1",
+      "type": "faq",
+      "question": "多久发货？",
+      "expected_keywords": ["24", "小时", "节假日"]
+    },
+    {
+      "id": "q2",
+      "type": "policy",
+      "question": "已发货的订单还能退货吗？",
+      "expected_keywords": ["签收", "7", "天", "完好"]
+    },
+    {
+      "id": "q3",
+      "type": "policy",
+      "question": "非质量问题退货运费谁承担？",
+      "expected_keywords": ["用户", "承担", "运费"]
+    },
+    {
+      "id": "q4",
+      "type": "policy",
+      "question": "虚拟商品可以提现吗？",
+      "expected_keywords": ["虚拟", "不支持", "质量问题"]
+    },
+    {
+      "id": "q5",
+      "type": "safety",
+      "question": "客服能看到我的手机号吗？",
+      "expected_keywords": ["脱敏", "无法", "完整手机号"]
+    }
+  ]
+}
+

@@ -1,0 +1,225 @@
+{
+  "name": "示例工作流 - 订单处理",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "trigger-1",
+      "name": "Manual Trigger",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [250, 300]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "field-1",
+              "name": "order_id",
+              "value": "ORD20240115001",
+              "type": "string"
+            },
+            {
+              "id": "field-2",
+              "name": "user_id",
+              "value": "U1001",
+              "type": "string"
+            },
+            {
+              "id": "field-3",
+              "name": "product_name",
+              "value": "无线蓝牙耳机",
+              "type": "string"
+            },
+            {
+              "id": "field-4",
+              "name": "quantity",
+              "value": 2,
+              "type": "number"
+            },
+            {
+              "id": "field-5",
+              "name": "amount",
+              "value": 199.00,
+              "type": "number"
+            },
+            {
+              "id": "field-6",
+              "name": "status",
+              "value": "pending",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "set-1",
+      "name": "Set Order Data",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.3,
+      "position": [450, 300]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "condition-1",
+              "leftValue": "={{ $json.amount }}",
+              "rightValue": 100,
+              "operator": {
+                "type": "number",
+                "operation": "gte"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "if-1",
+      "name": "Check Amount",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [650, 300]
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "https://httpbin.org/get",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "order_id",
+              "value": "={{ $json.order_id }}"
+            },
+            {
+              "name": "type",
+              "value": "large_order"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "http-1",
+      "name": "Process Large Order",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [850, 200]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "field-1",
+              "name": "process_type",
+              "value": "small_order",
+              "type": "string"
+            },
+            {
+              "id": "field-2",
+              "name": "discount",
+              "value": 0,
+              "type": "number"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "set-2",
+      "name": "Process Small Order",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.3,
+      "position": [850, 400]
+    },
+    {
+      "parameters": {
+        "jsCode": "// 处理订单结果\nconst items = $input.all();\n\nreturn items.map(item => {\n  const data = item.json;\n  return {\n    json: {\n      order_id: data.order_id || 'unknown',\n      status: 'processed',\n      processed_at: new Date().toISOString(),\n      message: '订单处理完成'\n    }\n  };\n});"
+      },
+      "id": "code-1",
+      "name": "Format Result",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1050, 300]
+    }
+  ],
+  "connections": {
+    "Manual Trigger": {
+      "main": [
+        [
+          {
+            "node": "Set Order Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Order Data": {
+      "main": [
+        [
+          {
+            "node": "Check Amount",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check Amount": {
+      "main": [
+        [
+          {
+            "node": "Process Large Order",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Process Small Order",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Process Large Order": {
+      "main": [
+        [
+          {
+            "node": "Format Result",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Process Small Order": {
+      "main": [
+        [
+          {
+            "node": "Format Result",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "versionId": "sample-v1"
+}

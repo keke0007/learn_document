@@ -1,0 +1,42 @@
+[
+  {
+    "id": 1,
+    "name": "张三",
+    "age": 25,
+    "email": "zhangsan@example.com",
+    "department": "研发部",
+    "salary": 15000
+  },
+  {
+    "id": 2,
+    "name": "李四",
+    "age": 30,
+    "email": "lisi@example.com",
+    "department": "产品部",
+    "salary": 18000
+  },
+  {
+    "id": 3,
+    "name": "王五",
+    "age": 28,
+    "email": "wangwu@example.com",
+    "department": "研发部",
+    "salary": 16000
+  },
+  {
+    "id": 4,
+    "name": "赵六",
+    "age": 32,
+    "email": "zhaoliu@example.com",
+    "department": "测试部",
+    "salary": 14000
+  },
+  {
+    "id": 5,
+    "name": "钱七",
+    "age": 27,
+    "email": "qianqi@example.com",
+    "department": "研发部",
+    "salary": 17000
+  }
+]

@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>闭包</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            border-bottom: 3px solid #4CAF50;
+            padding-bottom: 10px;
+        }
+        .section {
+            margin: 30px 0;
+            padding: 20px;
+            background: #f9f9f9;
+            border-left: 4px solid #4CAF50;
+            border-radius: 5px;
+        }
+        button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        .output {
+            background: #e8f5e9;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>闭包</h1>
+        
+        <div class="section">
+            <h2>1. 基础闭包</h2>
+            <button onclick="demoBasic()">运行示例</button>
+            <div id="basic-output" class="output"></div>
+        </div>
+        
+        <div class="section">
+            <h2>2. 闭包保存状态</h2>
+            <button onclick="demoState()">运行示例</button>
+            <div id="state-output" class="output"></div>
+        </div>
+        
+        <div class="section">
+            <h2>3. 私有变量</h2>
+            <button onclick="demoPrivate()">运行示例</button>
+            <div id="private-output" class="output"></div>
+        </div>
+        
+        <div class="section">
+            <h2>4. 循环中的闭包</h2>
+            <button onclick="demoLoop()">运行示例</button>
+            <div id="loop-output" class="output"></div>
+        </div>
+        
+        <div class="section">
+            <h2>5. 模块模式</h2>
+            <button onclick="demoModule()">运行示例</button>
+            <div id="module-output" class="output"></div>
+        </div>
+    </div>
+
+    <script>
+        // 1. 基础闭包
+        function outerFunction(x) {
+            // 内部函数可以访问外部函数的变量
+            function innerFunction(y) {
+                return x + y;
+            }
+            return innerFunction;
+        }
+        
+        function demoBasic() {
+            let output = "";
+            let addFive = outerFunction(5);
+            
+            output += `outerFunction(5) 返回一个函数<br>`;
+            output += `addFive(3): ${addFive(3)}<br>`;
+            output += `addFive(10): ${addFive(10)}<br>`;
+            output += "闭包让内部函数可以访问外部函数的变量";
+            
+            document.getElementById('basic-output').innerHTML = output;
+        }
+        
+        // 2. 闭包保存状态
+        function createCounter() {
+            let count = 0;
+            
+            return {
+                increment: function() {
+                    count++;
+                    return count;
+                },
+                decrement: function() {
+                    count--;
+                    return count;
+                },
+                getCount: function() {
+                    return count;
+                }
+            };
+        }
+        
+        function demoState() {
+            let output = "";
+            let counter1 = createCounter();
+            let counter2 = createCounter();
+            
+            output += `counter1.increment(): ${counter1.increment()}<br>`;
+            output += `counter1.increment(): ${counter1.increment()}<br>`;
+            output += `counter1.getCount(): ${counter1.getCount()}<br>`;
+            output += `<br>counter2.increment(): ${counter2.increment()}<br>`;
+            output += `counter2.getCount(): ${counter2.getCount()}<br>`;
+            output += "每个闭包都有自己独立的状态";
+            
+            document.getElementById('state-output').innerHTML = output;
+        }
+        
+        // 3. 私有变量
+        function createBankAccount(initialBalance) {
+            let balance = initialBalance; // 私有变量
+            
+            return {
+                deposit: function(amount) {
+                    balance += amount;
+                    return balance;
+                },
+                withdraw: function(amount) {
+                    if (amount <= balance) {
+                        balance -= amount;
+                        return balance;
+                    } else {
+                        return "余额不足";
+                    }
+                },
+                getBalance: function() {
+                    return balance;
+                }
+            };
+        }
+        
+        function demoPrivate() {
+            let output = "";
+            let account = createBankAccount(100);
+            
+            output += `初始余额: ${account.getBalance()}<br>`;
+            output += `存款 50: ${account.deposit(50)}<br>`;
+            output += `取款 30: ${account.withdraw(30)}<br>`;
+            output += `当前余额: ${account.getBalance()}<br>`;
+            output += "balance 变量是私有的，无法直接访问";
+            
+            document.getElementById('private-output').innerHTML = output;
+        }
+        
+        // 4. 循环中的闭包
+        function demoLoop() {
+            let output = "";
+            
+            // 问题：所有函数都引用同一个 i
+            output += "问题代码（使用 var）:<br>";
+            let functions1 = [];
+            for (var i = 0; i < 3; i++) {
+                functions1.push(function() {
+                    return i; // 所有函数都返回 3
+                });
+            }
+            output += `functions1[0](): ${functions1[0]()}<br>`;
+            output += `functions1[1](): ${functions1[1]()}<br>`;
+            
+            // 解决方案1：使用立即执行函数
+            output += "<br>解决方案1（IIFE）:<br>";
+            let functions2 = [];
+            for (var j = 0; j < 3; j++) {
+                functions2.push((function(index) {
+                    return function() {
+                        return index;
+                    };
+                })(j));
+            }
+            output += `functions2[0](): ${functions2[0]()}<br>`;
+            output += `functions2[1](): ${functions2[1]()}<br>`;
+            
+            // 解决方案2：使用 let
+            output += "<br>解决方案2（使用 let）:<br>";
+            let functions3 = [];
+            for (let k = 0; k < 3; k++) {
+                functions3.push(function() {
+                    return k;
+                });
+            }
+            output += `functions3[0](): ${functions3[0]()}<br>`;
+            output += `functions3[1](): ${functions3[1]()}<br>`;
+            
+            document.getElementById('loop-output').innerHTML = output;
+        }
+        
+        // 5. 模块模式
+        function demoModule() {
+            let output = "";
+            
+            let calculator = (function() {
+                let result = 0; // 私有变量
+                
+                return {
+                    add: function(x) {
+                        result += x;
+                        return this;
+                    },
+                    subtract: function(x) {
+                        result -= x;
+                        return this;
+                    },
+                    multiply: function(x) {
+                        result *= x;
+                        return this;
+                    },
+                    getResult: function() {
+                        return result;
+                    },
+                    reset: function() {
+                        result = 0;
+                        return this;
+                    }
+                };
+            })();
+            
+            calculator.add(10).multiply(2).subtract(5);
+            output += `计算结果: ${calculator.getResult()}<br>`;
+            output += `重置后: ${calculator.reset().getResult()}`;
+            
+            document.getElementById('module-output').innerHTML = output;
+        }
+        
+        console.log("=== 闭包示例 ===");
+        console.log("闭包：函数可以访问其外部作用域的变量");
+    </script>
+</body>
+</html>
