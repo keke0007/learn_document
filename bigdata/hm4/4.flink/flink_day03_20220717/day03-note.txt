@@ -1,0 +1,87 @@
+
+Flink on YARN：
+    将Flink Job提交运行到Hadoop YARN集群上。
+
+    1). Flink Cluster 集群
+        每个Flink Job运行时，需要Flink Cluster集群资源，提交Job到集群中运行。
+        主节点：
+            集群老大，JobManager
+            接收客户端提交Flink Job，分配资源运行Job中任务，监控Job运行
+        从节点：
+            集群小弟，TaskManager
+            运行Job中Task任务，放在Slot资源槽中执行的
+    
+    2). Flink on YARN 运行本质和流程
+        本质：
+            Flink Cluster集群运行在Hadoop YARN容器Container中，JM和TMs在NodeManagers的容器Container中运行。
+        流程：
+            1) 上传jar包和conf配置文件到HDFS
+                客户端向yarn集群提交应用（就是flink cluster），申请资源运行应用（运行JM和TMs）
+            2) 提交应用给RM
+            3) 分配资源，运行应用管理者AppMaster和JM
+                每个应用运行在YARN集群上，启动AppMaster
+                当在NodeManager容器中运行AppMaster后，到HDFS上下载jar包和conf配置文件，构建JM运行环境，运行JM
+            4) 向RM申请资源，运行TM（在NodeManager的容器Container）
+                【一开始，不申请资源，运行TM，当且仅当提交Flink Job时，需要资源，才申请运行】
+            
+    3). flink on yarn 三种部署模式
+        第1种：session 会话共享部署模式
+            启动1个Flink Cluster集群，提交运行多个Flink Job。 
+        第2种：Per-Job 独享资源部署模式
+            每个Flink Job运行时，单独申请资源，运行1个属于自己Flink Cluster 
+            【当Flink Job运行完成，集群关闭，释放资源】
+            【spark on yarn：yarn-client】
+        第3种：Application 应用部署模式
+            与Per-Job基本一致，每个Flink Job运行时，单独申请资源使用
+            Flink Job执行时main方法在JM中执行，不在客户端client执行
+            【spark on yarn：yarn-cluster】
+
+
+=======================================================================
+问卷调查：
+    1. Java 接口和实现类
+        没问题扣1
+    2. 匿名内部类
+        OK，扣2
+    3. Java8中Lambda表达式
+        OK，扣3
+    4. 使用JDBC操作MySQL
+        OK，扣4
+    【通过案例方式，将上述复盘一遍，编程一下】
+=======================================================================
+
+
+
+Flink API使用开发，创建1个Maven Project，有不同Mave Module模块：
+    flink-stream
+        |-flink-start
+            入门案例代码
+        |-flink-api
+            DataStream 流批一体化API使用代码
+        |-flink-core
+            Flink 四大基石（核心）代码
+        |-flink-action
+            Flink 流计算高级特性功能代码
+        |-flink-sql
+            Flink SQL模块代码
+
+
+
+==========================================================================
+Flink中DataStream处理数据时，调用算子，往往需要传递【函数接口对象】，三种书写方式：
+    方式1. 单独创建子类，实现函数接口，构建实例对象
+        当处理数据业务比较复杂时，建议此种方式（创建子类，实现接口）
+
+    方式2. 直接使用new 关键字，创建函数接口对象，实现抽象方法：匿名内部类方式创建对象
+        处理数据业务相对简单，使用此种方式
+        后续讲解DataStream算子时，几乎都是使用此种方式，快速，简单，方便
+
+    【使用方式1和方式2，编写代码绝对没有问题，尤其是方式1，仅仅复杂一点而已】
+
+    方式3. 使用Java8提供新特性：Lambda表达式，创建匿名对象
+        处理数据业务极其简单，比如一行代码就可以完成业务实现，可以使用lambda表达式
+
+
+
+
+

@@ -1,0 +1,113 @@
+
+
+课程内容提纲：
+    1、DataStream Connector
+        重点，涉及代码
+        【核心类是啥，创建类的对象，传递参数，调用方法，数据读写】
+
+    2、批处理DataSet
+        广播变量
+        分布式缓存
+        累加器
+        【知道】
+
+    3、Redis 内存数据库
+        Redis 快速入门
+        Flink与Redis整合
+        【项目三、实时项目，使用Redis内存数据库，缓存数据，频繁读取】
+
+==============================================================================
+1、DataStream 转换算子
+    将数据源数据抽象封装到DataStream数据流，调用转换算子Operator处理分析数据。
+    1) 数据流中每条数据处理算子
+        map(1 -> 1)、filter(1 -> 0或1)、flatMap(1 -> 0或1或多)
+        【DataStream中flatMap算子是否可以替代map算子使用？？】
+    2) 分组聚合算子
+        keyBy算子 -> 将数据流中数据按照指定key进行分组，得到数据流为分组流KeyedStream
+        聚合算子：
+            sum 算子，对每个组内数据求和操作
+            reduce 算子，对每个组内数据规约聚合操作，传递函数接口中方法reduce，有2个参数
+            max/maxBy或min/minBy 算子 
+    3) 双流合并算子
+        union 算子 -> 合并多个数据流DataStream数据到1个数据流中，要求数据流中数据类型相同
+        connect 算子 -> 连接2个数据流为1个数据流，数据类型可以不一样，但是连接以后，必须调用转换算子处理数据
+    4) 单流分割算子（侧边输出流）
+        老版本：split算子和select算子，流的分割本质：给数据流中每条数据打上标签并且输出
+        新版本：sideOutput侧边流输出实现流数据分割
+            step1. 定义标签OutputTag；
+            step2. 使用process处理算子处理流中每条数据，给数据打标签；
+            step3. 依据标签获取侧边流数据（分割流的额数据）；
+    5) 高级算子
+        DataStream 物理分区算子：7种类型
+            global全局、broadcast广播、forward向前、shuffle随机、
+            rebalance均衡、rescale本地均衡和自定义分区规则custom
+        RichFunction富函数
+            open方法和close方法 -> 声明周期方法
+            getRuntimeContext 在Job运行时，获取上下文对象，获取Job信息和状态
+        ProcessFunction处理函数
+            属于Flink API中最底层API，有一个方法：processElement，表示处理流中每条数据
+            onTimer定时器，比如实现订单超时取消
+
+
+在Flink 1.14版本中，Kafka Connector连接器中分别提供2套API读写Kafka Topic队列中数据：
+    1) 老接口实现类：
+        FlinkKafkaConsumer
+        FlinkKafkaProducer
+    2) 新接口实现类：
+        KafkaSource - 1.12
+        KafkaSink   - 1.14
+
+
+Kafka Consumer消费者消费topic队列中数据时，消费偏移量如何管理？
+    1). 如果消费组ConsumerGroup第一次消费数据，依据属性【offset.auto.reset】消费数据
+        latest 最新偏移量消费
+        smallest 最小偏移量消费
+    2). 消费组第二次，第三次，第四次，.... 消费数据时，依据上一次消费数据消费
+        默认情况下，程序运行时，内存中存储每次消费偏移量offset
+        并且
+        默认情况下，启动自动提交消费偏移量到topic：__consumer_offsets
+            按照时间间隔提交，比如5秒提交一次
+        [当消费程序异常终止后，再次重启时，自动到topic中获取上次消费偏移量，继续消费队列中数据]
+            数据重复消费、数据丢失消费
+    3). 禁用自动提交偏移量，手动提交消费偏移量
+        当每次消费数据完成后，手动提交消费偏移量到topic: __consumer_offsets
+            可能会出现数据重复消费，比如某些分区数据消费处理失败，导致没有提交偏移量
+    4). 禁用自动提交偏移量，手动对每个分区数据消费处理成功后，手动提交
+        1个1个分区数据消费处理成功后，提交次分区消费偏移量信息
+    
+
+Flink从Kafka Topic队列消费数据，有三种方式：
+    1). 消费一个topic队列，直接指定名称即可
+        public FlinkKafkaConsumer(String topic, DeserializationSchema<T> valueDeserializer, Properties props)
+
+    2). 消费多个topic队列，放入到列表List中
+        public FlinkKafkaConsumer(String topic, DeserializationSchema<T> valueDeserializer, Properties props)
+
+    3). 消费多个topic队列，使用正则表达式，要求所有topic名称符合一定规则
+        public FlinkKafkaConsumer(
+            Pattern subscriptionPattern,
+            DeserializationSchema<T> valueDeserializer,
+            Properties props) 
+        [支持topic动态发现，当新增队列topic后，名称符合正则表达式，自动加载topic中数据]
+
+
+Flink 中创建工具类/Connector类对象时，主要2种创建类对象方式：
+    1). 使用 new 关键字，创建某个类的实例对象
+        FlinkKafkaConsumer 
+        显示调用类的构造方法创建实例对象
+    
+    2). 基于建造者设计模式，创建某个类的实例对象
+        先获取类的Builder对象，然后设置类的设置执行，最后build方法创建实例
+
+
+
+
+基于flink构建实时数仓项目，按照数仓分层管理数据
+    ODS层 ->  DWD 层 -> DWS层 ->  ADS 层
+        |       |       |
+            Kafka Topic
+
+
+
+
+

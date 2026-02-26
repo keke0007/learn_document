@@ -1,0 +1,91 @@
+
+【了解Flink，学习Flink】
+    1. Flink 实时计算框架
+        功能、场景、思想
+    2. Flink 安装部署
+        flink cluster、不同集群运行模式（local cluster、Standalone Cluster、flink on yarn）
+    3. Flink 入门案例
+        词频统计WordCount（batch：DataSet、streaming：DataStream）
+            1.12 流批一体化，无论批处理还是流计算，基于DataStream API 
+        打包提交运行
+            flink run 
+    4. 基础概念
+        DataStream、并行度设置（4种方式）、Slot任务槽
+    5. Data Source 和Data Sink 
+        有界流数据源：collection、file
+        自定义数据源函数接口：SourceFunction（原生提供）、Reader（新接口）
+        自定义数据接收器含数据接口：SinkFunction（原生提供）、Writer（新接口）
+    6. DataStream Operator 算子
+        重点转换算子：filter、map、flatMap、keyBy、sum\reduce\max\min、union、connect、sideOutput
+        物理分区算子：global、broadcast、forward、shuffle、rebalance、rescale、custom
+        富函数：RichFunction
+    7. DataSTream Connector 连接器
+        提供API，实现数据源加载数据和数据接收器保存数据
+        Kafka：FlinkKafkaConsumer/KafkaSource、FlinkKafkaProducer/KafkaSink 
+        MySQL: JdbcSink
+        FileSystem: StreamingFileSink/FileSink 
+        Redis：RedisSink
+    8. 批处理高级特性
+        累加器（计数功能、分布式计数）、广播变量（Broadcast）、分布式缓存（Cache）
+                                        dataset                 file 
+                                                        |
+                                                    放入TaskManager内存
+                                    小表数据放入map集合，其中key就是与大表数据关联字段
+
+
+==================================================================================
+
+大数据流式计算引擎发展：
+        Storm       ->         SparkStreaming     ->   Flink 
+
+
+【使用Flink】Flink 实时计算引擎：四大基石
+    窗口Window、时间Time、状态State、检查点Checkpoint （+ 精确性一次语义+Flink Job调度）
+
+1、四大基石【第一部分】
+    窗口Window与时间Time
+
+    【每日实时大屏】
+        显示当日所有订单销售总额，从00:00 ~ 20:00 所有订单数据统计
+
+        计算数据范围：
+            00:00 ~ 24:00 每天，称之为窗口window
+        
+        处理数据：1 day，窗口大小= 1 day 
+            按照时间划分数据窗口
+        
+        Window 窗口计算 
+        Time 时间语义（数据时间、处理时间等）
+
+
+2、四大基石【第二部分】
+    状态State与检查点Checkpoint
+
+    flink job运行时，计算数据中，往往需要存储计算中间结果，以便后续数据处理使用
+        存储计算结果称之为State状态
+
+    为了flink job重启时，恢复以前状态，继续运行处理数据，需要将State状态保存，称之为Checkpoint检查点。
+        将Job运行时，某个时刻状态数据保存到可靠文件系统，当重启时，直接从检查点读取数据，就可以恢复运行。
+
+    State 状态（消费偏移量、分组聚合结果）
+    Checkpoint 检查点（容灾恢复流式应用）
+
+
+
+
+========================================================================
+Flink 窗口计算中，按照不同方式划分窗口：
+    1. 时间窗口TimeWindow
+        按照时间划分窗口，每个窗口的时间大小相同
+        滚动时间窗口：size = slide      
+            最重要的窗口
+        滑动时间窗口：size != slide，通常时size > slide 
+    2. 计数窗口CountWindow
+        按照数量划分窗口，每个窗口中数据条目数相同
+        滚动计数窗口：size = slide 
+        滑动计数窗口：size != slide，通常时size > slide 
+    3. 会话窗口SessionWindow
+        按照数据时间间隔划分，超过设置间隔gap，见前面数据划分到一个窗口中
+
+
+

@@ -1,0 +1,100 @@
+
+
+flink job 调度执行（理论层面）
+    第1点：job中subTask子任务数目；第2点：所需资源Slot任务槽个数
+
+    运行Flink Job程序时：
+        第1、Flink Cluster集群资源
+            JobManager和TaskManagers（Slot任务槽，指定内存memory和slot槽个数）
+
+            JobManager底层，三个部分组：
+                Dispatche 分发器、JobMaster作业主节点、ResourceManager资源管理器
+
+        第2、Flink Job运行任务和资源
+            SubTask子任务（多少人干活）、Slot槽个数（需要多少资源）
+            【决定主要因素：Job中各个Operator算子设置并行度】
+
+            并行度和算子链
+                并行度：指的是每个Operator算子处理数据时，运行实例对象（有几个干活）
+                算子链：一种优化，启动任务数目
+                    将相邻2个算子Operator合并为1个Operator算子链，减少运行实例对象（SubTaks子任务）
+                    合并条件：
+                        并行度相同、数据传输模式为OneToOne 
+                
+            任务槽slot
+                在Flink Job运行时，子任务SubTask运行所需资源封装抽象到Slot中
+                【允许1个slot资源槽可以运行同1个Job中不同类型的subTask子任务】
+                    一种优化，资源使用
+                【Flink Job运行时所需资源Slot槽个数=Operator算子中最大并行度】
+
+            提交运行Flink Job时，将编写程序，转换为物理执行图（SubTask数目和Slot数目）
+                第1个图: Streaming Graph 流图
+                    直接依据程序，映射构建数据流图
+                第2个图：Job Graph 作业图
+                    对Streaming Graph中Operator算子进行合并，行程算子链
+                第3个图：Execution Graph 执行图
+                    对Job Graph图加上并行度，确认job中subTask子任务个数
+                第4个图：物理执行图
+                    对Execution Graph中SubTask任务分配slot，考虑slot槽共享
+                        1个Job中不同类型SubTask任务可以运行在同1个slot槽
+                        1个Job中相同类型subTask任务必须运行在不同slot槽
+
+======================================================================================
+Flink Table API & SQL
+    简称：Flink SQL模块，相当于Hive框架或者SparkSQL 模块
+
+
+目前大数据计算引擎（查询分析引擎），绝大多数支持SQL查询分析：
+    1. MapReduce ->  Hive (仅仅提供SQL)
+
+    2. Spark(RDD)  ->   SparkSQL（不仅仅写SQL，支持DSL）
+
+    3. Presto、Phoenix、Impala - > 全是SQL分析
+
+    4. Flink（DataStream） ->  Flink Table API & SQL(与SparkSQL类似，要么SQL，要么DSL)
+
+
+Flink Table API & SQL：
+    首页文档：
+        https://nightlies.apache.org/flink/flink-docs-release-1.13/docs/dev/table/overview/
+
+    SQL 文档：
+        https://nightlies.apache.org/flink/flink-docs-release-1.13/docs/dev/table/sql/overview/
+
+    Table API 文档：    
+        https://nightlies.apache.org/flink/flink-docs-release-1.13/docs/dev/table/tableapi/
+
+    函数文档：
+        https://nightlies.apache.org/flink/flink-docs-release-1.13/docs/dev/table/functions/systemfunctions/
+    
+    Connector文档：
+        https://nightlies.apache.org/flink/flink-docs-release-1.13/docs/connectors/table/overview/
+
+
+
+如果使用SQL分析数据
+    step1. 将数据映射到table表
+        字段名称和字段类型
+    step2. 编写SQL语句  
+        SELECT ... FROM  tbl_xx  
+
+
+
+====================================================================================
+基于Flink计算引擎之上框架，使得使用Flink处理数据时，更加简单
+    1) StreamX 
+        http://www.streamxhub.com/
+        基于DataStream和SQL开发，主要编程
+
+    2) Dinky
+        http://www.dlink.top/
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,63 @@
+
+1、DataStream Connector连接器
+    1) Kafka Connector
+        数据源：FlinkKafkaConsumer\KafkaSource(1.12)
+        数据接收器：FlinkKafkaProducer\KafkaSink(1.14)
+        【基于flink实时大数据应用，数据管理方案：实时数仓】
+    2) 其他Connector（Sink 接收器）
+        JdbcSink
+        StreamingFileSink/FileSink（1.12） ->  FileSystem Connector: FileSource/FileSink
+
+
+2、Flink 批处理中，三个特性：
+    来源MapReduce和Spark批处理中特性
+    1) 累计器，分布式
+        了解，主要计数功能
+    2) 广播变量，类似Spark中
+        将小表数据封装到DataSet数据集，广播到TaskManager内存中，被Slot中运行SubTask任务共享
+    3) 分布式缓存，类似Hive中map join 
+        将小数据集放在文件中，缓存到TaskManager内存中，被Slot中运行SubTask任务共享
+
+
+3、Redis 入门使用
+    1) 基本概念：
+        数据库：
+            存储数据、查询数据 -> 速度快
+        NoSQL 数据库：
+            非关系性数据库，与MySQL关系型数据库相互补充功能
+            【存储数据量大、读写速度快】
+        基于内存存储NoSQL数据库
+            数据库中数据存储在内存Memory，写入数据和读取数据都很快
+        KeyValue存储类型数据库
+            数据库中数据管理：key -> value 
+    2) 大数据中Redis使用场景
+        存储实时Job计算结果（写入快，读取快）
+        缓存数据（比如黑名单数据、维度信息数据），提供快速读取（比如比对，数据信息）   
+        【不会出现使用Redis产生缓存击穿、缓存穿透、缓存雪崩】
+        string、hash、set 
+    3) Redis 安装启动
+    4) Redis 常用命令/数据类型
+        key: 全部字符串
+        value: string、hash、list、set、sortedset（基本数据类型）和高级数据类型
+
+
+================================================================================
+1、Redis 数据类型
+    list列表、set数学集合、SortedSet 可排序数学集合
+2、Jedis 库
+    操作Redis数据库，数据插入、查询等等
+3、RedisSink 接收器 
+    将DataStream数据流中数据保存到Redis内存数据库
+
+
+
+Redis 内存数据库
+    存储数据、查询数据 
+    5种数据类型及常用命令
+
+
+
+
+
+
+

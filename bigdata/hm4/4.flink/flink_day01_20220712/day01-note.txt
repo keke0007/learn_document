@@ -1,0 +1,73 @@
+
+大数据技术发展趋势：“三化”
+    SQL化、平台化、低代码化
+
+    大数据开发编程语言：
+        SQL 语言，使得大数据数据分析处理计算更加简单易用
+        Java 语言，大数据框架语言
+            Scala 语言，基于JVM之上的语言
+        Python 语言
+            Spark框架、Flink框架 都支持Python语言编程
+    
+    【MySQL数据库SQL和Hive数据仓库SQL】
+
+    
+==============================================================
+分布式流式实时计算引擎：Apache Flink
+    以Java语言为主，编程开发，分析处理流式数据
+    代码一定要敲，多多的敲
+        step1. 创建类的对象，设置属性值
+            new 关键字创建、建造者模式创建
+        step2. 调用对象方法，处理数据
+            传递方法参数值
+
+
+
+阿里巴巴双十一实时大屏背后技术：
+    1). 2017年之前，使用JStorm
+        Apache Storm   ->        JStorm 
+
+    2). 2017年开始，使用Blink
+        Apache Flink   ->       Blink(相当厉害，以SQL为主)
+            四个核心点（四大基石）：State、Checkpoint、Window、Time
+
+        2019年年初，Flink母公司被Alibaba收购，重点推广框架，发展主要方向SQL化
+
+
+
+
+大数据中使用Redis内存数据库，主要实时计算使用，应用场景：
+    1). 存储实时计算结果
+        内存数据库，读写数据非常快
+        比如Flink应用将实时计算结果存储Redis，Web前端实时从Redis加载结果业务展示
+    
+    2). 缓存黑名单数据或配置信息
+        当实时处理流式数据时，需要与Redis数据库中缓存数据比对或匹配
+        预警监控
+
+
+在Flink 1.12之前，流计算和批处理，提供2套API
+    1). 流计算，核心类：DataStream
+        DataStream#Operator
+
+    2). 批处理，核心类：DataSet
+        DataSet#Operator
+
+从Flink 1.12开始，流批一体化，建议使用1套API
+    核心类DataStream，既可以流计算，又可以批处理
+        只需要设置底层程序运行模式即可（batch、streaming）
+    本次课程使用Flink 1.13.1版本，所以使用DataStream编程
+        流批一体化DataStream API使用
+
+    Flink Table API & SQL 模块功能基本完成，推荐用户使用
+        尤其推荐基于SQL编程分析数据
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,120 @@
+
+Flink Table API & SQL 快速入门
+    【类似Hive数仓框架、类似SparkSQL模块，提供SQL分析数据和DSL编程方式】
+
+    模块功能：
+        上层API：Table API&SQL -> 将数据流抽象封装到Table，表执行环境TableEnvironment
+                                    |
+                将Table API和SQL转换DataStream Transformation转换操作
+
+    发展历史：
+        1) flink-1.9版本之前
+            flink table api & sql 功能简单，使用复杂，没有集成hive
+                datastream -> table -> datastream 
+        2) flink-1.9版本
+            阿里巴巴收购Flink母公司后发布第1版本，增加很多功能
+            flink table api & sql: Blink Planner，此外集成Hive
+        3) flink-1.12版本之前  
+            flink table api & sql 模块功能基本完成，可以用于实际生产环境
+            推荐使用，并且流批一体化
+    
+    开发要点和步骤：
+        TableEnvironment表执行环境、Table数据抽象封装
+        step1. 创建输入表:input_table, 映射数据源中数据，比如kafka topic
+        step2. 创建输出表:output_table, 映射数据接收器中数据，比如mysql table 
+        step3. 编写Table API代码或者编写SQL，对输入表中数据进行处理分析
+        step4. 保存结果数据到输出表，可以使用TableAPI，也可以是INSERT语句
+
+    入门案例：
+        【以批处理为例，加载本地文件系统中文本文件数据，使用SQL分析和Table API分析】
+            tableEnv#executeSql(ddl、dml、dql)  -> TableResult
+            tableEnv#sqlQuery(sql)  -> Table，可以直接调用execute，返回TableResult
+
+    DataStream与Table之间转换
+        StreamExecutionEnvironment -> StreamTableEnvironment 
+                DataStream                  Table   
+
+2. Table API Connector
+    【框架内置数据源source和数据接收器sink，创建表示，使用with语句，指定参数即可】
+    1) Kafka SQL Connector
+        流数据数据加载，流式数据保存
+    2) JDBC SQL Connector
+        流式数据保存、JdbSink
+    3) FileSystem SQL Connector
+        流式数据保存、StreamingFileSink\FileSink 
+    4) HBase SQL Connector
+        流式数据保存
+    5) Hive SQL Connector
+        集成Hive小蜜蜂，从Hive中已有的表加载数据，使用Hive管理表的元数据
+
+
+3、扩展性：如果使用Table API&SQL 实时处理数据
+    【构建实时数仓，基于SQL数据实时采集、处理和输出】
+
+    【依据数仓分层管理数据】
+        DIM层       ODS层   ->      DWD 层    ->   DWS 层    -> ADS 层
+    MySQL/HBase     Kafka          Kafka           Kafka      MySQL/ClickHouse/HBase/Doris
+
+
+
+4、强烈建议
+    1) StreamX 流式数据集成平台
+
+    2) Dinky 流式数据集成平台
+
+
+==========================================================================
+Apache HBase 集群启动异常，查看日志没有异常，所有数据清零操作，实际项目不允许。
+    【HBase 集群依赖ZK集群和HDFS集群】
+    1) 存储元数据
+        ZK集群，存储数据目录：/hbase 
+        rmr /hbase
+
+    2) 存储表数据
+        HDFS集群，存储数据目录：/hbase
+        hdfs dfs -rm -R /hbase
+
+    【所以，恢复HBase集群数据时，直接删除ZK集群和HDFS集群中数据即可。】
+
+
+==========================================================================
+大数据分析引擎框架中，提供专门编写SQL语句工具：
+    1) Hive 数仓框架
+        第一代客户端：
+            bin/hive 直接执行ddl、dml、dql等语句
+        第二代客户端：
+            启动HiveServer2服务
+            bin/beeline 命令行，直接执行ddl、dml、dql等语句
+            基于jdbc连接BI工具，直接书写ddl、dml、dql等语句执行
+                DataGrip、Zeppelin等
+    2) SparkSQL 模块
+        第一代客户端：
+            spark-sql  直接执行ddl、dml、dql等语句
+        第二代客户端： 
+            启动SparkSQL Thrift JDBC/ODBC Server 服务
+            bin/beeline 命令行，直接执行ddl、dml、dql等语句
+            基于jdbc连接BI工具，直接书写ddl、dml、dql等语句执行
+                DataGrip、Zeppelin等
+    3) Phoenix 框架
+        基于HBase之上SQL引擎框架，专门为HBase提供SQL语句操作
+        第一点：sqlline.py 
+            SQL 命令行，直接执行DDL、DML、DQL语句 
+        第二点：
+            基于jdbc连接BI工具，直接书写ddl、dml、dql等语句执行
+                DataGrip、Zeppelin等
+    4) Flink SQL 模块 
+        提供命令行SQL Client命令行，无需启动任务服务，直接启动即可，连接Flink Cluster集群
+            当指定DDL、DML、DQL语句时，转换DataStream Transformation操作，生成job，提交执行
+
+SQL 语句中，往往提供命令：EXPLAIN 执行计划
+
+
+
+
+
+
+
+
+
+
+        

@@ -1,0 +1,101 @@
+
+Flink DataStream 流式开发高级操作（算子）：
+    1) DataStream#process 算子
+        ProcessFunction函数接口类对象，对流中每条数据处理
+        第1、处理流中每条数据
+        第2、对分组流KeyedStream进行状态管理，实现词频统计，自定义状态存每个key状态
+        第3、对分组流KeyedStream可以设置定时任务（定时器），重写onTimer方法
+            订单超时自动取消
+
+    2) BroadcastState 广播状态
+        离线批处理：
+            大表与小表关联join，将小表数据广播缓存，处理大表数据时，直接内存加载使用
+            mapreduce:
+                小表数据分布式缓存
+            hive:
+                map join，此时2个表关联join，底层MR不会产生Shuffle，性能提升
+            spark:
+                将数据广播到Executor中，
+                spark join： 广播关联JOIN
+            flink batch:
+                小表数据广播变量，小表数据分布式缓存
+        流式实时计算：
+            大表数据流：数据源源不断产生
+            小表数据流：数据很少，但是数据会发生变化，比如维度数据，配置数据
+        本质：
+            将小表数据流广播，以MapState状态形式存储内存，当对大表数据流中数据处理时，直接从MapState中获取。
+            MapState中，Key：关联字段，Value：小表数据
+        实现：
+            1) 小表广播；2) 大表connect小表; 3) process算子，处理流中数据
+
+    3) Window Aggregate 窗口聚合
+        对窗口中数据计算类型（流计算）
+            第1种：全量窗口数据聚合
+                等待触发窗口计算时，一次性对窗口中所有数据一起计算
+                算子：apply、process 
+                可以获取窗口信息，如果是TimeWindow时间窗口，获取开始时间和结束时间
+            第2种：增量窗口数据聚合
+                当窗口中来1条数据，进行计算一次，将结果存储在聚合中间临时变量中，等到触发窗口计算时，可以直接返回增量聚合中间结果值即可
+                算子：reduce、aggregate、sum、max、min
+        先增量聚合，再全量计算
+            windowedStream.reduce(ReduceFunction, WindowFunction)
+
+    4) Async IO 异步IO请求
+        当对数据流中每条数据处理时，需要请求数据库，关联数据处理，为了更好处理流式数据，可以异步请求。
+        实现功能:
+            大表与小表数据关联，大表数据为数据流（存储Kafka），小表数据为维度数据（存储数据库）
+
+    5) 双流JOIN
+        大表数据流关联，数据仓库中对2个大数据流进行拉宽操作，存储数据库中，后续即席查询分析。
+        案例场景：
+            订单数据流：order-stream
+            订单详情数据流：detail-stream 
+
+        第1种方案：window join 窗口关联
+            【基于事件时间EventTime窗口】
+            将2个流数据，划分为窗口window，对2个流中相同窗口数据，按照key关联。
+                滚动窗口、滑动窗口、会话窗口
+            【仅仅实现等值jion，内连接】
+
+            window cogroup
+                类似window join，不同点：2个窗口数据按照key关联之前，相对各个窗口中key进行分组，将窗口中相同key的数据放在一起，然后再进行key关联
+            【可以实现，等值join、左外连接leftJoin、右外连接rightJoin、全外外接】
+
+        第2中方案：interval join 间隔关联
+            【2个流必须按照关联字段进行分组，只能分组流KeyedStream进行关联】
+            以其中1个流中数据为准，获取数据时间（事件时间），到另外1个流中，依据设置时间上限和下限，找时间范围内数据进行key匹配和关联。
+
+
+==============================================================================
+大数据三大分析引擎，作业Job中Task(SubTask)运行方式：
+    1) MapReduce 计算引擎
+        MapTask、ReduceTask ->  进程Process 方式运行，启动Java进程（JVM进程）
+
+    2) spark 计算引擎 
+        Task 任务 -> 线程Thread方式运行，运行在进程Process中（Executor中）
+
+    3) flink 计算引擎 
+        SubTask 子任务 ->  线程Thread方式运行, 运行在进程Process中（TaskManager中）
+
+
+
+MapReduce框架出现时，每个Task任务（MapTask还是ReduceTask）运行资源称为slot
+    hadoop 2 之前，MR任务运行集群：MapReduce 集群，其中资源被封装在Slot槽
+
+
+==============================================================================
+Flink Job作业调度时，确定subTask任务数和Slot资源槽
+    1. 依据Operator并行度和算子链OperatorChain
+        确定每个Job作业SubTask子任务个数
+
+    2. 依据并行度和任务槽Slot共享
+        确定每个Job作业Slot任务槽个数，也就是运行Job时，需要申请多少资源
+
+
+
+
+
+
+
+
+

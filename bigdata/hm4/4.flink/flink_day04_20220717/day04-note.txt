@@ -1,0 +1,12 @@
+
+Flink中Slot资源槽相关概念：
+    1) 每个TaskManager启动时，指定Slot槽个数
+        建议：Slot槽个数 = 分配CPU Core核数
+    2) 每个TaskManager中，各个Slot槽中内存平分TM内存
+        比如TM内存：10GB，有4个Slot槽，此时每个槽Slot分配2.5GB
+    3) 每个Slot中封装资源，运行Job中SubTask子任务
+        每个Slot槽中可以运行多个不同类型SubTask子任务，比如属于一个Job中
+
+
+
+

@@ -1,0 +1,100 @@
+
+
+Flink DataStream 流计算
+    四周时间，总共16次课
+
+Flink Table API & SQL
+    4次课时间
+
+
+==============================================================================
+1、Flink Checkpoint检查点
+    功能：
+        将运行Flink Stream Job某时刻状态State进行快照和保存，以便容灾恢复。
+    启动和配置：
+        设置时间间隔
+    job 作业重启：
+        方式1：手动重启，提交job作业执行时，指定Checkpoint检查点存储路径位置
+        方式2：自动重启策略
+            无限重启、不重启、固定次数延迟重启、失败率延迟重启策略
+    保存点Savepoint
+        手动一次Checkpoint，用户发送Barrier栅栏信号给Flink stream job作业，进行State状态快照和保存save.
+        场景：
+            当需要停止Job时，指定参数，进行Savepoint，当再次重启Job时，从保存点恢复。
+
+2、Flink Stream 程序一致性语义实现
+    1) 每个Flink Job来说
+        内部基于分布式快照算法，实现Checkpoint检查点，达到精确性一次语义
+
+    2) 1.4版本开始：可以实现端到端精确性一次语义
+        Source 数据源：支持可以重设读取位置
+        Job 内部数据Operator：Checkpoint检查点
+        Sink 数据终端：幂等性或事务性（WAL、2PC）
+
+        如果外部存储，支持事务性，可以实现两阶段提交接口函数，写入数据。
+            第1、开启事务
+            第2、预提交
+            第3、提交
+            第4、异常回滚
+
+    在实际项目中，flink stream job作业保存数据，常见地方：
+        1) Kafka 分布式消息队列
+            实时数仓，相当离线数仓中DWD中事实宽表数据，很多实时应用消费数据实时处理
+        2) Redis内存数据库
+            幂等性
+        3) HBase 数据库 
+            幂等性
+        4) MySQL 数据库
+            1.11版本提供JdbcSink，传递语句为upsert，实现精确性一次语义
+        5) .....
+
+
+==============================================================================
+Flink 基础知识，面试时常见点：
+    四大基石，尤其State和Checkpoint，外加精确性一次语义。
+
+
+
+==============================================================================
+【离线分析中，如果大表与小表数据关联时，将小表数据广播Broadcast，处理大表数据时，使用广播数据】
+    SpakCore：RDD
+        广播变量
+        Flink Batch中也有广播变量
+    SparkSQL：
+        Broadcast Join 
+
+Flink Stream 流计算中，对大表数据流中数据处理时，需要小表数据流关联，将小表数据广播出去
+    小表数据流：维度表数据流（配置表数据流），数据很少，发生变化
+
+    将动态变化小表数据流广播到TaskManager中，以State状态方式存储，此时称为：BroadcastState广播状态
+        State状态存小表数据时，使用MapState集合方式存储：
+            Key: 关联字段
+            Value：小表中关联字段对应的值
+            [当对大表数据流中每条数据处理时，依据关联字段到MapState中获取value值即可]
+
+    使用Flink DataStream中广播状态时，小表数据广播，大表数据关联使用，
+        类似Hive中MapJoin或SparkSQL中Broadcast JOIN 
+
+
+
+==============================================================================
+Flink Window窗口计算算子：
+    datastream.keyBy.window.apply(WindowFunction)
+
+    1) 全量聚合（一次性对窗口数据计算）
+        windowedStream.apply()/process()
+
+        优势：
+            获取窗口信息，比如时间窗口的话，获取窗口开始时间和结束时间
+
+
+    2) 增量聚合（窗口中进入一条数据，计算一次，并且存储计算中间结果值）
+        windowedStream.reduce()/aggregate()/max-min-sum
+        当触发窗口计算时，直接返回增量聚合时中间结果数据
+
+        优势：
+            窗口中一有数据，立即计算，当触发窗口时，直接返回增量聚合结果，速度快，延迟小
+    
+    【Flink Window窗口算子：window apply、window process| window reduce、window aggregate】
+
+

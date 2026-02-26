@@ -1,0 +1,62 @@
+
+Flink Table API & SQL 集成Hive
+    1) 元数据管理Catalog
+        【创建表信息：表名称，字段名称，字段类型，映射数据存储，称之为元数据】
+        支持四种类型管理：
+            GenericMemoryCatalog、
+                直接将元数据放在当前会话内存中，比如SQL Client会话内存中或程序运行时JVM内存中
+                【会话结束或程序结束，元数据丢失】
+            HiveCatalog
+                使用HiveMetaStore管理存储元数据，最终保存在MySQL数据库中
+                【企业中推荐使用方式，基于Hive管理数据源】
+            JdbcCatalog
+                直接将元数据Catalog存储到数据库中，目前仅仅执行PostgresqlCatalog
+            CustomCatalog 
+                提供接口，可以自己实现接口，进行元数据管理，比如存储Redis数据库，几乎自己不实现
+
+    2) 集成Hive 
+        启动HiveMetaStore元数据服务，使得Flink程序可以连接服务
+        step1. 创建Catalog，关联HiveMetaStore服务
+        step2. 直接使用Catalog      
+        【既可以将创建表的元数据保存HiveCatalog，又可以读取Hive中表的数据】
+            
+
+在Hive 数据仓库框架中，创建表、数据库、加载数据以后，元数据Catalog，
+    存储在MySQL数据库
+    启动HiveMetaStore服务，管理元数据
+
+
+Hive、SparkSQL、FlinkSQL中开窗函数
+    1). Hive 开窗函数
+        https://cwiki.apache.org/confluence/display/Hive/LanguageManual+WindowingAndAnalytics
+        LEAD、LAG、FIRST_VALUE、LAST_VALUE
+        COUNT、SUM、MIN、MAX、AVG
+        RANK、ROW_NUMBER、DENSE_RANK、NTILE、【CUME_DIST、PERCENT_RANK】
+    
+    2). SparkSQL 开窗函数
+        https://spark.apache.org/docs/3.1.2/sql-ref-functions-builtin.html
+        first/first_value、last/last_value
+        lag、lead
+        dense_rank、ntile、rank、row_number
+
+    3). FlinkSQL 开窗函数
+        https://nightlies.apache.org/flink/flink-docs-release-1.13/docs/dev/table/functions/systemfunctions/#aggregate-functions
+
+
+===============================================================================
+Flink SQL中window窗口函数，包含2类
+    1). over windows 
+        【开窗函数】
+        本质：给表中每行数据加上一列值（可能序号，可能字段值，可能字段聚合值）
+
+    2). group windows 
+        【Flink DataStream中窗口Window 计算】
+        Flink DataStream中窗口计算window，本质就是对流数据按照window分组，对组内数据计算
+        step1. 创建表，指定时间字段，及watermark(事件时间窗口)
+        step2. SQL语句，使用group window函数指定窗口
+            滚动窗口、滑动窗口和会话窗口
+        
+
+
+
+

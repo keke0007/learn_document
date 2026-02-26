@@ -1,0 +1,80 @@
+
+开发需求：
+    每日实时大屏展示：每天交易订单销售额统计，每天凌晨，销售额从零开始。
+
+
+===============================================================================
+Flink State状态和Checkpoint检查点：
+    1. 状态后端StateBackend
+        含义(1.13之前概念)：
+            flink stream job运行时，处理数据过程中，State状态保存和Checkpoint检查点存储。
+        3种类型StateBackend：
+            第1种：MemoryStateBackend（内存状态后端）
+                State -> TM 内存，Checkpoint -> JM 内存
+                启用stream job后默认状态后端
+            第2种：FsStateBackend（文件系统状态后端）
+                State -> TM 内存，Checkpoint -> Fs 文件系统，实际生产 -> HDFS
+            第3种：RocksDBStateBackend（嵌入式内存数据库状态后端）
+                State -> RocksDB（TM 内存），Checkpoint -> Fs 文件系统
+        1.13开始，State状态存储和Checkpoint检查点存储分开设置
+            StateBackend: 指的就是State存储
+                HashMap（TM内存）、RocksDB（嵌入式数据库）
+            CheckpointStorageDir：检查点存储设置
+                JobManager(JM内存)，FileSystem（文件系统）
+
+    2. Checkpoint 检查设置
+        以1.13版本演示
+        第1个方面，启动Checkpoint，设置时间间隔
+        第2个方面，设置StateBackend和CheckpointStorageDir
+        第3个方面，设置Checkpoint检查点属性值
+        第4个方面，重启策略
+
+    3. 案例演示：手动重启应用，检查点恢复
+        方式1：Web UI界面部署，填入参数->Checkpoint检查点保存状态目录
+        方式2：fun run -s checkpoint-dir ................
+
+
+===============================================================================
+Flink 流式Job实现精确性一次语义：
+    【精确性一次语义，又称为恰好一次性语义、数据一致性语义】
+    1. Flink Job 内部使用Checkpoint检查点机制实现精确性一次语义
+        分布式快照算法实现
+
+    2. Flink 1.4开始，可以实现端到端精确性一次语义
+        Source 数据源端：
+            支持读取数据重设偏移量，比如Kafka 消费数据，重设偏移量
+        
+        Job 程序内部：
+            Checkpoint检查点机制 
+        
+        Sink 数据接收器端：
+            幂等性写入，nosql数据库，数据库中upsert语句
+            事务性写入，WAL预写日志（使用不多）和2PC两阶段提交
+
+    3. 二阶段提交：2PC
+        提供接口：TwoPhaseCommitSinkFunction，要数据接收器端支持事务，比如MySQL数据库和Kafka消息队列
+            1) 开启事务beginTransaction
+            2) 预提交PreCommit
+            3) 真正提交commit
+            4) 失败时，事务回滚abort
+        
+        当DataSink要向外部写入数据时，先将数据写入事务中，等到Checkpoint结束后，再真正提交
+
+    4. Flink + Kafka/MySQL 如何实现端到端一次性语义
+        从Kafka队列消费数据
+        Flink Job内部启动Checkpoint检查点
+        数据终端：
+            Kafka -> FlinkKafkaProducer: 实现2PC接口
+            MySQL -> 要么JdbcSink（upsert语句），要么自己自定子类，实现2PC接口
+
+
+
+
+
+
+
+
+
+
+
+

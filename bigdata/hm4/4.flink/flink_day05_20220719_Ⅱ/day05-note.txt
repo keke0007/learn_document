@@ -1,0 +1,103 @@
+
+0、讲师虚拟机
+    node1.itcast.cn     192.168.88.100
+    node2.itcast.cn     192.168.88.101
+    node3.itcast.cn     192.168.88.102
+
+    操作系统用户：
+        root/123456
+    node1安装MySQL数据库
+        root/123456
+
+
+1、复盘上次课程内容
+    第一个方面：Flink 入门案例
+        1). Flink 程序开发编程模式
+            Data Source  ->   Transformation  ->   Data Sink
+            5个步骤：
+                step1. 执行环境-env
+                step2. 数据源-source
+                step3. 数据转换-Transformation
+                step4. 数据接收器-sink
+                step5. 触发执行-execute
+            提供API：分为4层
+                DataStream/DataSet API  -> Core API -> 1.12 流批一体化
+        2). 词频统计WordCount
+            批处理：基于DataSet
+                类比PySpark时，词频统计代码编写
+            流计算：基于DataStream
+                处理数据时，调用算子（函数）与批处理几乎一致
+                基于DataStream实现批处理，修改底层执行模式即可ExecutionMode=BATCH
+                程序参数处理工具类：ParameterTool
+            【本地模式运行Flink Job作业，启动1个JVM进程，可以认为时JM和TM合体】
+        3). 打包部署提交运行
+            采用flink on yarn：flink job作业执行时，对应flink cluster集群运行在yarn容器中
+                打成jar包
+            第1种方式提交：
+                命令行方式提交 -> flink run，flink on yarn使用per-job部署模式
+            第2中方式提交
+                Web UI方式提交 -> 必须首先启动Flink Cluster，在JM Web界面提交
+                支持flink on yarn使用Session会话共享集群和Standalone分布式集群
+        4). 基础知识补充
+            当方法参数类型为：接口类型，调用方法方法时，需要传递接口实现类对象，3种方式
+            方式1：
+                定义子类，实现接口，创建子类对象
+            方式2：
+                匿名内部类方式创建对象，1一次使用
+            方式3：
+                如果接口中方法实现时方法体简单，建议使用lambda表达式完成，代码先简洁优雅
+            
+    第二个方面：基础概念
+        1). DataStream 
+            对处理分析数据一种抽象，类似Spark中核心概念RDD，属于一种集合，处理数据时，调用转换算子
+        2). 并行度设置
+            在flink流式计算程序中，每一步操作称为Operator，分为三种类型：Source、Transformation、Sink
+            每个Operator操作（算子）可以设置并行度，具体处理数据使用有几个人干活
+            有4种方式设置并行度：
+                算子级别 >  执行环境级别 -> 提交客户端级别 -> 系统级别（配置文件）
+        3). 资源槽Slot（任务槽）
+            Flink Job运行需要资源，由Flink Cluster集群提供资源，其中从节点TaskManager中资源封装Slot操作
+                每个slot对应1 Core CPU，TM中所有Slot均分内存
+    
+    第三个方面：Data Source和Data Sink
+        1). Data Source
+            数据源，从哪里读取数据进行处理
+            第1、有界数据源（有界流）   - 批处理，测试数据
+                基于文件数据源和基于集合数据源
+            第2、无界数据源（无界流）
+                SocketSource9测试）、自定义数据源接口SourceFunction：run和cancle
+        2). Data Sink 
+            数据接收器，将结果数据保存到哪里去
+            保存数据流到文件中，提供方法已经过时，提供更好File Sink 
+            提供自定义接收器接口：SinkFunction -> invoke 
+                比如将数据流中数据写入到MySQL表中，或者将数据写入到HBase表中
+            
+
+
+2、DataStream 转换算子使用
+
+
+
+Hive中函数：explode 爆炸函数
+    将一行数据转换为多行数据
+        words: ['spark', 'flink', 'mapreduce']  -> 
+                        |
+                        |
+                        |
+        word: 'spark'
+              'flink'
+              'mapreduce'
+
+
+
+
+
+
+
+
+
+
+
+
+
+
