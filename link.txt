@@ -1,4 +1,4 @@
-u机器学习网站
+9u机器学习网站
 https://aibydoing.com/
 https://www.v2ex.com/t/1192760#reply2
 
@@ -43,3 +43,5 @@ https://github.com/gsd-build/get-shit-done
 repoprompt还挺不错的https://www.myaiexp.com/zh
 
 https://github.com/mindfold-ai/Trellis
+
+https://github.com/zxcvbnmzsedr/devhaven
