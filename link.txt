@@ -51,3 +51,5 @@ https://ai.centos.hk/console/topup
 https://agentrouter.org/console/topup
 
 https://ai.ctacy.cc/console/personal
+
+https://github.com/hitmux/HitCC
