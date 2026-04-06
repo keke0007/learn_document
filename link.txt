@@ -1,4 +1,4 @@
-9u机器学习网站
+79u机器学习网站
 https://aibydoing.com/
 https://www.v2ex.com/t/1192760#reply2
 
@@ -53,3 +53,5 @@ https://agentrouter.org/console/topup
 https://ai.ctacy.cc/console/personal
 
 https://github.com/hitmux/HitCC
+
+https://github.com/tw93/Waza
