@@ -68,3 +68,4 @@ https://github.com/k88hudson/git-flight-rules/blob/master/README_zh-CN.md
 https://github.com/ykdojo/claude-code-tips
 
 
+https://github.com/markdown-viewer/skills
