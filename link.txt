@@ -69,3 +69,6 @@ https://github.com/ykdojo/claude-code-tips
 
 
 https://github.com/markdown-viewer/skills
+
+
+https://github.com/alchaincyf/obsidian-ai-orange-book
