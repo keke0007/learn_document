@@ -65,4 +65,6 @@ https://bewaters.me/limxtop/2021/08/18/English-introduction/
 
 https://github.com/k88hudson/git-flight-rules/blob/master/README_zh-CN.md
 
+https://github.com/ykdojo/claude-code-tips
+
 
