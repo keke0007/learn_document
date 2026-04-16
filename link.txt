@@ -1,4 +1,4 @@
-9u机器学习网站
+79u机器学习网站
 https://aibydoing.com/
 https://www.v2ex.com/t/1192760#reply2
 
@@ -53,3 +53,22 @@ https://agentrouter.org/console/topup
 https://ai.ctacy.cc/console/personal
 
 https://github.com/hitmux/HitCC
+
+https://github.com/tw93/Waza
+
+
+https://github.com/ZJU-LLMs/Foundations-of-LLMs
+
+https://www.yuque.com/1ianz/dn3yhu/xzme82fb15arrdvn?singleDoc#
+
+https://bewaters.me/limxtop/2021/08/18/English-introduction/
+
+https://github.com/k88hudson/git-flight-rules/blob/master/README_zh-CN.md
+
+https://github.com/ykdojo/claude-code-tips
+
+
+https://github.com/markdown-viewer/skills
+
+
+https://github.com/alchaincyf/obsidian-ai-orange-book
