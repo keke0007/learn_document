@@ -88,3 +88,10 @@ kelivo
 oh-my-codex  新出的编排工具 大家可以看看尝试一下   里面内置了很多规范和skill
 https://gaaq06kk46.feishu.cn/docx/Kc1Ddu6dko02YJxaubUca3EUnhd
 https://gaaq06kk46.feishu.cn/docx/ZwRTdVQ0NocqU4xCXj4cLcE6n2I
+
+https://agentskills.io/home
+
+https://github.com/ComposioHQ/awesome-claude-skills
+
+https://github.com/jiweiyeah/Skills-Manager
+
