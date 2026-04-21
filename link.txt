@@ -112,3 +112,9 @@ https://github.com/TsingJyujing/blogs
 https://github.com/QLHazyCoder/codex-oauth-automation-extension/releases
 
 https://github.com/shareAI-lab/shareAI-skills/blob/main/skills/skill-judge/SKILL.md
+
+https://github.com/any4ai/AnyCrawl
+
+https://github.com/zxfccmm4/Obsidian-OpenCode-Knowledge
+
+https://github.com/addyosmani/agent-skills
