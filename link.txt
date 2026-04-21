@@ -1,4 +1,4 @@
-279u机器学习网站
+9279u机器学习网站
 https://aibydoing.com/
 https://www.v2ex.com/t/1192760#reply2
 
@@ -106,3 +106,5 @@ https://x.com/jakevin7/status/2046232019806704079
 https://github.com/Z4nzu/hackingtool
 
 https://github.com/Visualize-ML/Linear-Algebra-Made-Easy---Learn-with-Python-and-Visualization
+
+https://github.com/TsingJyujing/blogs
