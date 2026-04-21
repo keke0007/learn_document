@@ -108,3 +108,7 @@ https://github.com/Z4nzu/hackingtool
 https://github.com/Visualize-ML/Linear-Algebra-Made-Easy---Learn-with-Python-and-Visualization
 
 https://github.com/TsingJyujing/blogs
+
+https://github.com/QLHazyCoder/codex-oauth-automation-extension/releases
+
+https://github.com/shareAI-lab/shareAI-skills/blob/main/skills/skill-judge/SKILL.md
