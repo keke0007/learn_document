@@ -1,1 +1,3 @@
 https://datawhalechina.github.io/easy-vibe/zh-cn/stage-3/core-skills/skills/
+
+https://github.com/FrancyJGLisboa/agent-skill-creator
