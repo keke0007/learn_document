@@ -1,0 +1,56 @@
+# agentic-doc-archive
+description: 项目完结归档：生成当前开发阶段的详细技术上下文文档，用于下一次迭代。
+globs: src/**/*, agent-doc/reference/**/*
+
+# 项目完结归档 (Project Archive)
+
+当用户输入 "项目归档"、"生成上下文文档" 或 "project archive" 时，触发此规则。
+
+## 角色
+你是一个 **高级技术架构师 (Senior Technical Architect)**。你的任务是将当前开发会话中的所有关键信息、架构决策和代码逻辑 "冻结" 成一份高密度的技术文档。这份文档将作为 **下一个 AI 实例 (Next AI Instance)** 的启动上下文 (Context)。
+
+## 目标
+不要写给最终用户看的说明书，要写给 **接手的开发者/AI** 看的 "大脑转储 (Brain Dump)"。重点在于 **What (做了什么)**、**How (怎么实现的)** 和 **Why (为什么这么设计)**。
+
+## 执行步骤
+
+1.  **全局扫描**: 快速回顾当前会话修改的所有文件 (`src/**/*`) 和相关的 `agent-doc/`。
+2.  **结构化输出**: 在 `agent-doc/reference/` 目录下创建一个新文件，命名格式建议为 `v{版本}_{功能模块}_context.md` (例如: `v1_workflow_engine_context.md`)。
+3.  **文档内容模板**:
+
+```markdown
+# [版本/功能] 技术上下文归档
+
+## 1. 业务目标 (Business Goal)
+- 简述本阶段主要解决的问题和实现的功能。
+- 核心 User Story。
+
+## 2. 系统架构 (System Architecture)
+- **关键组件**: 列出新增或修改的核心类/模块。
+- **交互流程**: 使用 Mermaid `sequenceDiagram` 或 `flowchart` 描述核心业务流。
+- **数据流向**: 数据如何在组件间传递。
+
+## 3. 核心实现细节 (Key Implementation Details)
+- **关键逻辑**: 解释复杂的算法或业务规则 (引用具体代码位置)。
+- **设计模式**: 使用了哪些模式 (Strategy, Factory, Observer 等) 及其原因。
+- **变更点**: 相比上一版本，主要改动了哪些核心逻辑。
+
+## 4. 接口与数据契约 (Interfaces & Data Contracts)
+- **API 定义**: 新增或修改的接口 (Input/Output)。
+- **数据结构**: 核心 DTO/Entity 的字段变更。
+- **数据库变更**: 新增表、字段或索引。
+
+## 5. 配置与环境 (Configuration & Environment)
+- **Env 变量**: 新增的配置项及其默认值。
+- **依赖库**: 新引入的 jar 包或工具库。
+
+## 6. 技术债务与遗留问题 (Tech Debt & Known Issues)
+- **TODOs**: 代码中留下的 `// TODO` 或未完成的功能。
+- **潜在风险**: 性能瓶颈、并发问题或边缘情况。
+- **下期建议**: 对下一阶段迭代的建议。
+```
+
+## 注意事项
+- **代码引用**: 必须包含关键代码片段或文件路径引用 (e.g., `src/main/java/.Service.java`).
+- **准确性**: 不要编造。如果不确定某个逻辑，标记为 "待确认"。
+- **简洁性**: 避免废话，使用技术术语。
